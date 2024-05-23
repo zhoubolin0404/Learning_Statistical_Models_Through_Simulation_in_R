@@ -28,6 +28,7 @@ $$Y_i = \beta_0 + \beta_1 X_i + e_i$$
 
 其中$Y_i$是样本$i$的因变量的观测值，由截距加上被系数$\beta_1$加权的预测值$X_i$以及误差项构成。表示线性关系$Y_i = 3 + 2X_i + e_i$的模拟数据如图\@ref(fig:basic-glm)所示。
 
+
 <div class="figure">
 <img src="01-introduction_files/figure-html/basic-glm-1.png" alt="线性模型Y = 3 + 2X的模拟数据" width="672" />
 <p class="caption">(\#fig:basic-glm)线性模型Y = 3 + 2X的模拟数据</p>

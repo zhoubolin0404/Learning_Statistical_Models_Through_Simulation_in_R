@@ -32,6 +32,7 @@ $$Y_i = \beta_0 + \beta_1 X_i + e_i$$
 
 其中$Y_i$是样本$i$的因变量的观测值，由截距加上被系数$\beta_1$加权的预测值$X_i$以及误差项构成。表示线性关系$Y_i = 3 + 2X_i + e_i$的模拟数据如图\@ref(fig:basic-glm)所示。
 
+
 ```{r basic-glm, echo=FALSE, fig.cap="线性模型Y = 3 + 2X的模拟数据", message=FALSE, warning=FALSE}
 library("tidyverse") # if needed
 
@@ -45,7 +46,7 @@ ggplot(dat, aes(X, Y)) +
   geom_abline(intercept = 3, slope = 2, color = "blue")
 ```
 
-```{r glm, webex.hide="查看绘制该图的R代码", ref.label="basic-glm", eval=FALSE}
+```{r glm, ref.label="basic-glm", eval=FALSE}
 ```
 
 你可能会发现上述方程表示的是一条直线($y = mx + b$)，其中$\beta_0$是截距，$\beta_1$是斜率。$e_i$是样本$i$的模型误差，表示样本观测值$Y_i$与给定$X_i$的模型预测值之间的差距。
