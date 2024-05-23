@@ -1,6 +1,6 @@
 ---
 title: "学习统计模型——通过R模拟"
-author: "Zhou Bolin"
+author: "Freiheit_lin"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book

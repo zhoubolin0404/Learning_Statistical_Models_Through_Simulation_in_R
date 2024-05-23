@@ -20,7 +20,7 @@
   
   
 
-<meta name="author" content="Zhou Bolin" />
+<meta name="author" content="Freiheit_lin" />
 
 
 <meta name="date" content="2024-05-23" />
@@ -66,6 +66,70 @@ MathJax.Hub.Config({
 </script>
 
 
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
 <style type="text/css">
   
@@ -93,6 +157,10 @@ MathJax.Hub.Config({
 <li class="chapter" data-level="1" data-path="前言.html"><a href="前言.html"><i class="fa fa-check"></i><b>1</b> 前言</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="前言.html"><a href="前言.html#课程目的"><i class="fa fa-check"></i><b>1.1</b> 课程目的</a></li>
+<li class="chapter" data-level="1.2" data-path="前言.html"><a href="前言.html#广义线性混合模型generalized-linear-mixed-effects-models-glmms"><i class="fa fa-check"></i><b>1.2</b> 广义线性混合模型(Generalized Linear Mixed-Effects Models, GLMMs)</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="前言.html"><a href="前言.html#线性模型"><i class="fa fa-check"></i><b>1.2.1</b> 线性模型</a></li>
+</ul></li>
 </ul></li>
 </ul>
 
@@ -117,14 +185,62 @@ MathJax.Hub.Config({
 <h2><span class="header-section-number">1.1</span> 课程目的<a href="前言.html#课程目的" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>本课程的目的是教你如何分析(还有模拟!)作为心理学家你可能遇到的各种数据集。重点是行为数据——反应时、知觉判断、选择、决策、李斯特量表评分、眼动、睡眠时间等。这些数据通常是在有计划的研究或实验中收集到的。</p>
 <p>本课程旨在教授<strong>灵活</strong>、<strong>可推广</strong>、<strong>可重复</strong>的分析技术。你将学习到的技术是灵活的，这意味着它们可以应用到各式各样的研究设计和不同类型的数据上。通过充分考虑抽样对统计推断的潜在偏倚影响，它们在最大程度上具有可推广性——这有助于支持超越特定被试和实验中涉及的刺激得出结论。最后，你将学习到的技术会尽可能地做到可完全重复，因为你的分析将以R代码的纯文本脚本形式明确记录从原始数据到研究结果的每一个步骤。</p>
-<p>本课程强调一个灵活的回归模型框架而不是教授处理不同类型数据的“公式”。课程假设你需要分析的基本数据类型将是多层的(multilevel)，而且你不仅仅需要处理连续测量数据，还要处理有序测量数据（李克特量表评分）、计数数据（特定事件发生的次数）以及名义数据（某物所属的类别）。</p>
+</div>
+<div id="广义线性混合模型generalized-linear-mixed-effects-models-glmms" class="section level2 hasAnchor" number="1.2">
+<h2><span class="header-section-number">1.2</span> 广义线性混合模型(Generalized Linear Mixed-Effects Models, GLMMs)<a href="前言.html#广义线性混合模型generalized-linear-mixed-effects-models-glmms" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>本课程强调一个灵活的回归模型框架而不是教授处理不同类型数据的”公式”。课程假设你需要分析的基本数据类型将是多层的(multilevel)，而且你不仅仅需要处理连续测量数据，还要处理有序测量数据（李克特量表评分）、计数数据（特定事件发生的次数）以及名义数据（某物所属的类别）。</p>
 <p>本课程结束时，你将学会如何使用广义线性混合模型(GLMMs)来量化因变量和一组预测变量之间的关系。要理解GLMMs，你需要学习以下三部分：</p>
 <ol style="list-style-type: decimal">
 <li>“线性模型”部分，包括如何捕捉不同类型的预测变量及其交互作用；</li>
 <li>“混合”部分，包括如何使用随机效应来表示通过对同一批被试或刺激进行重复测量而产生的多层次依赖关系；</li>
 <li>“广义”部分，包括拓展线性模型来表示非完全正态自变量，包括计数、有序和二元变量。</li>
 </ol>
+<div id="线性模型" class="section level3 hasAnchor" number="1.2.1">
+<h3><span class="header-section-number">1.2.1</span> 线性模型<a href="前言.html#线性模型" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>GLMMs是一般线性模型的扩展。一般线性模型是方差分析(ANOVA)、t检验和古典回归等更简单方法的基础。本课程的主要观点是：<strong>你可能遇到的几乎所有实验得到的数据都可以用GLMMs进行分析</strong>。</p>
+<p>一个线性模型的简单例子：</p>
+<p><span class="math display">\[Y_i = \beta_0 + \beta_1 X_i + e_i\]</span></p>
+<p>其中<span class="math inline">\(Y_i\)</span>是样本<span class="math inline">\(i\)</span>的因变量的观测值，由截距加上被系数<span class="math inline">\(\beta_1\)</span>加权的预测值<span class="math inline">\(X_i\)</span>以及误差项构成。表示线性关系<span class="math inline">\(Y_i = 3 + 2X_i + e_i\)</span>的模拟数据如图<a href="前言.html#fig:basic-glm">1.1</a>所示。</p>
+<div class="figure"><span style="display:block;" id="fig:basic-glm"></span>
+<img src="01-introduction_files/figure-html/basic-glm-1.png" alt="线性模型Y = 3 + 2X的模拟数据" width="672" />
+<p class="caption">
+图1.1: 线性模型Y = 3 + 2X的模拟数据
+</p>
+</div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="前言.html#cb1-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;tidyverse&quot;</span>) <span class="co"># if needed</span></span>
+<span id="cb1-2"><a href="前言.html#cb1-2" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="前言.html#cb1-3" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">62</span>)</span>
+<span id="cb1-4"><a href="前言.html#cb1-4" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="前言.html#cb1-5" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">X =</span> <span class="fu">runif</span>(<span class="dv">100</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>),</span>
+<span id="cb1-6"><a href="前言.html#cb1-6" tabindex="-1"></a>              <span class="at">Y =</span> <span class="dv">3</span> <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> X <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">100</span>))</span>
+<span id="cb1-7"><a href="前言.html#cb1-7" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="前言.html#cb1-8" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(X, Y)) <span class="sc">+</span></span>
+<span id="cb1-9"><a href="前言.html#cb1-9" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb1-10"><a href="前言.html#cb1-10" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">3</span>, <span class="at">slope =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
+<p>你可能会发现上述方程表示的是一条直线(<span class="math inline">\(y = mx + b\)</span>)，其中<span class="math inline">\(\beta_0\)</span>是截距，<span class="math inline">\(\beta_1\)</span>是斜率。<span class="math inline">\(e_i\)</span>是样本<span class="math inline">\(i\)</span>的模型误差，表示样本观测值<span class="math inline">\(Y_i\)</span>与给定<span class="math inline">\(X_i\)</span>的模型预测值之间的差距。</p>
+<div class="info">
+<p><strong>表示法惯例</strong></p>
+<p>希腊字母(<span class="math inline">\(\beta\)</span>, <span class="math inline">\(\rho\)</span>, <span class="math inline">\(\tau\)</span>)表示总体参数，通常是未观测到的，需要从数据中估计得到的。当我们想要区分<strong>估计</strong>参数和真实值时，我们会使用”hat”：如<span class="math inline">\(\hat{\beta}_0\)</span>表示从数据中估计得到的<span class="math inline">\(\beta_0\)</span>的值。</p>
+<p>大写拉丁字母(<span class="math inline">\(X\)</span>、<span class="math inline">\(Y\)</span>)表示观测值——即你已经测量过的值，因此是已知的。你也会看到小写拉丁字母(如<span class="math inline">\(e_i\)</span>)，表示统计误差或其他我将称之为派生量或虚拟量的东西(这将在课程后面进行解释)。</p>
+</div>
+<div class="warning">
+<p><strong>线性模型中的”线性”并不像你想象的那样!</strong></p>
+<p>许多人认为”线性模型”只能捕捉线性关系，即可以用直线(或平面)来描述的关系。这是错误的。</p>
+<p>线性模型是各种项的加权和，每个项都有一个预测变量(或常数)乘上一个系数。在上述模型中，系数是<span class="math inline">\(\beta_0\)</span>和<span class="math inline">\(\beta_1\)</span>。你可以用线性模型拟合各种复杂的关系，包括非线性关系，如下所示。</p>
+<pre><code>## Warning: package &#39;patchwork&#39; was built under R version 4.3.3</code></pre>
+<div class="figure"><span style="display:block;" id="fig:tryptych"></span>
+<img src="01-introduction_files/figure-html/tryptych-1.png" alt="用线性模型建模的非线性关系" width="768" />
+<p class="caption">
+图1.2: 用线性模型建模的非线性关系
+</p>
+</div>
+<p>在左边面板中，我们使用线性模型<span class="math inline">\(Y = \beta_0 + \beta_1 X + \beta_2 X^2\)</span>捕捉了一个二次(抛物线)函数。X和Y之间的关系是非线性的，但模型本身是线性的。我们对预测变量<span class="math inline">\(X\)</span>进行了平方处理，但系数<span class="math inline">\(\beta_0\)</span>、<span class="math inline">\(\beta_1\)</span>和<span class="math inline">\(\beta_2\)</span>并没有被平方、立方或类似的处理(它们都是”一次幂”)。</p>
+<p>在中间面板中，我们使用线性模型捕捉了一个S形函数。在这里，Y变量表示某个事件的概率，例如基于学习时间来预测通过考试的概率。在这种情况下，我们通过在一个特殊的转换空间中估计线性模型来建模X和Y之间的关系，使得X-Y关系是线性的，然后将模型投影回非线性的概率空间(使用”链接函数”)。非线性来自于”链接函数”，但模型本身是线性的。</p>
+<p>最后，右边面板展示了一种略显任意的波动模式，由广义可加混合模型捕获——这是一种我们在本课程中不会学到的高级技术。但从根本上说，它仍然是一个线性模型，因为它还是一系列复杂事物(在这种情况下是”基础函数”)的加权和，而系数提供了权重。</p>
+<p>线性模型是一个在<strong>系数是线性</strong>的模型；模型中的每个系数(<span class="math inline">\(\beta_0\)</span>、<span class="math inline">\(\beta_1\)</span>)只允许被设置为一次幂，并且每个项<span class="math inline">\(\beta_i X_j\)</span>都只涉及单个系数。这些项只能与涉及其他系数的项相加，但不能相乘或相除(如<span class="math inline">\(Y = \frac{\beta_1}{\beta_2} X\)</span>是不允许的)。</p>
+</div>
 
+</div>
 </div>
 </div>
             </section>
@@ -187,6 +303,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>
