@@ -1,9 +1,6 @@
 # 前言
 
-```{r chapter-status, echo=FALSE, results='asis'}
-# chapter_status("incomplete")
 
-```
 
 ## 课程目的
 
