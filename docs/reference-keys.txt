@@ -4,3 +4,6 @@ fig:tryptych
 课程目的
 广义线性混合模型generalized-linear-mixed-effects-models-glmms
 线性模型
+混合模型
+关于可重复性的说明
+基于模拟的方法
