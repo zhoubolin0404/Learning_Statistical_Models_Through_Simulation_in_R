@@ -218,16 +218,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-9"><a href="前言.html#cb1-9" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb1-10"><a href="前言.html#cb1-10" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">3</span>, <span class="at">slope =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
 <p>你可能会发现上述方程表示的是一条直线(<span class="math inline">\(y = mx + b\)</span>)，其中<span class="math inline">\(\beta_0\)</span>是截距，<span class="math inline">\(\beta_1\)</span>是斜率。<span class="math inline">\(e_i\)</span>是样本<span class="math inline">\(i\)</span>的模型误差，表示样本观测值<span class="math inline">\(Y_i\)</span>与给定<span class="math inline">\(X_i\)</span>的模型预测值之间的差距。</p>
-<div class="info">
+<div style="border: 2px solid orange; padding: 10px; background-color: #fff5cc;">
 <p><strong>表示法惯例</strong></p>
 <p>希腊字母(<span class="math inline">\(\beta\)</span>, <span class="math inline">\(\rho\)</span>, <span class="math inline">\(\tau\)</span>)表示总体参数，通常是未观测到的，需要从数据中估计得到的。当我们想要区分<strong>估计</strong>参数和真实值时，我们会使用”hat”：如<span class="math inline">\(\hat{\beta}_0\)</span>表示从数据中估计得到的<span class="math inline">\(\beta_0\)</span>的值。</p>
 <p>大写拉丁字母(<span class="math inline">\(X\)</span>、<span class="math inline">\(Y\)</span>)表示观测值——即你已经测量过的值，因此是已知的。你也会看到小写拉丁字母(如<span class="math inline">\(e_i\)</span>)，表示统计误差或其他我将称之为派生量或虚拟量的东西(这将在课程后面进行解释)。</p>
 </div>
-<div class="warning">
+<br>
+<div style="border: 2px solid blue; padding: 10px; background-color: #e6f7ff;">
 <p><strong>线性模型中的”线性”并不像你想象的那样!</strong></p>
 <p>许多人认为”线性模型”只能捕捉线性关系，即可以用直线(或平面)来描述的关系。这是错误的。</p>
 <p>线性模型是各种项的加权和，每个项都有一个预测变量(或常数)乘上一个系数。在上述模型中，系数是<span class="math inline">\(\beta_0\)</span>和<span class="math inline">\(\beta_1\)</span>。你可以用线性模型拟合各种复杂的关系，包括非线性关系，如下所示。</p>
-<pre><code>## Warning: package &#39;patchwork&#39; was built under R version 4.3.3</code></pre>
 <div class="figure"><span style="display:block;" id="fig:tryptych"></span>
 <img src="01-introduction_files/figure-html/tryptych-1.png" alt="用线性模型建模的非线性关系" width="768" />
 <p class="caption">
@@ -237,7 +237,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>在左边面板中，我们使用线性模型<span class="math inline">\(Y = \beta_0 + \beta_1 X + \beta_2 X^2\)</span>捕捉了一个二次(抛物线)函数。X和Y之间的关系是非线性的，但模型本身是线性的。我们对预测变量<span class="math inline">\(X\)</span>进行了平方处理，但系数<span class="math inline">\(\beta_0\)</span>、<span class="math inline">\(\beta_1\)</span>和<span class="math inline">\(\beta_2\)</span>并没有被平方、立方或类似的处理(它们都是”一次幂”)。</p>
 <p>在中间面板中，我们使用线性模型捕捉了一个S形函数。在这里，Y变量表示某个事件的概率，例如基于学习时间来预测通过考试的概率。在这种情况下，我们通过在一个特殊的转换空间中估计线性模型来建模X和Y之间的关系，使得X-Y关系是线性的，然后将模型投影回非线性的概率空间(使用”链接函数”)。非线性来自于”链接函数”，但模型本身是线性的。</p>
 <p>最后，右边面板展示了一种略显任意的波动模式，由广义可加混合模型捕获——这是一种我们在本课程中不会学到的高级技术。但从根本上说，它仍然是一个线性模型，因为它还是一系列复杂事物(在这种情况下是”基础函数”)的加权和，而系数提供了权重。</p>
-<p>线性模型是一个在<strong>系数是线性</strong>的模型；模型中的每个系数(<span class="math inline">\(\beta_0\)</span>、<span class="math inline">\(\beta_1\)</span>)只允许被设置为一次幂，并且每个项<span class="math inline">\(\beta_i X_j\)</span>都只涉及单个系数。这些项只能与涉及其他系数的项相加，但不能相乘或相除(如<span class="math inline">\(Y = \frac{\beta_1}{\beta_2} X\)</span>是不允许的)。</p>
+<p>线性模型是一个<strong>系数是线性</strong>的模型；模型中的每个系数(<span class="math inline">\(\beta_0\)</span>、<span class="math inline">\(\beta_1\)</span>)只允许被设置为一次幂，并且每个项<span class="math inline">\(\beta_i X_j\)</span>都只涉及单个系数。这些项只能与涉及其他系数的项相加，但不能相乘或相除(如<span class="math inline">\(Y = \frac{\beta_1}{\beta_2} X\)</span>是不允许的)。</p>
 </div>
 
 </div>
