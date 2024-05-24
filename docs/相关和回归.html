@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>参考文献 | 学习统计模型——通过R模拟</title>
-  <meta name="description" content="参考文献 | 学习统计模型——通过R模拟" />
+  <title>2 相关和回归 | 学习统计模型——通过R模拟</title>
+  <meta name="description" content="2 相关和回归 | 学习统计模型——通过R模拟" />
   <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="参考文献 | 学习统计模型——通过R模拟" />
+  <meta property="og:title" content="2 相关和回归 | 学习统计模型——通过R模拟" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="参考文献 | 学习统计模型——通过R模拟" />
+  <meta name="twitter:title" content="2 相关和回归 | 学习统计模型——通过R模拟" />
   
   
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="相关和回归.html"/>
-
+<link rel="prev" href="前言.html"/>
+<link rel="next" href="参考文献.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -209,13 +209,71 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="参考文献" class="section level1 unnumbered hasAnchor">
-<h1>参考文献<a href="参考文献.html#参考文献" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-
-<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
-<div class="csl-entry">
-Yarkoni, T. (2019). <em>The generalizability crisis</em>. <a href="https://doi.org/10.31234/osf.io/jqw35">https://doi.org/10.31234/osf.io/jqw35</a>
+<div id="相关和回归" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">2</span> 相关和回归<a href="相关和回归.html#相关和回归" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="相关矩阵correlation-matrices" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> 相关矩阵(Correlation matrices)<a href="相关和回归.html#相关矩阵correlation-matrices" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>你可能已经通过阅读心理学论文对<strong>相关矩阵</strong>这个概念有所了解。相关矩阵是总结同一个体的多个测量值之间关系的常用方法。</p>
+<p>假设你用多个量表测量了心理幸福感。一个问题是这些量表在多大程度上测量了相同的东西。通常，你会查看相关矩阵来探索测量之间所有成对关系。</p>
+<p>回忆一下，相关系数量化了两个变量之间关系的<strong>强度</strong>和<strong>方向</strong>。它通常用符号<span class="math inline">\(r\)</span>或<span class="math inline">\(\rho\)</span>(希腊字母”rho”)表示。相关系数的范围在-1到1之间，其中0表示没有关系，正值反映正相关(一个变量增加，另一个也增加)，负值反映负相关(一个变量增加，另一个减少)。</p>
+<div class="figure"><span style="display:block;" id="fig:correlation-relationships"></span>
+<img src="02-Correlation_and_Regression_files/figure-html/correlation-relationships-1.png" alt="Different types of bivariate relationships." width="576" />
+<p class="caption">
+图2.1: Different types of bivariate relationships.
+</p>
 </div>
+<p>如果你有<span class="math inline">\(n\)</span>个测量值，你可以计算多少个成对相关？你可以用下面蓝框中的公式来计算，也可以更简单地通过R中的<code>choose(n, 2)</code>函数直接计算。例如，要获得6个测量值之间可能的成对相关数量，你可以输入<code>choose(6, 2)</code>，这会告诉你有15对组合。</p>
+<div style="border: 2px solid blue; padding: 10px; background-color: #e6f7ff;">
+<p>对于任意<span class="math inline">\(n\)</span>个测量值，你可以计算<span class="math inline">\(\frac{n!}{2(n - 2)!}\)</span>个各值之间的成对相关。符号<span class="math inline">\(!\)</span>称为<strong>阶乘(factorial)</strong>运算符，定义为从1到<span class="math inline">\(n\)</span>所有数字的乘积。因此，如果你有6个测量值，你可以得到</p>
+<p><span class="math display">\[
+\frac{6!}{2(6-2)!} = \frac{1 \times 2 \times 3 \times 4 \times 5 \times 6}{2\left(1 \times 2 \times 3 \times 4\right)} = \frac{720}{2(24)} = 15
+\]</span></p>
+</div>
+<p>你可以使用R中的<code>base::cor()</code>或<code>corrr::correlate()</code>来创建相关矩阵。我们更喜欢后者函数，因为<code>cor()</code>要求你的数据存储在矩阵中，而我们将处理的大多数数据是存储在数据框中的表格数据。<code>corrr::correlate()</code>函数将数据框作为第一个参数，并提供“整洁”的输出，因此它可以更好地与tidyverse系列函数和管道操作符(<code>%&gt;%</code>)联动。</p>
+<p>让我们创建一个相关矩阵来看看它是如何工作的。首先加载我们需要的包。</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="相关和回归.html#cb8-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</span>
+<span id="cb8-2"><a href="相关和回归.html#cb8-2" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;corrr&quot;</span>)  <span class="co"># 如缺失(missing)，在控制台(console)中输入install.packages(&quot;corrr&quot;)</span></span></code></pre></div>
+<p>我们将使用<code>starwars</code>数据集，这是在加载tidyverse包后可用的内置数据集。该数据集包含了出现在星球大战电影系列中的各种角色的信息。让我们来看看之间的相关性</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="相关和回归.html#cb9-1" tabindex="-1"></a>starwars <span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="相关和回归.html#cb9-2" tabindex="-1"></a>  <span class="fu">select</span>(height, mass, birth_year) <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="相关和回归.html#cb9-3" tabindex="-1"></a>  <span class="fu">correlate</span>()</span></code></pre></div>
+<pre><code>## Correlation computed with
+## • Method: &#39;pearson&#39;
+## • Missing treated using: &#39;pairwise.complete.obs&#39;</code></pre>
+<pre><code>## # A tibble: 3 × 4
+##   term       height   mass birth_year
+##   &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt;
+## 1 height     NA      0.131     -0.404
+## 2 mass        0.131 NA          0.478
+## 3 birth_year -0.404  0.478     NA</code></pre>
+<p>你可以在任意给定的行或列的交叉处查找任何双变量相关系数。因此，<code>height</code>和<code>mass</code>之间的相关系数是0.134，你可以在第1行，第2列或第2行，第1列找到它——它们是相同的。请注意，这里只有<code>choose(3, 2)</code> = 3个唯一的双变量关系，但每个关系在表中出现了两次。我们可能只想显示唯一的组合。我们可以通过在管道中附加<code>corrr::shave()</code>来实现。</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="相关和回归.html#cb12-1" tabindex="-1"></a>starwars <span class="sc">%&gt;%</span></span>
+<span id="cb12-2"><a href="相关和回归.html#cb12-2" tabindex="-1"></a>  <span class="fu">select</span>(height, mass, birth_year) <span class="sc">%&gt;%</span></span>
+<span id="cb12-3"><a href="相关和回归.html#cb12-3" tabindex="-1"></a>  <span class="fu">correlate</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb12-4"><a href="相关和回归.html#cb12-4" tabindex="-1"></a>  <span class="fu">shave</span>()</span></code></pre></div>
+<pre><code>## Correlation computed with
+## • Method: &#39;pearson&#39;
+## • Missing treated using: &#39;pairwise.complete.obs&#39;</code></pre>
+<pre><code>## # A tibble: 3 × 4
+##   term       height   mass birth_year
+##   &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt;
+## 1 height     NA     NA             NA
+## 2 mass        0.131 NA             NA
+## 3 birth_year -0.404  0.478         NA</code></pre>
+<p>现在我们只有相关矩阵的下三角部分，但<code>NA</code>看起来很难看，前导0也不美观。<strong><code>corrr</code></strong>包还提供了<code>fashion()</code>函数，可以对其进行清理(更多选项请参见<code>?corrr::fashion</code>)。</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="相关和回归.html#cb15-1" tabindex="-1"></a>starwars <span class="sc">%&gt;%</span></span>
+<span id="cb15-2"><a href="相关和回归.html#cb15-2" tabindex="-1"></a>  <span class="fu">select</span>(height, mass, birth_year) <span class="sc">%&gt;%</span></span>
+<span id="cb15-3"><a href="相关和回归.html#cb15-3" tabindex="-1"></a>  <span class="fu">correlate</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb15-4"><a href="相关和回归.html#cb15-4" tabindex="-1"></a>  <span class="fu">shave</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb15-5"><a href="相关和回归.html#cb15-5" tabindex="-1"></a>  <span class="fu">fashion</span>()</span></code></pre></div>
+<pre><code>## Correlation computed with
+## • Method: &#39;pearson&#39;
+## • Missing treated using: &#39;pairwise.complete.obs&#39;</code></pre>
+<pre><code>##         term height mass birth_year
+## 1     height                       
+## 2       mass    .13                
+## 3 birth_year   -.40  .48</code></pre>
+
 </div>
 </div>
             </section>
@@ -223,8 +281,8 @@ Yarkoni, T. (2019). <em>The generalizability crisis</em>. <a href="https://doi.o
           </div>
         </div>
       </div>
-<a href="相关和回归.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="前言.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="参考文献.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

@@ -1,5 +1,6 @@
 fig:basic-glm
 fig:tryptych
+fig:correlation-relationships
 前言
 课程目的
 广义线性混合模型generalized-linear-mixed-effects-models-glmms
@@ -7,3 +8,5 @@ fig:tryptych
 混合模型
 关于可重复性的说明
 基于模拟的方法
+相关和回归
+相关矩阵correlation-matrices

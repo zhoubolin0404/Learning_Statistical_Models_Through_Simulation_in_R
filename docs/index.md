@@ -1,10 +1,9 @@
 ---
 title: "学习统计模型——通过R模拟"
 author: "Freiheit_lin"
-date: "2024-05-23"
+date: "2024-05-24"
 site: bookdown::bookdown_site
 documentclass: book
-classoption: oneside
 bibliography: [book.bib, packages.bib]
 biblio-style: apa
 csl: include/apa.csl
