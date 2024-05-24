@@ -217,9 +217,9 @@ div.csl-indent {
 <p>假设你用多个量表测量了心理幸福感。一个问题是这些量表在多大程度上测量了相同的东西。通常，你会查看相关矩阵来探索测量之间所有成对关系。</p>
 <p>回忆一下，相关系数量化了两个变量之间关系的<strong>强度</strong>和<strong>方向</strong>。它通常用符号<span class="math inline">\(r\)</span>或<span class="math inline">\(\rho\)</span>(希腊字母”rho”)表示。相关系数的范围在-1到1之间，其中0表示没有关系，正值反映正相关(一个变量增加，另一个也增加)，负值反映负相关(一个变量增加，另一个减少)。</p>
 <div class="figure"><span style="display:block;" id="fig:correlation-relationships"></span>
-<img src="02-Correlation_and_Regression_files/figure-html/correlation-relationships-1.png" alt="Different types of bivariate relationships." width="576" />
+<img src="02-Correlation_and_Regression_files/figure-html/correlation-relationships-1.png" alt="不同类型的二元关系" width="576" />
 <p class="caption">
-图2.1: Different types of bivariate relationships.
+图2.1: 不同类型的二元关系
 </p>
 </div>
 <p>如果你有<span class="math inline">\(n\)</span>个测量值，你可以计算多少个成对相关？你可以用下面蓝框中的公式来计算，也可以更简单地通过R中的<code>choose(n, 2)</code>函数直接计算。例如，要获得6个测量值之间可能的成对相关数量，你可以输入<code>choose(6, 2)</code>，这会告诉你有15对组合。</p>

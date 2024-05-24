@@ -13,7 +13,7 @@ library("tidyverse")
 
 回忆一下，相关系数量化了两个变量之间关系的**强度**和**方向**。它通常用符号$r$或$\rho$(希腊字母"rho")表示。相关系数的范围在-1到1之间，其中0表示没有关系，正值反映正相关(一个变量增加，另一个也增加)，负值反映负相关(一个变量增加，另一个减少)。
 
-```{r correlation-relationships, fig.width=6, fig.height=3, echo=FALSE, message=FALSE, fig.cap = "Different types of bivariate relationships."}
+```{r correlation-relationships, fig.width=6, fig.height=3, echo=FALSE, message=FALSE, fig.cap = "不同类型的二元关系"}
 .pos <- MASS::mvrnorm(500, c(0, 0), matrix(c(1, .6, .6, 1), ncol = 2))
 .neg <- MASS::mvrnorm(500, c(0, 0), matrix(c(1, -.6, -.6, 1), ncol = 2))
 .none <- MASS::mvrnorm(500, c(0, 0), matrix(c(1, 0, 0, 1), ncol = 2))

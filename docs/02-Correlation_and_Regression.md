@@ -11,8 +11,8 @@
 回忆一下，相关系数量化了两个变量之间关系的**强度**和**方向**。它通常用符号$r$或$\rho$(希腊字母"rho")表示。相关系数的范围在-1到1之间，其中0表示没有关系，正值反映正相关(一个变量增加，另一个也增加)，负值反映负相关(一个变量增加，另一个减少)。
 
 <div class="figure">
-<img src="02-Correlation_and_Regression_files/figure-html/correlation-relationships-1.png" alt="Different types of bivariate relationships." width="576" />
-<p class="caption">(\#fig:correlation-relationships)Different types of bivariate relationships.</p>
+<img src="02-Correlation_and_Regression_files/figure-html/correlation-relationships-1.png" alt="不同类型的二元关系" width="576" />
+<p class="caption">(\#fig:correlation-relationships)不同类型的二元关系</p>
 </div>
 
 如果你有$n$个测量值，你可以计算多少个成对相关？你可以用下面蓝框中的公式来计算，也可以更简单地通过R中的`choose(n, 2)`函数直接计算。例如，要获得6个测量值之间可能的成对相关数量，你可以输入`choose(6, 2)`，这会告诉你有15对组合。
