@@ -229,6 +229,7 @@ div.csl-indent {
 \frac{6!}{2(6-2)!} = \frac{1 \times 2 \times 3 \times 4 \times 5 \times 6}{2\left(1 \times 2 \times 3 \times 4\right)} = \frac{720}{2(24)} = 15
 \]</span></p>
 </div>
+<p><br></p>
 <p>你可以使用R中的<code>base::cor()</code>或<code>corrr::correlate()</code>来创建相关矩阵。我们更喜欢后者函数，因为<code>cor()</code>要求你的数据存储在矩阵中，而我们将处理的大多数数据是存储在数据框中的表格数据。<code>corrr::correlate()</code>函数将数据框作为第一个参数，并提供“整洁”的输出，因此它可以更好地与tidyverse系列函数和管道操作符(<code>%&gt;%</code>)联动。</p>
 <p>让我们创建一个相关矩阵来看看它是如何工作的。首先加载我们需要的包。</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="相关和回归.html#cb8-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</span>
