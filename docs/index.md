@@ -1,6 +1,6 @@
 ---
 title: "学习统计模型——通过R模拟"
-author: "Freiheit_lin"
+author: "Zhou Bolin"
 date: "2024-05-24"
 site: bookdown::bookdown_site
 documentclass: book
@@ -21,7 +21,7 @@ link-citations: yes
 
 本教材包括以下内容：
 
-* 线性模型工作流;
+* 线性模型工作流程;
 * 方差-协方差矩阵;
 * 多元回归;
 * 交互作用(连续与分类; 分类与分类);

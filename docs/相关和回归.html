@@ -20,7 +20,7 @@
   
   
 
-<meta name="author" content="Freiheit_lin" />
+<meta name="author" content="Zhou Bolin" />
 
 
 <meta name="date" content="2024-05-24" />
@@ -247,7 +247,7 @@ div.csl-indent {
 ## 1 height     NA      0.131     -0.404
 ## 2 mass        0.131 NA          0.478
 ## 3 birth_year -0.404  0.478     NA</code></pre>
-<p>你可以在任意给定的行或列的交叉处查找任何双变量相关系数。因此，<code>height</code>和<code>mass</code>之间的相关系数是0.134，你可以在第1行，第2列或第2行，第1列找到它——它们是相同的。请注意，这里只有<code>choose(3, 2)</code> = 3个唯一的双变量关系，但每个关系在表中出现了两次。我们可能只想显示唯一的组合。我们可以通过在管道中附加<code>corrr::shave()</code>来实现。</p>
+<p>你可以在任意给定的行或列的交叉处查找任何双变量相关系数。因此，<code>height</code>和<code>mass</code>之间的相关系数是.131，你可以在第1行，第2列或第2行，第1列找到它——它们是相同的。请注意，这里只有<code>choose(3, 2)</code> = 3个唯一的双变量关系，但每个关系在表中出现了两次。我们可能只想显示唯一的组合，这可以通过在管道中附加<code>corrr::shave()</code>来实现。</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="相关和回归.html#cb12-1" tabindex="-1"></a>starwars <span class="sc">%&gt;%</span></span>
 <span id="cb12-2"><a href="相关和回归.html#cb12-2" tabindex="-1"></a>  <span class="fu">select</span>(height, mass, birth_year) <span class="sc">%&gt;%</span></span>
 <span id="cb12-3"><a href="相关和回归.html#cb12-3" tabindex="-1"></a>  <span class="fu">correlate</span>() <span class="sc">%&gt;%</span></span>
