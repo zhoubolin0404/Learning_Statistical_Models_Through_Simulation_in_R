@@ -1,6 +1,9 @@
 fig:basic-glm
 fig:tryptych
 fig:correlation-relationships
+fig:pairs
+fig:massive-creature
+fig:bye-yoda
 前言
 课程目的
 广义线性混合模型generalized-linear-mixed-effects-models-glmms
@@ -10,3 +13,4 @@ fig:correlation-relationships
 基于模拟的方法
 相关和回归
 相关矩阵correlation-matrices
+模拟二元数据

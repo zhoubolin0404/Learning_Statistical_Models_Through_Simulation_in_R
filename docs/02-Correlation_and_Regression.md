@@ -18,7 +18,6 @@
 如果你有$n$个测量值，你可以计算多少个成对相关？你可以用下面蓝框中的公式来计算，也可以更简单地通过R中的`choose(n, 2)`函数直接计算。例如，要获得6个测量值之间可能的成对相关数量，你可以输入`choose(6, 2)`，这会告诉你有15对组合。
 
 ::: {style="border: 2px solid blue; padding: 10px; background-color: #e6f7ff;"}
-
 对于任意$n$个测量值，你可以计算$\frac{n!}{2(n - 2)!}$个各值之间的成对相关。符号$!$称为**阶乘(factorial)**运算符，定义为从1到$n$所有数字的乘积。因此，如果你有6个测量值，你可以得到
 
 $$
@@ -28,7 +27,7 @@ $$
 
 <br>
 
-你可以使用R中的`base::cor()`或`corrr::correlate()`来创建相关矩阵。我们更喜欢后者函数，因为`cor()`要求你的数据存储在矩阵中，而我们将处理的大多数数据是存储在数据框中的表格数据。`corrr::correlate()`函数将数据框作为第一个参数，并提供“整洁”的输出，因此它可以更好地与tidyverse系列函数和管道操作符(`%>%`)联动。
+你可以使用R中的`base::cor()`或`corrr::correlate()`来创建相关矩阵。我们更喜欢后者函数，因为`cor()`要求你的数据存储在矩阵中，而我们将处理的大多数数据是存储在数据框中的表格数据。`corrr::correlate()`函数将数据框作为第一个参数，并提供"整洁"的输出，因此它可以更好地与tidyverse系列函数和管道操作符(`%>%`)联动。
 
 让我们创建一个相关矩阵来看看它是如何工作的。首先加载我们需要的包。
 
@@ -62,7 +61,7 @@ starwars %>%
 ## 3 birth_year -0.404  0.478     NA
 ```
 
-你可以在任意给定的行或列的交叉处查找任何双变量相关系数。因此，`height`和`mass`之间的相关系数是.131，你可以在第1行，第2列或第2行，第1列找到它——它们是相同的。请注意，这里只有`choose(3, 2)` = 3个唯一的双变量关系，但每个关系在表中出现了两次。我们可能只想显示唯一的组合，这可以通过在管道中附加`corrr::shave()`来实现。
+你可以在任意给定的行或列的交叉处查找任何双变量相关系数。因此，`height`和`mass`之间的相关系数是.131，你可以在第1行，第2列或第2行，第1列找到它------它们是相同的。请注意，这里只有`choose(3, 2)` = 3个唯一的双变量关系，但每个关系在表中出现了两次。我们可能只想显示唯一的组合，这可以通过在管道中附加`corrr::shave()`来实现。
 
 
 ```r
@@ -87,7 +86,7 @@ starwars %>%
 ## 3 birth_year -0.404  0.478         NA
 ```
 
-现在我们只有相关矩阵的下三角部分，但`NA`看起来很难看，前导0也不美观。**`corrr`**包还提供了`fashion()`函数，可以对其进行清理(更多选项请参见`?corrr::fashion`)。
+现在我们只有相关矩阵的下三角部分，但`NA`看起来很难看，前导0也不美观。**`corrr`**包还提供了`fashion()`函数，可以对其进行清理(更多选项请查阅`?corrr::fashion`)。
 
 
 ```r
@@ -110,4 +109,186 @@ starwars %>%
 ## 2       mass    .13                
 ## 3 birth_year   -.40  .48
 ```
+
+相关性只有在关系(大致)线性且没有严重的异常值对结果产生过大影响时才能很好地描述关系。因此，可视化相关性通常和量化它们一样是个好主意。`base::pairs()`函数可以实现这一点。`pairs()`的第一个参数形式为`~ v1 + v2 + v3 + ... + vn`，其中`v1`、`v2`等是你想要进行相关分析的变量名。
+
+
+```r
+pairs(~ height + mass + birth_year, starwars)
+```
+
+<div class="figure">
+<img src="02-Correlation_and_Regression_files/figure-html/pairs-1.png" alt="星球大战数据集相关关系" width="576" />
+<p class="caption">(\#fig:pairs)星球大战数据集相关关系</p>
+</div>
+
+我们会发现一个巨大的离群值影响了我们的数据。具体来说是有个体重超过1200kg的生物。让我们找出它并从数据集里面删掉它。
+
+
+```r
+starwars %>%
+  filter(mass > 1200) %>%
+  select(name, mass, height, birth_year)
+```
+
+```
+## # A tibble: 1 × 4
+##   name                   mass height birth_year
+##   <chr>                 <dbl>  <int>      <dbl>
+## 1 Jabba Desilijic Tiure  1358    175        600
+```
+
+好了，让我们看看没有了这个庞然大物的数据会是什么样子。
+
+
+```r
+starwars2 <- starwars %>%
+  filter(name != "Jabba Desilijic Tiure")
+
+pairs(~height + mass + birth_year, starwars2)
+```
+
+<div class="figure">
+<img src="02-Correlation_and_Regression_files/figure-html/massive-creature-1.png" alt="去除体重离群值后星球大战数据集相关关系" width="672" />
+<p class="caption">(\#fig:massive-creature)去除体重离群值后星球大战数据集相关关系</p>
+</div>
+
+好多了，但还有个生物的离群出生年份可能是我们不想要的。
+
+
+```r
+starwars2 %>%
+  filter(birth_year > 800) %>%
+  select(name, height, mass, birth_year)
+```
+
+```
+## # A tibble: 1 × 4
+##   name  height  mass birth_year
+##   <chr>  <int> <dbl>      <dbl>
+## 1 Yoda      66    17        896
+```
+
+是尤达大师！他和宇宙一样古老。让我们抛开他看看图会怎么样。
+
+
+```r
+starwars3 <- starwars2 %>%
+  filter(name != "Yoda")
+
+pairs(~height + mass + birth_year, starwars3)
+```
+
+<div class="figure">
+<img src="02-Correlation_and_Regression_files/figure-html/bye-yoda-1.png" alt="去除体重和出生年份离群值后星球大战数据集相关关系" width="576" />
+<p class="caption">(\#fig:bye-yoda)去除体重和出生年份离群值后星球大战数据集相关关系</p>
+</div>
+
+看起来更好了。让我们看看它是怎样改变我们的相关矩阵的。
+
+
+```r
+starwars3 %>%
+  select(height, mass, birth_year) %>%
+  correlate() %>%
+  shave() %>%
+  fashion()
+```
+
+```
+## Correlation computed with
+## • Method: 'pearson'
+## • Missing treated using: 'pairwise.complete.obs'
+```
+
+```
+##         term height mass birth_year
+## 1     height                       
+## 2       mass    .73                
+## 3 birth_year    .44  .24
+```
+
+请注意，这些值与我们开始时的值有很大不同。
+
+有时移除离群值不是一个好办法。处理离群值的另一个办法是使用一种更稳健(robust)的方法。使用`corrr::correlate()`默认计算的相关系数是Pearson积差相关(Pearson product-moment correlation)系数。我们也能通过改变`correlate()`的`method()`参数来计算Spearman相关系数。这将在计算相关性之前用排名替换原始值，因此仍会包括离群值，但影响将大大减小。
+
+
+```r
+starwars %>%
+  select(height, mass, birth_year) %>%
+  correlate(method = "spearman") %>%
+  shave() %>%
+  fashion()
+```
+
+```
+## Correlation computed with
+## • Method: 'spearman'
+## • Missing treated using: 'pairwise.complete.obs'
+```
+
+```
+##         term height mass birth_year
+## 1     height                       
+## 2       mass    .72                
+## 3 birth_year    .15  .15
+```
+
+顺便一提，如果你用R Markdown生成报告，并希望你的表格有个好看的格式，可以使用`knitr:: able()`。
+
+
+```r
+starwars %>%
+  select(height, mass, birth_year) %>%
+  correlate(method = "spearman") %>%
+  shave() %>%
+  fashion() %>%
+  knitr::kable()
+```
+
+
+
+|term       |height |mass |birth_year |
+|:----------|:------|:----|:----------|
+|height     |       |     |           |
+|mass       |.72    |     |           |
+|birth_year |.15    |.15  |           |
+
+## 模拟二元数据
+
+你已经学会了使用`rnorm()`函数从正态分布中模拟数据。回忆一下，`rnorm()`允许你指定单个变量的平均值和标准差。那我们怎么模拟相关变量呢？
+
+应该很明确，你不能仅仅运行两次`rnorm()`后组合变量就完事。因为这会得到两个不相关的变量，即相关性为零。
+
+**`MASS`**包提供`mvrnorm()`函数，这是rnorm的"多元"(multivariate)版(因此函数的名字是'mv' + 'rnorm'，这样更容易记住)。
+
+***
+**提示**
+
+R预装了**`MASS`**包。但**`MASS`**包中你唯一可能会用到的函数只是`mvrnorm()`，因此相比于使用`library("MASS")`加载包，使用`MASS::mvrnorm()`是更好的办法，尤其是在**`MASS`**和**`tidyverse`**里的**`dplyr`**包不太合得来的情况下(因为两个包都有`select()`函数)。因此，如果在加载**`tidyverse`**之后加载**`MASS`**，那么最终得到的`select()`是**`MASS`**版本，而不是**`dplyr`**版本。这会让你绞尽脑汁来找出代码的问题所在，所以总在不加载的情况下使用`MASS::mvrnorm()`吧。
+
+这里作者贴了一则他在Twitter(现X)上吐槽**`MASS`**的打油诗，不过现在已经查不到了QwQ，考虑到翻译水平不佳，附上原文！
+
+> MASS before dplyr, clashes not dire; <br> dplyr before MASS, pain in the ass.
+>
+> ------ Dale Barr(September 30, 2014)
+
+***
+
+请查看`mvrnorm()`函数的文档(在控制台输入`?MASS::mvrnorm`)。
+
+有3个参数需要注意：
+
+| 参数  | 描述                                       |
+|:------|:-------------------------------------------|
+| n     | 所需样本数                                 |
+| mu    | 一个给出变量均值的向量                     |
+| Sigma | 一个正定对称矩阵，用于指定变量的协方差矩阵 |
+
+对`n`和`mu`的描述可以理解，但“一个正定对称矩阵(positive-definite symmetric matrix)，用于指定变量的协方差矩阵”是什么意思？
+
+
+
+
+
 
