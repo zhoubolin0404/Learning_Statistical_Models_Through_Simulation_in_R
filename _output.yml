@@ -3,6 +3,7 @@ bookdown::gitbook:
     in_header: _header.html
   config:
     download: ["pdf"]
+  css: ["styles.css"]
 bookdown::pdf_book:
   includes:
     in_header: preamble.tex

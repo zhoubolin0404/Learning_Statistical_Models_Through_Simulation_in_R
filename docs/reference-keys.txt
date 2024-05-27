@@ -4,6 +4,8 @@ fig:correlation-relationships
 fig:pairs
 fig:massive-creature
 fig:bye-yoda
+fig:heights-and-weights
+fig:handw-log
 前言
 课程目的
 广义线性混合模型generalized-linear-mixed-effects-models-glmms

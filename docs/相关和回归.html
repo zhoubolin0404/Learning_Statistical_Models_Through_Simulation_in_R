@@ -23,7 +23,7 @@
 <meta name="author" content="Zhou Bolin" />
 
 
-<meta name="date" content="2024-05-26" />
+<meta name="date" content="2024-05-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -158,6 +158,7 @@ div.csl-indent {
 }
 </style>
 
+<link rel="stylesheet" href="styles.css" type="text/css" />
 </head>
 
 <body>
@@ -224,13 +225,12 @@ div.csl-indent {
 </p>
 </div>
 <p>如果你有<span class="math inline">\(n\)</span>个测量值，你可以计算多少个成对相关？你可以用下面蓝框中的公式来计算，也可以更简单地通过R中的<code>choose(n, 2)</code>函数直接计算。例如，要获得6个测量值之间可能的成对相关数量，你可以输入<code>choose(6, 2)</code>，这会告诉你有15对组合。</p>
-<div style="border: 2px solid blue; padding: 10px; background-color: #e6f7ff;">
+<div class="bluebox">
 <p>对于任意<span class="math inline">\(n\)</span>个测量值，你可以计算<span class="math inline">\(\frac{n!}{2(n - 2)!}\)</span>个各值之间的成对相关。符号<span class="math inline">\(!\)</span>称为<strong>阶乘(factorial)</strong>运算符，定义为从1到<span class="math inline">\(n\)</span>所有数字的乘积。因此，如果你有6个测量值，你可以得到</p>
 <p><span class="math display">\[
 \frac{6!}{2(6-2)!} = \frac{1 \times 2 \times 3 \times 4 \times 5 \times 6}{2\left(1 \times 2 \times 3 \times 4\right)} = \frac{720}{2(24)} = 15
 \]</span></p>
 </div>
-<p><br></p>
 <p>你可以使用R中的<code>base::cor()</code>或<code>corrr::correlate()</code>来创建相关矩阵。我们更喜欢后者函数，因为<code>cor()</code>要求你的数据存储在矩阵中，而我们将处理的大多数数据是存储在数据框中的表格数据。<code>corrr::correlate()</code>函数将数据框作为第一个参数，并提供”整洁”的输出，因此它可以更好地与tidyverse系列函数和管道操作符(<code>%&gt;%</code>)联动。</p>
 <p>让我们创建一个相关矩阵来看看它是如何工作的。首先加载我们需要的包。</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="相关和回归.html#cb8-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</span>
@@ -388,18 +388,17 @@ div.csl-indent {
 </div>
 <div id="模拟二元数据" class="section level2 hasAnchor" number="2.2">
 <h2><span class="header-section-number">2.2</span> 模拟二元数据<a href="相关和回归.html#模拟二元数据" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>你已经学会了使用<code>rnorm()</code>函数从正态分布中模拟数据。回忆一下，<code>rnorm()</code>允许你指定单个变量的平均值和标准差。那我们怎么模拟相关变量呢？</p>
+<p>你已经学会了使用<code>rnorm()</code>函数从正态分布中模拟数据。回忆一下，<code>rnorm()</code>允许你指定单个变量的均值和标准差。那我们怎么模拟相关变量呢？</p>
 <p>应该很明确，你不能仅仅运行两次<code>rnorm()</code>后组合变量就完事。因为这会得到两个不相关的变量，即相关性为零。</p>
 <p><strong><code>MASS</code></strong>包提供<code>mvrnorm()</code>函数，这是rnorm的”多元”(multivariate)版(因此函数的名字是’mv’ + ‘rnorm’，这样更容易记住)。</p>
-<hr />
-<p><strong>提示</strong></p>
+<div class="blueborder">
 <p>R预装了<strong><code>MASS</code></strong>包。但<strong><code>MASS</code></strong>包中你唯一可能会用到的函数只是<code>mvrnorm()</code>，因此相比于使用<code>library("MASS")</code>加载包，使用<code>MASS::mvrnorm()</code>是更好的办法，尤其是在<strong><code>MASS</code></strong>和<strong><code>tidyverse</code></strong>里的<strong><code>dplyr</code></strong>包不太合得来的情况下(因为两个包都有<code>select()</code>函数)。因此，如果在加载<strong><code>tidyverse</code></strong>之后加载<strong><code>MASS</code></strong>，那么最终得到的<code>select()</code>是<strong><code>MASS</code></strong>版本，而不是<strong><code>dplyr</code></strong>版本。这会让你绞尽脑汁来找出代码的问题所在，所以总在不加载的情况下使用<code>MASS::mvrnorm()</code>吧。</p>
 <p>这里作者贴了一则他在Twitter(现X)上吐槽<strong><code>MASS</code></strong>的打油诗，不过现在已经查不到了QwQ，考虑到翻译水平不佳，附上原文！</p>
 <blockquote>
 <p>MASS before dplyr, clashes not dire; <br> dplyr before MASS, pain in the ass.</p>
 <p>—— Dale Barr(September 30, 2014)</p>
 </blockquote>
-<hr />
+</div>
 <p>请查看<code>mvrnorm()</code>函数的文档(在控制台输入<code>?MASS::mvrnorm</code>)。</p>
 <p>有3个参数需要注意：</p>
 <table>
@@ -424,7 +423,68 @@ div.csl-indent {
 </tr>
 </tbody>
 </table>
-<p>对<code>n</code>和<code>mu</code>的描述可以理解，但“一个正定对称矩阵(positive-definite symmetric matrix)，用于指定变量的协方差矩阵”是什么意思？</p>
+<p>对<code>n</code>和<code>mu</code>的描述可以理解，但“一个正定对称矩阵(positive-definite symmetric matrix)，用于指定变量的协方差矩阵”是什么意思呢？</p>
+<p>当你有个多元数据时，<strong>协方差矩阵</strong>(也叫<strong>方差-协方差矩阵</strong>)反映了各个变量的方差及其相互关系。它类似于<strong>标准差</strong>的多维版本。要充分描述单变量正态分布，你只需要知道均值和标准差；要描述双变量正态分布，你需要分别知道两个变量的均值、标准差和他们的相关性；对于包含两个以上变量的多元分布，你需要知道所有变量的均值、它们的标准差以及所有可能的成对相关性。<strong>这些概念在我们开始讨论混合效应模型时会变得非常重要。</strong></p>
+<p>你可以将协方差矩阵看作类似于之前见过的相关矩阵；实际上，通过一些计算，你可以将协方差矩阵转换为相关矩阵。</p>
+<div class="bluebox">
+<p><strong>你在说什么《黑客帝国(Matrix)》？那不是从上世纪90年代开始的科幻电影系列吗？</strong></p>
+<p>在数学中，矩阵只是向量概念的推广:向量被认为只有一个维度，而矩阵可以是任意数量的维度。</p>
+<p>那么矩阵</p>
+<p><span class="math display">\[
+\begin{pmatrix}
+1 &amp; 4 &amp; 7 \\
+2 &amp; 5 &amp; 8 \\
+3 &amp; 6 &amp; 9 \\
+\end{pmatrix}
+\]</span></p>
+<p>是一个3(行) x 3(列)矩阵，包括了列向量<span class="math inline">\(\begin{pmatrix} 1 \\ 2 \\ 3 \\ \end{pmatrix}\)</span>，<span class="math inline">\(\begin{pmatrix} 4 \\ 5 \\ 6 \\ \end{pmatrix}\)</span>和<span class="math inline">\(\begin{pmatrix} 7 \\ 8 \\ 9 \\ \end{pmatrix}\)</span>。通常我们用<span class="math inline">\(i\)</span> x <span class="math inline">\(j\)</span>的形式表示矩阵，<span class="math inline">\(i\)</span>是行数，<span class="math inline">\(j\)</span>是列数。因此，一个3x2矩阵有3行2列，像这样：</p>
+<p><span class="math display">\[
+\begin{pmatrix}
+a &amp; d \\
+b &amp; e \\
+c &amp; f \\
+\end{pmatrix}
+\]</span></p>
+<p><strong>方阵</strong>是行数等于列数的矩阵。</p>
+<p>你可以用<code>matrix()</code>函数在R中创建一个方阵，或者使用base R的 <code>cbind()</code>和<code>rbind()</code>将向量连接在一起，它们分别将向量按列和按行连接在一起。在控制台试试<code>cbina(1:3, 4:6, 7:9)</code>吧。</p>
+</div>
+<p>那么“正定”和“对称”是什么呢？这是对可以表示多元正态分布的这类矩阵的数学要求。换句话说，你提供的协方差矩阵必须表示一个合法的多元正态分布。在这点上，你真的不需要知道再多了。</p>
+<iframe src="https://dalejbarr.github.io/bivariate/index.html" width="420" height="620" class="noborder">
+</iframe>
+<p>让我们从模拟假设的人类身高和体重的数据开始。我们知道这些是相关的。为了能够模拟数据，我们需要这两个变量的均值和标准差以及它们的相关性。</p>
+<p>我找到了一些<a href="https://www.geogebra.org/m/RRprACv4">数据</a>并把它转换为CSV文件。如果你想跟上，可以下载这个文件<a href="data/heights_and_weights.csv" download="heights_and_weights.csv">heights_and_weights.csv</a>。这是散点图：</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="相关和回归.html#cb32-1" tabindex="-1"></a>handw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/heights_and_weights.csv&quot;</span>, <span class="at">col_types =</span> <span class="st">&quot;dd&quot;</span>)</span>
+<span id="cb32-2"><a href="相关和回归.html#cb32-2" tabindex="-1"></a></span>
+<span id="cb32-3"><a href="相关和回归.html#cb32-3" tabindex="-1"></a><span class="fu">ggplot</span>(handw, <span class="fu">aes</span>(height_in, weight_lbs)) <span class="sc">+</span> </span>
+<span id="cb32-4"><a href="相关和回归.html#cb32-4" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> .<span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb32-5"><a href="相关和回归.html#cb32-5" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;height (inches)&quot;</span>, <span class="at">y =</span> <span class="st">&quot;weight (pounds)&quot;</span>) </span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:heights-and-weights"></span>
+<img src="02-Correlation_and_Regression_files/figure-html/heights-and-weights-1.png" alt="475人的身高和体重(包括婴儿)" width="672" />
+<p class="caption">
+图2.5: 475人的身高和体重(包括婴儿)
+</p>
+</div>
+<p>这不是一个线性关系。我们可以先对每个变量进行对数(log)变换。</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="相关和回归.html#cb33-1" tabindex="-1"></a>handw_log <span class="ot">&lt;-</span> handw <span class="sc">%&gt;%</span></span>
+<span id="cb33-2"><a href="相关和回归.html#cb33-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">hlog =</span> <span class="fu">log</span>(height_in),</span>
+<span id="cb33-3"><a href="相关和回归.html#cb33-3" tabindex="-1"></a>         <span class="at">wlog =</span> <span class="fu">log</span>(weight_lbs))</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:handw-log"></span>
+<img src="02-Correlation_and_Regression_files/figure-html/handw-log-1.png" alt="对数变换后的身高和体重" width="672" />
+<p class="caption">
+图2.6: 对数变换后的身高和体重
+</p>
+</div>
+<p>散点图右上侧尾部有一个大的点簇，这可能表示在这个样本中成年人比儿童更多，因为成年人更高和更重。</p>
+<p>对数身高的均值是4.11 (SD = 0.26)，而对数体重的均值是4.74 (SD = 0.65)。对数身高和对数体重之间的相关性我们可以用<code>cor()</code>函数获得，高达0.96。</p>
+<p>我们现在有了模拟500人身高和体重所需的所有信息。但我们如何将这些信息输入到<code>MASS::mvrnorm()</code>呢？我们知道函数调用的第一部分是<code>MASS::mvrnorm(500, c(4.11,4.74), ...)</code>，但<code>Sigma</code>——那个协方差矩阵呢？我们从上面知道<span class="math inline">\(\hat{\sigma}_x = 0.26\)</span>和<span class="math inline">\(\hat{\sigma}_y = 0.65\)</span>，以及<span class="math inline">\(\hat{\sigma}_y = 0.65\)</span>, and <span class="math inline">\(\hat{\rho}_{xy} = 0.96\)</span>。</p>
+<p>表示二元数据<code>Sigma</code> (<span class="math inline">\(\mathbf{\Sigma}\)</span>)的协方差矩阵如下：</p>
+<p><span class="math display">\[
+\mathbf{\Sigma} =
+\begin{pmatrix}
+{\sigma_x}^2                &amp; \rho_{xy} \sigma_x \sigma_y \\
+\rho_{yx} \sigma_y \sigma_x &amp; {\sigma_y}^2 \\
+\end{pmatrix}
+\]</span></p>
 
 </div>
 </div>
