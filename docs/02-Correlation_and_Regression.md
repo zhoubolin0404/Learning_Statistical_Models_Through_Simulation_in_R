@@ -376,3 +376,222 @@ $$
 \end{pmatrix}
 $$
 
+方差（标准差的平方，${\sigma_x}^2$和${\sigma_y}^2$）位于对角线上，协方差(相关系数乘以两个标准差，$\rho_{xy} \sigma_x \sigma_y$)位于非对角线上。记住协方差就是相关系数与两个标准差的积，这是很有用的。正如我们在上面的相关矩阵中看到的，表格中存在额外信息；也就是说，协方差同时出现在矩阵的右上角单元格和左下角单元格。
+
+代入之前的值，协方差矩阵应该是：
+
+$$
+\begin{pmatrix}
+.26^2 & (.96)(.26)(.65) \\
+(.96)(.65)(.26) & .65^2 \\
+\end{pmatrix} =
+\begin{pmatrix}
+.067 & .162 \\
+.162 & .423 \\
+\end{pmatrix}
+$$
+
+很好，那么我们如何在R中形成`Sigma`以便我们可以将它传递给`mvrnorm()`函数呢？我们将使用`matrix()`函数，如下所示。
+
+首先，让我们定义协方差并将其存储在变量`my_cov`中。
+
+
+```r
+my_cov <- .96 * .26 * .65
+```
+
+现在我们将使用`matrix()`来定义我们的`Sigma`为`my_Sigma`。
+
+
+```r
+my_Sigma <- matrix(c(.26^2, my_cov, my_cov, .65^2), ncol = 2)
+my_Sigma
+```
+
+```
+##         [,1]    [,2]
+## [1,] 0.06760 0.16224
+## [2,] 0.16224 0.42250
+```
+
+<div class = "bluebox">
+
+**对`matrix()`函数感到困惑吗?**
+
+通过运行下面的代码，你可以发现`matrix()`是逐列填充矩阵元素，而不是逐行填充:
+
+`matrix(c("a", "b", "c", "d"), ncol = 2)`
+
+如果你想改变这种行为，将`byrow`参数设置为`TRUE`。
+
+`matrix(c("a", "b", "c", "d"), ncol = 2, byrow = TRUE)`
+
+</div>
+
+太好了！现在我们得到了`my_Sigma`，我们已经准备好使用`MASS::mvrnorm()`了。让我们通过创建6个模拟的人的数据来测试一下。
+
+
+```r
+set.seed(62) # 为了可重复性
+
+# 传递*命名的*向量c(height = 4.11, weight = 4.74)给mu可以在输出中得到列名
+log_ht_wt <- MASS::mvrnorm(6, 
+                           c(height = 4.11, weight = 4.74), 
+                           my_Sigma)
+
+log_ht_wt
+```
+
+```
+##        height   weight
+## [1,] 4.254209 5.282913
+## [2,] 4.257828 4.895222
+## [3,] 3.722376 3.759767
+## [4,] 4.191287 4.764229
+## [5,] 4.739967 6.185191
+## [6,] 4.058105 4.806485
+```
+
+那么`MASS::mvrnorm()`会返回一个矩阵，每个模拟的人对应一行，其中第一列表示对数身高，第二列表示对数体重。但是对数身高和对数体重对我们来说并不是很有用，所以让我们使用`exp()`函数来进行转换，它是`log()`转换的逆操作。
+
+
+```r
+exp(log_ht_wt)
+```
+
+```
+##         height    weight
+## [1,]  70.40108 196.94276
+## [2,]  70.65632 133.64963
+## [3,]  41.36254  42.93844
+## [4,]  66.10779 117.24065
+## [5,] 114.43045 485.50576
+## [6,]  57.86453 122.30092
+```
+
+那么我们第一个模拟的人的身高是70.4英寸(大约是5'5"或者178.816 cm)，体重是196.94磅(约89.32 kg)。听起来感觉不错吧！(还是要注意，它会生成超出我们原始数据范围的观测值：我们会得到超高的人，例如第5个观测值，但至少体重/身高的关系会被保留)。
+
+好的，让我们随机生成一群人的数据，将它们从对数转换为英寸和磅，然后将它们与我们的原始数据进行比较，看看效果如何。
+
+
+```r
+## 模拟新的人
+new_humans <- MASS::mvrnorm(500, 
+                            c(height_in = 4.11, weight_lbs = 4.74),
+                            my_Sigma) %>%
+  exp() %>% # 从对数转换回英寸和磅
+  as_tibble() %>% # 为绘图转换为tibble格式
+  mutate(type = "simulated") # 将他们标记为模拟(simulated)
+
+## 合并真实和模拟的数据集，其中handw是来自heights_and_weights.csv的变量
+alldata <- bind_rows(handw %>% mutate(type = "real"), 
+                     new_humans)
+
+ggplot(alldata, aes(height_in, weight_lbs)) +
+  geom_point(aes(colour = type), alpha = .1)
+```
+
+<div class="figure">
+<img src="02-Correlation_and_Regression_files/figure-html/plot-together-1.png" alt="真实和模拟的人" width="672" />
+<p class="caption">(\#fig:plot-together)真实和模拟的人</p>
+</div>
+
+你可以看到，我们模拟的人与正常的人非常相似，只是我们创建了一些身高和体重超出正常范围的人。
+
+## 相关和回归的关系
+
+好的，我们知道如何估计相关了，但如果我们想要根据身高来预测体重该怎么办呢？这可能听起来像一个不切实际的问题。但事实上，在使用或进行安全性取决于患者体重的药物或程序，但没时间称量患者体重时，[急救医护人员可以使用这种技术，在紧急情况下迅速估算人们的体重](https://link.springer.com/article/10.1186/s12245-018-0212-9)。
+
+回忆一下，简单回归模型的GLM是：
+
+$$Y_i = \beta_0 + \beta_1 X_i + e_i.$$
+
+在这里，我们尝试根据他们观测到的身高($X_i$)来预测体重($Y_i$)。在这个方程里，$\beta_0$和$\beta_1$分别是y轴截距和斜率的参数，$e_i$是残差。传统上假设$e_i$的值来自均值为0、方差为$\sigma^2$的正态分布；数学上的表述是$e_i \sim N(0, \sigma^2)$，其中$\sim$表示“按照分布”，$N(0, \sigma^2)$表示“均值为0、方差为$\sigma^2$的正态分布($N$)”。
+
+这表明如果我们有X和Y的均值估计值(分别标记为$\mu_x$和$\mu_y$)、标准差估计值($\hat{\sigma}_x$和$\hat{\sigma}_y$)、X和Y之间相关系数的估计值($\hat{\rho}$)，我们就有了估计回归方程参数$\beta_0$和$\beta_1$所需要的所有信息。下面是具体做法。(译者注：这里的估计值是指根据样本信息来估计总体情况的估计值，是总体的估计值、样本的观测值)
+
+首先，回归线的斜率$\beta_1$等于相关系数$\rho$乘以$Y$和$X$的标准差之比。
+
+$$\beta_1 = \rho \frac{\sigma_Y}{\sigma_X}$$
+
+根据上面对数身高和对数体重的估计值，你能算出$\beta_1$吗?
+
+
+```r
+b1 <- .96 * (.65 / .26)
+b1
+```
+
+```
+## [1] 2.4
+```
+
+下一个要注意的点是，基于数学原理，回归线必须通过与$X$和$Y$均值对应的点，即点$(\mu_x, \mu_y)$(你可以想象回归线根据斜率围绕该点“旋转”)。你也知道$\beta_0$是y轴截距，即在$X = 0$处与纵轴相交的点。根据这些信息和上面的估计值，你能推断出$\beta_0$的值吗？
+
+下面是你求解$\beta_0$的推理过程。
+
+想象一下，从$X = \mu_x$逐步一个一个单位后退到$X = 0$。在$X = \mu_x$处，$Y = 4.74$，每在X轴后退一个单位，$Y$将下降$\beta_1 = 2.4$个单位。当你到0时，$Y$将从$\mu_y$下降到$\mu_y - \mu_x \beta_1$。
+
+因此通解是：$\beta_0 = \mu_y - \mu_x\beta_1$。
+
+因为$\beta_1 = 2.4$、$\mu_x = 4.11$、$\mu_y = 4.74$，所以$\beta_0 = -5.124$。因此，我们的回归方程是：
+
+$$Y_i =  -5.124 + 2.4X_i + e_i.$$
+
+为了验证我们的结果，我们先对对数转换后的数据进行回归，使用`lm()`函数，它采用最小二乘法(ordinary least squares regression)来估计参数。
+
+
+```r
+summary(lm(wlog ~ hlog, handw_log))
+```
+
+```
+## 
+## Call:
+## lm(formula = wlog ~ hlog, data = handw_log)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.63296 -0.09915 -0.01366  0.09285  0.65635 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -5.26977    0.13169  -40.02   <2e-16 ***
+## hlog         2.43304    0.03194   76.17   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.1774 on 473 degrees of freedom
+## Multiple R-squared:  0.9246,	Adjusted R-squared:  0.9245 
+## F-statistic:  5802 on 1 and 473 DF,  p-value: < 2.2e-16
+```
+
+看起来非常接近。不完全匹配的原因仅仅是我们将估计值四舍五入到小数点后两位以方便计算。
+
+作为另一个检查，让我们将手动计算的回归线叠加在对数转换后数据的散点图上。
+
+
+```r
+ggplot(handw_log, aes(hlog, wlog)) +
+  geom_point(alpha = .2) +
+  labs(x = "log(height)", y = "log(weight)") +
+  geom_abline(intercept = -5.124, slope = 2.4, colour = 'blue')
+```
+
+<div class="figure">
+<img src="02-Correlation_and_Regression_files/figure-html/scatter-with-line-1.png" alt="对数值和叠加的回归线" width="672" />
+<p class="caption">(\#fig:scatter-with-line)对数值和叠加的回归线</p>
+</div>
+
+看起来是对的。
+
+最后，以下是相关性和回归之间关系的一些影响：
+
+-   当$\beta_1 = 0$时，与$\rho = 0$相同。
+-   当$\beta_1 > 0$时， $\rho > 0$，因为标准差不能为负。
+-   当$\beta_1 < 0$时， $\rho < 0$，原因同上。
+-   拒绝零假设$\beta_1 = 0$与拒绝零假设$\rho = 0$是相同的。在`lm()`中得到的$\beta_1$的p值与使用`cor.test()`得到的$\rho$的p值相同。
+
+## 练习
+
+<iframe src="https://rstudio-connect.psy.gla.ac.uk/covariance/?showcase=0" width="530px" height="480px" data-external="1"></iframe>

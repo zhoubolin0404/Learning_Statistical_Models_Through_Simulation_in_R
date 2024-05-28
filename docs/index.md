@@ -1,7 +1,7 @@
 ---
 title: "学习统计模型——通过R模拟"
 author: "Zhou Bolin"
-date: "2024-05-27"
+date: "2024-05-29"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]

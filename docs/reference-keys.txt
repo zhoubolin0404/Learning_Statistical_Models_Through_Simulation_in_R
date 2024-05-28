@@ -6,6 +6,8 @@ fig:massive-creature
 fig:bye-yoda
 fig:heights-and-weights
 fig:handw-log
+fig:plot-together
+fig:scatter-with-line
 前言
 课程目的
 广义线性混合模型generalized-linear-mixed-effects-models-glmms
@@ -16,3 +18,5 @@ fig:handw-log
 相关和回归
 相关矩阵correlation-matrices
 模拟二元数据
+相关和回归的关系
+练习
