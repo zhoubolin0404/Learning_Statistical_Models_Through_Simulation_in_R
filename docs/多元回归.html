@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>3 多元回归 | 学习统计模型——通过R模拟</title>
+  <meta name="description" content="3 多元回归 | 学习统计模型——通过R模拟" />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="3 多元回归 | 学习统计模型——通过R模拟" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="3 多元回归 | 学习统计模型——通过R模拟" />
+  
+  
+  
+
+<meta name="author" content="Zhou Bolin" />
+
+
+<meta name="date" content="2024-05-29" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="相关和回归.html"/>
+<link rel="next" href="参考文献.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  jax: ["input/TeX","output/SVG"],
+  extensions: ["tex2jax.js","MathMenu.js","MathZoom.js"],
+  TeX: {
+    extensions: ["AMSmath.js","AMSsymbols.js","noErrors.js","noUndefined.js"]
+  }
+});
+</script>
+<script type="text/javascript"
+   src="../../../MathJax/MathJax.js">
+</script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>概述</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#如何引用本书"><i class="fa fa-check"></i>如何引用本书</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#发现问题"><i class="fa fa-check"></i>发现问题？</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#教育者需知"><i class="fa fa-check"></i>教育者需知</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="前言.html"><a href="前言.html"><i class="fa fa-check"></i><b>1</b> 前言</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="前言.html"><a href="前言.html#课程目的"><i class="fa fa-check"></i><b>1.1</b> 课程目的</a></li>
+<li class="chapter" data-level="1.2" data-path="前言.html"><a href="前言.html#广义线性混合模型generalized-linear-mixed-effects-models-glmms"><i class="fa fa-check"></i><b>1.2</b> 广义线性混合模型(Generalized Linear Mixed-Effects Models, GLMMs)</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="前言.html"><a href="前言.html#线性模型"><i class="fa fa-check"></i><b>1.2.1</b> 线性模型</a></li>
+<li class="chapter" data-level="1.2.2" data-path="前言.html"><a href="前言.html#混合模型"><i class="fa fa-check"></i><b>1.2.2</b> 混合模型</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="前言.html"><a href="前言.html#关于可重复性的说明"><i class="fa fa-check"></i><b>1.3</b> 关于可重复性的说明</a></li>
+<li class="chapter" data-level="1.4" data-path="前言.html"><a href="前言.html#基于模拟的方法"><i class="fa fa-check"></i><b>1.4</b> 基于模拟的方法</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="相关和回归.html"><a href="相关和回归.html"><i class="fa fa-check"></i><b>2</b> 相关和回归</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="相关和回归.html"><a href="相关和回归.html#相关矩阵correlation-matrices"><i class="fa fa-check"></i><b>2.1</b> 相关矩阵(Correlation matrices)</a></li>
+<li class="chapter" data-level="2.2" data-path="相关和回归.html"><a href="相关和回归.html#模拟二元数据"><i class="fa fa-check"></i><b>2.2</b> 模拟二元数据</a></li>
+<li class="chapter" data-level="2.3" data-path="相关和回归.html"><a href="相关和回归.html#相关和回归的关系"><i class="fa fa-check"></i><b>2.3</b> 相关和回归的关系</a></li>
+<li class="chapter" data-level="2.4" data-path="相关和回归.html"><a href="相关和回归.html#练习"><i class="fa fa-check"></i><b>2.4</b> 练习</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="多元回归.html"><a href="多元回归.html"><i class="fa fa-check"></i><b>3</b> 多元回归</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="多元回归.html"><a href="多元回归.html#一个例子如何在统计学上取得好成绩"><i class="fa fa-check"></i><b>3.1</b> 一个例子：如何在统计学上取得好成绩</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="多元回归.html"><a href="多元回归.html#数据导入和可视化"><i class="fa fa-check"></i><b>3.1.1</b> 数据导入和可视化</a></li>
+<li class="chapter" data-level="3.1.2" data-path="多元回归.html"><a href="多元回归.html#估计和解释"><i class="fa fa-check"></i><b>3.1.2</b> 估计和解释</a></li>
+<li class="chapter" data-level="3.1.3" data-path="多元回归.html"><a href="多元回归.html#使用predict通过线性模型进行预测"><i class="fa fa-check"></i><b>3.1.3</b> 使用<code>predict()</code>通过线性模型进行预测</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="参考文献.html"><a href="参考文献.html"><i class="fa fa-check"></i>参考文献</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">学习统计模型——通过R模拟</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="多元回归" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">3</span> 多元回归<a href="多元回归.html#多元回归" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>单层数据包含<span class="math inline">\(m\)</span>个预测变量的一般模型是：</p>
+<p><span class="math display">\[
+Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + \ldots + \beta_m X_{mi} + e_i
+\]</span></p>
+<p>其中<span class="math inline">\(e_i \sim \mathcal{N}\left(0, \sigma^2\right)\)</span>，换句话说，我们假设误差来自一个均值为0，方差为<span class="math inline">\(\sigma^2\)</span>的正态分布。</p>
+<p>注意，这里的关键假设<strong>不是</strong>响应变量(<span class="math inline">\(Y\)</span>)服从正态分布，<strong>也不是</strong>单个预测变量(<span class="math inline">\(X\)</span>)服从正态分布；而是<strong>仅</strong>模型残差服从正态分布(详细讨论见这篇<a href="https://datahowler.wordpress.com/2018/08/04/checking-model-assumptions-look-at-the-residuals-not-the-raw-data/">博客</a>)。单个<span class="math inline">\(X\)</span>预测变量可以是任意组合的连续变量和/或分类变量，包括变量之间的交互。这个特定模型背后的进一步假设是，关系是“平面的”(可以用一个平面描述，类似于简单回归中的线性假设)，且误差方差与预测变量无关。</p>
+<p><span class="math inline">\(\beta\)</span>的值被称为<strong>回归系数(regression coefficient)</strong>。每个<span class="math inline">\(\beta_h\)</span>被解释为<strong>在保持其他所有预测变量不变的情况下<span class="math inline">\(\beta_h\)</span>的偏效应(partial effect)</strong>。如果你有<span class="math inline">\(m\)</span>个预测变量，你将有<span class="math inline">\(m+1\)</span>个回归系数：一个用于截距，每个预测变量各一个</p>
+<p>尽管在统计教科书中对多元回归的讨论很常见，但你很少有机会应用到上述的精确模型。因为上述模型假设的是单层数据，而大多数心理学数据是多层的。然而，这两种数据集的基本原理是相同的，因此先学习比较简单的案例是值得的。</p>
+<div id="一个例子如何在统计学上取得好成绩" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> 一个例子：如何在统计学上取得好成绩<a href="多元回归.html#一个例子如何在统计学上取得好成绩" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>让我们来看一些(虚构但基于现实的)数据，看看我们如何使用多元回归来回答各种研究问题。在这个假设的研究中，你有一个包含100名统计学学生的数据集，其中包括他们的最终课程成绩(<code>grade</code>)、每个学生参加讲座的次数(<code>lecture</code>，一个范围为0-10的整数)、每个学生点击下载在线资料的次数(<code>nclicks</code>)以及每个学生在修这门课程之前的平均绩点(<code>GPA</code>)，其范围从0(不及格)到4(最高可能成绩)。</p>
+<div id="数据导入和可视化" class="section level3 hasAnchor" number="3.1.1">
+<h3><span class="header-section-number">3.1.1</span> 数据导入和可视化<a href="多元回归.html#数据导入和可视化" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>让我们加载数据<a href="https://raw.githubusercontent.com/PsyTeachR/stat-models-v1/master/data/grades.csv" target="_download">grades.csv</a>并看一看。</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="多元回归.html#cb47-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;corrr&quot;</span>) <span class="co"># 相关矩阵</span></span>
+<span id="cb47-2"><a href="多元回归.html#cb47-2" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</span>
+<span id="cb47-3"><a href="多元回归.html#cb47-3" tabindex="-1"></a></span>
+<span id="cb47-4"><a href="多元回归.html#cb47-4" tabindex="-1"></a>grades <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/grades.csv&quot;</span>, <span class="at">col_types =</span> <span class="st">&quot;ddii&quot;</span>)</span>
+<span id="cb47-5"><a href="多元回归.html#cb47-5" tabindex="-1"></a></span>
+<span id="cb47-6"><a href="多元回归.html#cb47-6" tabindex="-1"></a>grades</span></code></pre></div>
+<pre><code>## # A tibble: 100 × 4
+##    grade   GPA lecture nclicks
+##    &lt;dbl&gt; &lt;dbl&gt;   &lt;int&gt;   &lt;int&gt;
+##  1  2.40 1.13        6      88
+##  2  3.67 0.971       6      96
+##  3  2.85 3.34        6     123
+##  4  1.36 2.76        9      99
+##  5  2.31 1.02        4      66
+##  6  2.58 0.841       8      99
+##  7  2.69 4           5      86
+##  8  3.05 2.29        7     118
+##  9  3.21 3.39        9      98
+## 10  2.24 3.27       10     115
+## # ℹ 90 more rows</code></pre>
+<p>首先，让我们看一看所有的两两相关。</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="多元回归.html#cb49-1" tabindex="-1"></a>grades <span class="sc">%&gt;%</span></span>
+<span id="cb49-2"><a href="多元回归.html#cb49-2" tabindex="-1"></a>  <span class="fu">correlate</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb49-3"><a href="多元回归.html#cb49-3" tabindex="-1"></a>  <span class="fu">shave</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb49-4"><a href="多元回归.html#cb49-4" tabindex="-1"></a>  <span class="fu">fashion</span>()</span></code></pre></div>
+<pre><code>## Correlation computed with
+## • Method: &#39;pearson&#39;
+## • Missing treated using: &#39;pairwise.complete.obs&#39;</code></pre>
+<pre><code>##      term grade  GPA lecture nclicks
+## 1   grade                           
+## 2     GPA   .25                     
+## 3 lecture   .24  .44                
+## 4 nclicks   .16  .30     .36</code></pre>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="多元回归.html#cb52-1" tabindex="-1"></a><span class="fu">pairs</span>(grades)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:pairs"></span>
+<img src="03-%E5%A4%9A%E5%85%83%E5%9B%9E%E5%BD%92_files/figure-html/pairs-1.png" alt="`grades`数据集中的所有成对关系" width="672" />
+<p class="caption">
+图2.2: <code>grades</code>数据集中的所有成对关系
+</p>
+</div>
+</div>
+<div id="估计和解释" class="section level3 hasAnchor" number="3.1.2">
+<h3><span class="header-section-number">3.1.2</span> 估计和解释<a href="多元回归.html#估计和解释" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>我们将使用<code>lm()</code>函数来估计回归系数(<span class="math inline">\(\beta\)</span>s)。针对一个有<span class="math inline">\(m\)</span>个预测变量的GLM：</p>
+<p><span class="math display">\[
+Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + \ldots + \beta_m X_{mi} + e_i
+\]</span></p>
+<p>对base R的<code>lm()</code>调用如下：</p>
+<p><code>lm(Y ~ X1 + X2 + ... + Xm, data)</code></p>
+<p>变量<code>Y</code>是你的响应变量，变量<code>X</code>是预测变量。注意，你不需要明确指定截距或残差项;这些是默认包含的。</p>
+<p>对于当前数据，让我们通过<code>lecture</code>和<code>nclicks</code>来预测<code>grade</code>。</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="多元回归.html#cb53-1" tabindex="-1"></a>my_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(grade <span class="sc">~</span> lecture <span class="sc">+</span> nclicks, grades)</span>
+<span id="cb53-2"><a href="多元回归.html#cb53-2" tabindex="-1"></a></span>
+<span id="cb53-3"><a href="多元回归.html#cb53-3" tabindex="-1"></a><span class="fu">summary</span>(my_model)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = grade ~ lecture + nclicks, data = grades)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -2.21653 -0.40603  0.02267  0.60720  1.38558 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)  
+## (Intercept) 1.462037   0.571124   2.560   0.0120 *
+## lecture     0.091501   0.045766   1.999   0.0484 *
+## nclicks     0.005052   0.006051   0.835   0.4058  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.8692 on 97 degrees of freedom
+## Multiple R-squared:  0.06543,    Adjusted R-squared:  0.04616 
+## F-statistic: 3.395 on 2 and 97 DF,  p-value: 0.03756</code></pre>
+<p>我们通常会在参数符号的顶部加上一个帽子(hat)，以明确我们正在处理样本的估计值，而不是(未知的)真实总体值。由上可知:</p>
+<ul>
+<li><span class="math inline">\(\hat{\beta}_0\)</span> = 1.46</li>
+<li><span class="math inline">\(\hat{\beta}_1\)</span> = 0.09</li>
+<li><span class="math inline">\(\hat{\beta}_2\)</span> = 0.01</li>
+</ul>
+<p>这告诉我们，一个人的预期成绩与他们的参加讲座的次数和点击下载在线资料的次数通过以下公式相关联：</p>
+<p><code>grade</code> = 1.46 + 0.09 <span class="math inline">\(\times\)</span> <code>lecture</code> + 0.01 <span class="math inline">\(\times\)</span> <code>nclicks</code></p>
+<p>因为<span class="math inline">\(\hat{\beta}_1\)</span>和<span class="math inline">\(\hat{\beta}_2\)</span>都是正数，所以我们知道<code>lecture</code>和<code>nclicks</code>的值越高，成绩越好。</p>
+<p>因此，如果有人问你，你预测一个参加了3次讲座并下载了70次的学生成绩是多少，你可以通过代入相应的值轻松算出来。</p>
+<p><code>grade</code> = 1.46 + 0.09 <span class="math inline">\(\times\)</span> 3 + 0.01 <span class="math inline">\(\times\)</span> 70</p>
+<p>相当于：</p>
+<p><code>grade</code> = 1.46 + 0.27 + 0.7</p>
+<p>可化简为：</p>
+<p><code>grade</code> = 2.43</p>
+</div>
+<div id="使用predict通过线性模型进行预测" class="section level3 hasAnchor" number="3.1.3">
+<h3><span class="header-section-number">3.1.3</span> 使用<code>predict()</code>通过线性模型进行预测<a href="多元回归.html#使用predict通过线性模型进行预测" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>如果我们想通过新的预测变量值来预测响应变量值，我们可以使用base R 的<code>predict()</code>函数。</p>
+<p><code>predict()</code>函数有两个主要参数。第一个参数是拟合的模型对象(即上面的my_model)，第二个参数是包含预测变量新值的数据框(或tibble，R中和数据框data frame类似的一种数据格式)。</p>
+<div class="yellowbox">
+<p>在新表中，你需要包含<strong>所有的</strong>预测变量。如果您的tibble缺少任何预测变量，你将收到错误消息(error message)。您还需要确保新表中的变量名与模型中的变量名<strong>完全</strong>匹配。</p>
+</div>
+<p>让我们创建一个带有新值的tibble并进行测试。</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="多元回归.html#cb55-1" tabindex="-1"></a><span class="do">## “tribble”是一种按行而不是按列创建tibble的方法。有时这样做会很有用。</span></span>
+<span id="cb55-2"><a href="多元回归.html#cb55-2" tabindex="-1"></a>new_data <span class="ot">&lt;-</span> <span class="fu">tribble</span>(<span class="sc">~</span>lecture, <span class="sc">~</span>nclicks,</span>
+<span id="cb55-3"><a href="多元回归.html#cb55-3" tabindex="-1"></a>                    <span class="dv">3</span>, <span class="dv">70</span>,</span>
+<span id="cb55-4"><a href="多元回归.html#cb55-4" tabindex="-1"></a>                    <span class="dv">10</span>, <span class="dv">130</span>,</span>
+<span id="cb55-5"><a href="多元回归.html#cb55-5" tabindex="-1"></a>                    <span class="dv">0</span>, <span class="dv">20</span>,</span>
+<span id="cb55-6"><a href="多元回归.html#cb55-6" tabindex="-1"></a>                    <span class="dv">5</span>, <span class="dv">100</span>)</span></code></pre></div>
+<div class="bluebox">
+<p><code>tribble()</code>函数提供了一种按行而不是按列逐步构建tibble的方法，而使用<code>tibble()</code>函数则是按列逐步构建表格。</p>
+<p><code>tribble()</code>的第一行包含列名，每个列名前面都有一个波浪号(<code>~</code>)。</p>
+<p>有时这种方法比逐行构建更容易阅读，尽管结果是相同的。考虑到这些，我们也可以使用以下方式创建上述表格：</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="多元回归.html#cb56-1" tabindex="-1"></a>new_data <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">lecture =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">10</span>, <span class="dv">0</span>, <span class="dv">5</span>),</span>
+<span id="cb56-2"><a href="多元回归.html#cb56-2" tabindex="-1"></a>                   <span class="at">nclicks =</span> <span class="fu">c</span>(<span class="dv">70</span>, <span class="dv">130</span>, <span class="dv">20</span>, <span class="dv">100</span>))</span></code></pre></div>
+</div>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="相关和回归.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="参考文献.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["CBook.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

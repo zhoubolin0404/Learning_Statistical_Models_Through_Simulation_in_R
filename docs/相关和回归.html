@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="前言.html"/>
-<link rel="next" href="参考文献.html"/>
+<link rel="next" href="多元回归.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -195,6 +195,15 @@ div.csl-indent {
 <li class="chapter" data-level="2.3" data-path="相关和回归.html"><a href="相关和回归.html#相关和回归的关系"><i class="fa fa-check"></i><b>2.3</b> 相关和回归的关系</a></li>
 <li class="chapter" data-level="2.4" data-path="相关和回归.html"><a href="相关和回归.html#练习"><i class="fa fa-check"></i><b>2.4</b> 练习</a></li>
 </ul></li>
+<li class="chapter" data-level="3" data-path="多元回归.html"><a href="多元回归.html"><i class="fa fa-check"></i><b>3</b> 多元回归</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="多元回归.html"><a href="多元回归.html#一个例子如何在统计学上取得好成绩"><i class="fa fa-check"></i><b>3.1</b> 一个例子：如何在统计学上取得好成绩</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="多元回归.html"><a href="多元回归.html#数据导入和可视化"><i class="fa fa-check"></i><b>3.1.1</b> 数据导入和可视化</a></li>
+<li class="chapter" data-level="3.1.2" data-path="多元回归.html"><a href="多元回归.html#估计和解释"><i class="fa fa-check"></i><b>3.1.2</b> 估计和解释</a></li>
+<li class="chapter" data-level="3.1.3" data-path="多元回归.html"><a href="多元回归.html#使用predict通过线性模型进行预测"><i class="fa fa-check"></i><b>3.1.3</b> 使用<code>predict()</code>通过线性模型进行预测</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="参考文献.html"><a href="参考文献.html"><i class="fa fa-check"></i>参考文献</a></li>
 </ul>
 
@@ -221,7 +230,7 @@ div.csl-indent {
 <p>假设你用多个量表测量了心理幸福感。一个问题是这些量表在多大程度上测量了相同的东西。通常，你会查看相关矩阵来探索测量之间所有成对关系。</p>
 <p>回忆一下，相关系数量化了两个变量之间关系的<strong>强度</strong>和<strong>方向</strong>。它通常用符号<span class="math inline">\(r\)</span>或<span class="math inline">\(\rho\)</span>(希腊字母”rho”)表示。相关系数的范围在-1到1之间，其中0表示没有关系，正值反映正相关(一个变量增加，另一个也增加)，负值反映负相关(一个变量增加，另一个减少)。</p>
 <div class="figure"><span style="display:block;" id="fig:correlation-relationships"></span>
-<img src="02-Correlation_and_Regression_files/figure-html/correlation-relationships-1.png" alt="不同类型的二元关系" width="576" />
+<img src="02-%E7%9B%B8%E5%85%B3%E5%92%8C%E5%9B%9E%E5%BD%92_files/figure-html/correlation-relationships-1.png" alt="不同类型的二元关系" width="576" />
 <p class="caption">
 图2.1: 不同类型的二元关系
 </p>
@@ -280,7 +289,7 @@ div.csl-indent {
 <p>相关性只有在关系(大致)线性且没有严重的异常值对结果产生过大影响时才能很好地描述关系。因此，可视化相关性通常和量化它们一样是个好主意。<code>base::pairs()</code>函数可以实现这一点。<code>pairs()</code>的第一个参数形式为<code>~ v1 + v2 + v3 + ... + vn</code>，其中<code>v1</code>、<code>v2</code>等是你想要进行相关分析的变量名。</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="相关和回归.html#cb18-1" tabindex="-1"></a><span class="fu">pairs</span>(<span class="sc">~</span> height <span class="sc">+</span> mass <span class="sc">+</span> birth_year, starwars)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:pairs"></span>
-<img src="02-Correlation_and_Regression_files/figure-html/pairs-1.png" alt="星球大战数据集相关关系" width="576" />
+<img src="02-%E7%9B%B8%E5%85%B3%E5%92%8C%E5%9B%9E%E5%BD%92_files/figure-html/pairs-1.png" alt="星球大战数据集相关关系" width="576" />
 <p class="caption">
 图2.2: 星球大战数据集相关关系
 </p>
@@ -299,7 +308,7 @@ div.csl-indent {
 <span id="cb21-3"><a href="相关和回归.html#cb21-3" tabindex="-1"></a></span>
 <span id="cb21-4"><a href="相关和回归.html#cb21-4" tabindex="-1"></a><span class="fu">pairs</span>(<span class="sc">~</span>height <span class="sc">+</span> mass <span class="sc">+</span> birth_year, starwars2)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:massive-creature"></span>
-<img src="02-Correlation_and_Regression_files/figure-html/massive-creature-1.png" alt="去除体重离群值后星球大战数据集相关关系" width="672" />
+<img src="02-%E7%9B%B8%E5%85%B3%E5%92%8C%E5%9B%9E%E5%BD%92_files/figure-html/massive-creature-1.png" alt="去除体重离群值后星球大战数据集相关关系" width="672" />
 <p class="caption">
 图2.3: 去除体重离群值后星球大战数据集相关关系
 </p>
@@ -318,7 +327,7 @@ div.csl-indent {
 <span id="cb24-3"><a href="相关和回归.html#cb24-3" tabindex="-1"></a></span>
 <span id="cb24-4"><a href="相关和回归.html#cb24-4" tabindex="-1"></a><span class="fu">pairs</span>(<span class="sc">~</span>height <span class="sc">+</span> mass <span class="sc">+</span> birth_year, starwars3)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:bye-yoda"></span>
-<img src="02-Correlation_and_Regression_files/figure-html/bye-yoda-1.png" alt="去除体重和出生年份离群值后星球大战数据集相关关系" width="576" />
+<img src="02-%E7%9B%B8%E5%85%B3%E5%92%8C%E5%9B%9E%E5%BD%92_files/figure-html/bye-yoda-1.png" alt="去除体重和出生年份离群值后星球大战数据集相关关系" width="576" />
 <p class="caption">
 图2.4: 去除体重和出生年份离群值后星球大战数据集相关关系
 </p>
@@ -461,7 +470,7 @@ c &amp; f \\
 <span id="cb32-4"><a href="相关和回归.html#cb32-4" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> .<span class="dv">2</span>) <span class="sc">+</span></span>
 <span id="cb32-5"><a href="相关和回归.html#cb32-5" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;height (inches)&quot;</span>, <span class="at">y =</span> <span class="st">&quot;weight (pounds)&quot;</span>) </span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:heights-and-weights"></span>
-<img src="02-Correlation_and_Regression_files/figure-html/heights-and-weights-1.png" alt="475人的身高和体重(包括婴儿)" width="672" />
+<img src="02-%E7%9B%B8%E5%85%B3%E5%92%8C%E5%9B%9E%E5%BD%92_files/figure-html/heights-and-weights-1.png" alt="475人的身高和体重(包括婴儿)" width="672" />
 <p class="caption">
 图2.5: 475人的身高和体重(包括婴儿)
 </p>
@@ -471,7 +480,7 @@ c &amp; f \\
 <span id="cb33-2"><a href="相关和回归.html#cb33-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">hlog =</span> <span class="fu">log</span>(height_in),</span>
 <span id="cb33-3"><a href="相关和回归.html#cb33-3" tabindex="-1"></a>         <span class="at">wlog =</span> <span class="fu">log</span>(weight_lbs))</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:handw-log"></span>
-<img src="02-Correlation_and_Regression_files/figure-html/handw-log-1.png" alt="对数变换后的身高和体重" width="672" />
+<img src="02-%E7%9B%B8%E5%85%B3%E5%92%8C%E5%9B%9E%E5%BD%92_files/figure-html/handw-log-1.png" alt="对数变换后的身高和体重" width="672" />
 <p class="caption">
 图2.6: 对数变换后的身高和体重
 </p>
@@ -557,7 +566,7 @@ c &amp; f \\
 <span id="cb41-13"><a href="相关和回归.html#cb41-13" tabindex="-1"></a><span class="fu">ggplot</span>(alldata, <span class="fu">aes</span>(height_in, weight_lbs)) <span class="sc">+</span></span>
 <span id="cb41-14"><a href="相关和回归.html#cb41-14" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">colour =</span> type), <span class="at">alpha =</span> .<span class="dv">1</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:plot-together"></span>
-<img src="02-Correlation_and_Regression_files/figure-html/plot-together-1.png" alt="真实和模拟的人" width="672" />
+<img src="02-%E7%9B%B8%E5%85%B3%E5%92%8C%E5%9B%9E%E5%BD%92_files/figure-html/plot-together-1.png" alt="真实和模拟的人" width="672" />
 <p class="caption">
 图2.7: 真实和模拟的人
 </p>
@@ -610,7 +619,7 @@ c &amp; f \\
 <span id="cb46-3"><a href="相关和回归.html#cb46-3" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;log(height)&quot;</span>, <span class="at">y =</span> <span class="st">&quot;log(weight)&quot;</span>) <span class="sc">+</span></span>
 <span id="cb46-4"><a href="相关和回归.html#cb46-4" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="sc">-</span><span class="fl">5.124</span>, <span class="at">slope =</span> <span class="fl">2.4</span>, <span class="at">colour =</span> <span class="st">&#39;blue&#39;</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:scatter-with-line"></span>
-<img src="02-Correlation_and_Regression_files/figure-html/scatter-with-line-1.png" alt="对数值和叠加的回归线" width="672" />
+<img src="02-%E7%9B%B8%E5%85%B3%E5%92%8C%E5%9B%9E%E5%BD%92_files/figure-html/scatter-with-line-1.png" alt="对数值和叠加的回归线" width="672" />
 <p class="caption">
 图2.8: 对数值和叠加的回归线
 </p>
@@ -637,7 +646,7 @@ c &amp; f \\
         </div>
       </div>
 <a href="前言.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="参考文献.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="多元回归.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
