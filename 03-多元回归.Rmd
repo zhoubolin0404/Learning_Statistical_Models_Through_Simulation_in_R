@@ -136,3 +136,99 @@ new_data <- tibble(lecture = c(3, 10, 0, 5),
 ```
 
 </div>
+
+现在我们已经创建了表`new_data`，只需将其传递给`predict()`函数，这会返回一个关于$Y$(grade)预测值的向量。
+
+```{r predict-it}
+predict(my_model, new_data)
+```
+
+这很好，但也许我们希望将预测值和预测变量对应起来。我们可以通过将预测值作为新列添加到`new_data`中来实现这一点。
+
+```{r}
+new_data %>%
+  mutate(predicted_grade = predict(my_model, new_data))
+```
+
+想查看`predict()`的更多操作吗？使用`?predict.lm`来获得帮助。
+
+### 偏效应可视化
+
+如上所述，每个回归系数的参数估计值告诉我们该变量的**偏**效应；即保持其他所有变量不变时它的效应。有办法可视化这个偏效应吗？是的，你可以使用`predict()`函数来实现，通过创建一个表，其中关注的预测变量的值是多样的，其他所有预测变量用均值填充。
+
+例如，我们要可视化`lecture`对`grade`的偏效应，同时将`nclicks`的值保持在其均值不变。
+
+```{r partial-lecture}
+nclicks_mean <- grades %>% pull(nclicks) %>% mean()
+
+## 预测用的新数据
+new_lecture <- tibble(lecture = 0:10,
+                      nclicks = nclicks_mean)
+
+## 将预测值添加到new_lecture
+new_lecture2 <- new_lecture %>%
+  mutate(grade = predict(my_model, new_lecture))
+
+new_lecture2
+```
+
+现在让我们作图。
+
+```{r partial-lecture-plot, fig.cap = "nclicks固定在均值，`lecture`对成绩的偏效应"}
+ggplot(grades, aes(lecture, grade)) + 
+  geom_point() +
+  geom_line(data = new_lecture2)
+```
+
+<div class = "yellowbox>
+
+偏效应图只有在模型中关注的预测变量与其他预测变量之间没有交互作用时才有意义。
+
+原因是当存在交互作用时，关注的预测变量$X_i$的偏效应会随着与其交互的变量的变动而变动。
+
+</div>
+
+现在你能可视化`nclicks`对`grade`的偏效应吗?
+
+本页最后给出解决方法。
+
+### 标准化系数
+
+我们经常用多元回归来解决的一类问题是，**哪个预测变量对预测Y最重要？**
+
+现在，你不能简单地读取$\hat{\beta}$值并选择绝对值最大的一个，因为这些预测变量都在不同的尺度上。为了回答这个问题，你需要对预测变量进行**中心化(center)**和**比例化(scale)**。
+
+还记得$z$分数吗？
+
+$$
+z = \frac{X - \mu_x}{\sigma_x}
+$$
+
+$z$分数($z$-score)表示$X$与样本均值($\mu_x$)之间的标准差单位距离($\sigma_x$)。因此，$z$分数为1意味着该值高于均值1个标准差；$z$分数为-2.5意味着低于均值2.5个标准差。$Z$分数通过将它们校准为标准正态分布(均值为0，标准差为1的分布)给了我们一种比较来自不同总体的事物的办法。
+
+那么我们通过将预测变量转换为$z$分数来重新缩放它们。这是相当容易做到的。
+
+```{r rescale-predictors}
+grades2 <- grades %>%
+  mutate(lecture_c = (lecture - mean(lecture)) / sd(lecture),
+         nclicks_c = (nclicks - mean(nclicks)) / sd(nclicks))
+
+grades2
+```
+
+现在让我们用居中和缩放后的预测变量重新拟合模型。
+
+```{r my-model2}
+
+my_model_scaled <- lm(grade ~ lecture_c + nclicks_c, grades2)
+
+summary(my_model_scaled)
+```
+
+```{r which-larger, include=FALSE}
+.bigger <- names(which.max(coef(my_model_scaled)[-1]))
+.smaller <- setdiff(names(coef(my_model_scaled)[-1]), .bigger)
+
+if (coef(my_model_scaled)[[2]] > coef(my_model_scaled)[[1]]) "nclicks_c" else "lecture_c"
+```
+

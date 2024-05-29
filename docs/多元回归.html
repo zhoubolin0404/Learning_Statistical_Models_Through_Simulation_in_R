@@ -202,6 +202,8 @@ div.csl-indent {
 <li class="chapter" data-level="3.1.1" data-path="多元回归.html"><a href="多元回归.html#数据导入和可视化"><i class="fa fa-check"></i><b>3.1.1</b> 数据导入和可视化</a></li>
 <li class="chapter" data-level="3.1.2" data-path="多元回归.html"><a href="多元回归.html#估计和解释"><i class="fa fa-check"></i><b>3.1.2</b> 估计和解释</a></li>
 <li class="chapter" data-level="3.1.3" data-path="多元回归.html"><a href="多元回归.html#使用predict通过线性模型进行预测"><i class="fa fa-check"></i><b>3.1.3</b> 使用<code>predict()</code>通过线性模型进行预测</a></li>
+<li class="chapter" data-level="3.1.4" data-path="多元回归.html"><a href="多元回归.html#偏效应可视化"><i class="fa fa-check"></i><b>3.1.4</b> 偏效应可视化</a></li>
+<li class="chapter" data-level="3.1.5" data-path="多元回归.html"><a href="多元回归.html#标准化系数"><i class="fa fa-check"></i><b>3.1.5</b> 标准化系数</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="参考文献.html"><a href="参考文献.html"><i class="fa fa-check"></i>参考文献</a></li>
@@ -348,6 +350,120 @@ Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + \ldots + \beta_m X_{mi} + e_i
 <div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="多元回归.html#cb56-1" tabindex="-1"></a>new_data <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">lecture =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">10</span>, <span class="dv">0</span>, <span class="dv">5</span>),</span>
 <span id="cb56-2"><a href="多元回归.html#cb56-2" tabindex="-1"></a>                   <span class="at">nclicks =</span> <span class="fu">c</span>(<span class="dv">70</span>, <span class="dv">130</span>, <span class="dv">20</span>, <span class="dv">100</span>))</span></code></pre></div>
 </div>
+<p>现在我们已经创建了表<code>new_data</code>，只需将其传递给<code>predict()</code>函数，这会返回一个关于<span class="math inline">\(Y\)</span>(grade)预测值的向量。</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="多元回归.html#cb57-1" tabindex="-1"></a><span class="fu">predict</span>(my_model, new_data)</span></code></pre></div>
+<pre><code>##        1        2        3        4 
+## 2.090214 3.033869 1.563087 2.424790</code></pre>
+<p>这很好，但也许我们希望将预测值和预测变量对应起来。我们可以通过将预测值作为新列添加到<code>new_data</code>中来实现这一点。</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="多元回归.html#cb59-1" tabindex="-1"></a>new_data <span class="sc">%&gt;%</span></span>
+<span id="cb59-2"><a href="多元回归.html#cb59-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">predicted_grade =</span> <span class="fu">predict</span>(my_model, new_data))</span></code></pre></div>
+<pre><code>## # A tibble: 4 × 3
+##   lecture nclicks predicted_grade
+##     &lt;dbl&gt;   &lt;dbl&gt;           &lt;dbl&gt;
+## 1       3      70            2.09
+## 2      10     130            3.03
+## 3       0      20            1.56
+## 4       5     100            2.42</code></pre>
+<p>想查看<code>predict()</code>的更多操作吗？使用<code>?predict.lm</code>来获得帮助。</p>
+</div>
+<div id="偏效应可视化" class="section level3 hasAnchor" number="3.1.4">
+<h3><span class="header-section-number">3.1.4</span> 偏效应可视化<a href="多元回归.html#偏效应可视化" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>如上所述，每个回归系数的参数估计值告诉我们该变量的<strong>偏</strong>效应；即保持其他所有变量不变时它的效应。有办法可视化这个偏效应吗？是的，你可以使用<code>predict()</code>函数来实现，通过创建一个表，其中关注的预测变量的值是多样的，其他所有预测变量用均值填充。</p>
+<p>例如，我们要可视化<code>lecture</code>对<code>grade</code>的偏效应，同时将<code>nclicks</code>的值保持在其均值不变。</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="多元回归.html#cb61-1" tabindex="-1"></a>nclicks_mean <span class="ot">&lt;-</span> grades <span class="sc">%&gt;%</span> <span class="fu">pull</span>(nclicks) <span class="sc">%&gt;%</span> <span class="fu">mean</span>()</span>
+<span id="cb61-2"><a href="多元回归.html#cb61-2" tabindex="-1"></a></span>
+<span id="cb61-3"><a href="多元回归.html#cb61-3" tabindex="-1"></a><span class="do">## 预测用的新数据</span></span>
+<span id="cb61-4"><a href="多元回归.html#cb61-4" tabindex="-1"></a>new_lecture <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">lecture =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">10</span>,</span>
+<span id="cb61-5"><a href="多元回归.html#cb61-5" tabindex="-1"></a>                      <span class="at">nclicks =</span> nclicks_mean)</span>
+<span id="cb61-6"><a href="多元回归.html#cb61-6" tabindex="-1"></a></span>
+<span id="cb61-7"><a href="多元回归.html#cb61-7" tabindex="-1"></a><span class="do">## 将预测值添加到new_lecture</span></span>
+<span id="cb61-8"><a href="多元回归.html#cb61-8" tabindex="-1"></a>new_lecture2 <span class="ot">&lt;-</span> new_lecture <span class="sc">%&gt;%</span></span>
+<span id="cb61-9"><a href="多元回归.html#cb61-9" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">grade =</span> <span class="fu">predict</span>(my_model, new_lecture))</span>
+<span id="cb61-10"><a href="多元回归.html#cb61-10" tabindex="-1"></a></span>
+<span id="cb61-11"><a href="多元回归.html#cb61-11" tabindex="-1"></a>new_lecture2</span></code></pre></div>
+<pre><code>## # A tibble: 11 × 3
+##    lecture nclicks grade
+##      &lt;int&gt;   &lt;dbl&gt; &lt;dbl&gt;
+##  1       0    98.3  1.96
+##  2       1    98.3  2.05
+##  3       2    98.3  2.14
+##  4       3    98.3  2.23
+##  5       4    98.3  2.32
+##  6       5    98.3  2.42
+##  7       6    98.3  2.51
+##  8       7    98.3  2.60
+##  9       8    98.3  2.69
+## 10       9    98.3  2.78
+## 11      10    98.3  2.87</code></pre>
+<p>现在让我们作图。</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="多元回归.html#cb63-1" tabindex="-1"></a><span class="fu">ggplot</span>(grades, <span class="fu">aes</span>(lecture, grade)) <span class="sc">+</span> </span>
+<span id="cb63-2"><a href="多元回归.html#cb63-2" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb63-3"><a href="多元回归.html#cb63-3" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> new_lecture2)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:partial-lecture-plot"></span>
+<img src="03-%E5%A4%9A%E5%85%83%E5%9B%9E%E5%BD%92_files/figure-html/partial-lecture-plot-1.png" alt="nclicks固定在均值，`lecture`对成绩的偏效应" width="672" />
+<p class="caption">
+图3.1: nclicks固定在均值，<code>lecture</code>对成绩的偏效应
+</p>
+</div>
+<p>&lt;div class = “yellowbox&gt;</p>
+<p>偏效应图只有在模型中关注的预测变量与其他预测变量之间没有交互作用时才有意义。</p>
+<p>原因是当存在交互作用时，关注的预测变量<span class="math inline">\(X_i\)</span>的偏效应会随着与其交互的变量的变动而变动。</p>
+</div>
+<p>现在你能可视化<code>nclicks</code>对<code>grade</code>的偏效应吗?</p>
+<p>本页最后给出解决方法。</p>
+</div>
+<div id="标准化系数" class="section level3 hasAnchor" number="3.1.5">
+<h3><span class="header-section-number">3.1.5</span> 标准化系数<a href="多元回归.html#标准化系数" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>我们经常用多元回归来解决的一类问题是，<strong>哪个预测变量对预测Y最重要？</strong></p>
+<p>现在，你不能简单地读取<span class="math inline">\(\hat{\beta}\)</span>值并选择绝对值最大的一个，因为这些预测变量都在不同的尺度上。为了回答这个问题，你需要对预测变量进行<strong>中心化(center)</strong>和<strong>比例化(scale)</strong>。</p>
+<p>还记得<span class="math inline">\(z\)</span>分数吗？</p>
+<p><span class="math display">\[
+z = \frac{X - \mu_x}{\sigma_x}
+\]</span></p>
+<p><span class="math inline">\(z\)</span>分数(<span class="math inline">\(z\)</span>-score)表示<span class="math inline">\(X\)</span>与样本均值(<span class="math inline">\(\mu_x\)</span>)之间的标准差单位距离(<span class="math inline">\(\sigma_x\)</span>)。因此，<span class="math inline">\(z\)</span>分数为1意味着该值高于均值1个标准差；<span class="math inline">\(z\)</span>分数为-2.5意味着低于均值2.5个标准差。<span class="math inline">\(Z\)</span>分数通过将它们校准为标准正态分布(均值为0，标准差为1的分布)给了我们一种比较来自不同总体的事物的办法。</p>
+<p>那么我们通过将预测变量转换为<span class="math inline">\(z\)</span>分数来重新缩放它们。这是相当容易做到的。</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="多元回归.html#cb64-1" tabindex="-1"></a>grades2 <span class="ot">&lt;-</span> grades <span class="sc">%&gt;%</span></span>
+<span id="cb64-2"><a href="多元回归.html#cb64-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">lecture_c =</span> (lecture <span class="sc">-</span> <span class="fu">mean</span>(lecture)) <span class="sc">/</span> <span class="fu">sd</span>(lecture),</span>
+<span id="cb64-3"><a href="多元回归.html#cb64-3" tabindex="-1"></a>         <span class="at">nclicks_c =</span> (nclicks <span class="sc">-</span> <span class="fu">mean</span>(nclicks)) <span class="sc">/</span> <span class="fu">sd</span>(nclicks))</span>
+<span id="cb64-4"><a href="多元回归.html#cb64-4" tabindex="-1"></a></span>
+<span id="cb64-5"><a href="多元回归.html#cb64-5" tabindex="-1"></a>grades2</span></code></pre></div>
+<pre><code>## # A tibble: 100 × 6
+##    grade   GPA lecture nclicks lecture_c nclicks_c
+##    &lt;dbl&gt; &lt;dbl&gt;   &lt;int&gt;   &lt;int&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+##  1  2.40 1.13        6      88  -0.484     -0.666 
+##  2  3.67 0.971       6      96  -0.484     -0.150 
+##  3  2.85 3.34        6     123  -0.484      1.59  
+##  4  1.36 2.76        9      99   0.982      0.0439
+##  5  2.31 1.02        4      66  -1.46      -2.09  
+##  6  2.58 0.841       8      99   0.493      0.0439
+##  7  2.69 4           5      86  -0.972     -0.796 
+##  8  3.05 2.29        7     118   0.00488    1.27  
+##  9  3.21 3.39        9      98   0.982     -0.0207
+## 10  2.24 3.27       10     115   1.47       1.08  
+## # ℹ 90 more rows</code></pre>
+<p>现在让我们用居中和缩放后的预测变量重新拟合模型。</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="多元回归.html#cb66-1" tabindex="-1"></a>my_model_scaled <span class="ot">&lt;-</span> <span class="fu">lm</span>(grade <span class="sc">~</span> lecture_c <span class="sc">+</span> nclicks_c, grades2)</span>
+<span id="cb66-2"><a href="多元回归.html#cb66-2" tabindex="-1"></a></span>
+<span id="cb66-3"><a href="多元回归.html#cb66-3" tabindex="-1"></a><span class="fu">summary</span>(my_model_scaled)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = grade ~ lecture_c + nclicks_c, data = grades2)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -2.21653 -0.40603  0.02267  0.60720  1.38558 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  2.59839    0.08692  29.895   &lt;2e-16 ***
+## lecture_c    0.18734    0.09370   1.999   0.0484 *  
+## nclicks_c    0.07823    0.09370   0.835   0.4058    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.8692 on 97 degrees of freedom
+## Multiple R-squared:  0.06543,    Adjusted R-squared:  0.04616 
+## F-statistic: 3.395 on 2 and 97 DF,  p-value: 0.03756</code></pre>
 
 </div>
 </div>

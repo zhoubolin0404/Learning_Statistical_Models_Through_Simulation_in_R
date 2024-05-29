@@ -8,6 +8,7 @@ fig:heights-and-weights
 fig:handw-log
 fig:plot-together
 fig:scatter-with-line
+fig:partial-lecture-plot
 前言
 课程目的
 广义线性混合模型generalized-linear-mixed-effects-models-glmms
@@ -25,3 +26,5 @@ fig:scatter-with-line
 数据导入和可视化
 估计和解释
 使用predict通过线性模型进行预测
+偏效应可视化
+标准化系数
