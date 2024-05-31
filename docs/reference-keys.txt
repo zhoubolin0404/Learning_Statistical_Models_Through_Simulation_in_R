@@ -28,3 +28,5 @@ fig:partial-lecture-plot
 使用predict通过线性模型进行预测
 偏效应可视化
 标准化系数
+模型比较
+处理分类预测变量
