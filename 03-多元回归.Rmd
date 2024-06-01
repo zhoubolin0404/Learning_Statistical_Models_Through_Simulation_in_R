@@ -434,11 +434,11 @@ season_wt3 %>%
   distinct(season, spring_v_winter, summer_v_winter, fall_v_winter)
 ```
 
-由于我们的拼写错误，当`season == "summer"`时，预测变量`summer_v_winter`不是`1`；相反，它**总是0**。`if_else()`字面上意思是“如果`season == "summer"`，则将`summer_v_winter`设置为1，否则为0”。当然，`season`**永远**不会等于`summer`，因为`summer`是一个拼写错误。我们本可以通过使用`distinct()`进行上面的检查轻松发现这一点。当你创建自己的数值预测变量时，养成这样做的习惯是很重要的。
+由于我们的拼写错误，当`season == "summer"`时，预测变量`summer_v_winter`不是`1`；相反，它**总是0**。`if_else()`字面上意思是“如果`season == "summre"`，则将`summer_v_winter`设置为1，否则为0”。当然，`season`**永远**不会等于`summre`，因为`summre`是一个拼写错误。我们本可以通过使用`distinct()`进行上面的检查轻松发现这一点。当你创建自己的数值预测变量时，养成这样做的习惯是很重要的。
 :::
 
 ::: bluebox
-**更仔细地看看R的默认值**
+**更仔细地看看R的默认情况**
 
 如果你曾经使用过像SPSS这样的指向-点击的统计软件，你可能从未学习过如何编码分类预测变量。通常，软件会识别预测变量是否为分类变量，并在后台将其重新编码为数值型预测变量。R也是如此：如果你将`character`或`factor`类型的预测变量提供给线性建模函数，它将为你创建数值型虚拟编码的预测变量，如下方代码所示。
 
