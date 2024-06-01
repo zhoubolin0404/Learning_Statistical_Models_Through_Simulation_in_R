@@ -33,5 +33,5 @@ fig:partial-nclicks
 处理分类预测变量
 虚拟编码又称处理编码
 当k-2时的虚拟编码
-多元回归和单因素方差分one-way-anova析的等价性
+多元回归和单因素方差分析one-way-anova的等价性
 练习答案
