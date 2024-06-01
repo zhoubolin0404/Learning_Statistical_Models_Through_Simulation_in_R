@@ -23,7 +23,7 @@
 <meta name="author" content="Zhou Bolin" />
 
 
-<meta name="date" content="2024-05-31" />
+<meta name="date" content="2024-06-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -206,7 +206,13 @@ div.csl-indent {
 <li class="chapter" data-level="3.1.5" data-path="多元回归.html"><a href="多元回归.html#标准化系数"><i class="fa fa-check"></i><b>3.1.5</b> 标准化系数</a></li>
 <li class="chapter" data-level="3.1.6" data-path="多元回归.html"><a href="多元回归.html#模型比较"><i class="fa fa-check"></i><b>3.1.6</b> 模型比较</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="多元回归.html"><a href="多元回归.html#处理分类预测变量"><i class="fa fa-check"></i><b>3.2</b> 处理分类预测变量</a></li>
+<li class="chapter" data-level="3.2" data-path="多元回归.html"><a href="多元回归.html#处理分类预测变量"><i class="fa fa-check"></i><b>3.2</b> 处理分类预测变量</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="多元回归.html"><a href="多元回归.html#虚拟编码又称处理编码"><i class="fa fa-check"></i><b>3.2.1</b> 虚拟编码(又称“处理”编码)</a></li>
+<li class="chapter" data-level="3.2.2" data-path="多元回归.html"><a href="多元回归.html#当k-2时的虚拟编码"><i class="fa fa-check"></i><b>3.2.2</b> 当<span class="math inline">\(k &gt; 2\)</span>时的虚拟编码</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="多元回归.html"><a href="多元回归.html#多元回归和单因素方差分one-way-anova析的等价性"><i class="fa fa-check"></i><b>3.3</b> 多元回归和单因素方差分(one-way ANOVA)析的等价性</a></li>
+<li class="chapter" data-level="3.4" data-path="多元回归.html"><a href="多元回归.html#练习答案"><i class="fa fa-check"></i><b>3.4</b> 练习答案</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="参考文献.html"><a href="参考文献.html"><i class="fa fa-check"></i>参考文献</a></li>
 </ul>
@@ -300,7 +306,7 @@ div.csl-indent {
 <p>可重复性指的是在不同情况下重现研究结果的可能性程度。</p>
 <p>如果我们能在给定原始数据的情况下得到相同的结果，我们会说这个发现在<em>分析(analytically)</em>或<em>计算(computationally)</em>上是可重复的。需要注意的是，这与说一个发现<strong>可复制(replicable)</strong>是不同的。可复制指的是能够在<strong>新样本</strong>中复制这一发现。对于这些术语并没有广泛的共识，但方便起见，我们可以将分析上的可重复性(reproducibility)和可复制性(replicability)视为两种不同但相关的可重复性(reproducibility)类型，前者反映分析员之间(或同一分析员随时间变化)的可重复性，而后者反映了在被试样本或亚群体之间的可重复性。</p>
 <p>确保分析可重复性是一个难题。如果你未能正确记录自己的分析过程，或者你使用的软件被修改或过时并且变得不可用，你可能会在重现自己的发现时遇到麻烦！</p>
-<p>分析的另一个重要属性是透明度——在某种研究中所有步骤都可以公开的程度。一项研究可能是透明的但不可重复，反之亦然。使用促进透明度的工作流程非常重要。这使得脚本编程的“编辑–执行”工作流程对于数据分析来说是理想的选择，远远优于大多数商业统计软件的“点–点击”的工作流程。通过编写代码，你可以使逻辑和决策过程对他人明确，并易于重建。</p>
+<p>分析的另一个重要属性是透明度——在某种研究中所有步骤都可以公开的程度。一项研究可能是透明的但不可重复，反之亦然。使用促进透明度的工作流程非常重要。这使得脚本编程的“编辑–执行”工作流程对于数据分析来说是理想的选择，远远优于大多数商业统计软件的“指向–点击”的工作流程。通过编写代码，你可以使逻辑和决策过程对他人明确，并易于重建。</p>
 </div>
 <div id="基于模拟的方法" class="section level2 hasAnchor" number="1.4">
 <h2><span class="header-section-number">1.4</span> 基于模拟的方法<a href="前言.html#基于模拟的方法" class="anchor-section" aria-label="Anchor link to header"></a></h2>
