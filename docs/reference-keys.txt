@@ -10,6 +10,8 @@ fig:plot-together
 fig:scatter-with-line
 fig:partial-lecture-plot
 fig:partial-nclicks
+fig:plot-urban
+fig:combined-plot
 前言
 课程目的
 广义线性混合模型generalized-linear-mixed-effects-models-glmms
@@ -35,3 +37,5 @@ fig:partial-nclicks
 当k-2时的虚拟编码
 多元回归和单因素方差分析one-way-anova的等价性
 练习答案
+交互作用
+cont-by-cat
