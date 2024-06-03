@@ -220,7 +220,10 @@ div.csl-indent {
 <li class="chapter" data-level="4" data-path="交互作用.html"><a href="交互作用.html"><i class="fa fa-check"></i><b>4</b> 交互作用</a>
 <ul>
 <li class="chapter" data-level="4.1" data-path="交互作用.html"><a href="交互作用.html#cont-by-cat"><i class="fa fa-check"></i><b>4.1</b> 连续变量-分类变量交互作用</a></li>
-<li class="chapter" data-level="4.2" data-path="交互作用.html"><a href="交互作用.html#分类变量-分类变量交互作用"><i class="fa fa-check"></i><b>4.2</b> 分类变量-分类变量交互作用</a></li>
+<li class="chapter" data-level="4.2" data-path="交互作用.html"><a href="交互作用.html#分类变量-分类变量交互作用"><i class="fa fa-check"></i><b>4.2</b> 分类变量-分类变量交互作用</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="交互作用.html"><a href="交互作用.html#认知治疗与药物治疗对情绪的影响"><i class="fa fa-check"></i><b>4.2.1</b> 认知治疗与药物治疗对情绪的影响</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="参考文献.html"><a href="参考文献.html"><i class="fa fa-check"></i>参考文献</a></li>
 </ul>
@@ -616,7 +619,93 @@ div.csl-indent {
 </tr>
 </tbody>
 </table>
+<div class="yellowbox">
+<p>不要混淆<strong>因子</strong>和<strong>水平</strong>！</p>
+<p>如果你听说一个研究有三个处理组(处理组A、处理组B和对照组)，这不是一个“三因子(three-factor, three-way)设计”。这是一个单因子(one-factor, one-way)设计，具有一个三水平因子(处理条件)。</p>
+<p>不存在只有一个水平的因子。</p>
+</div>
+<p>你可以通过将每个因子的水平数相乘来确定设计中有多少个单元。因此，一个2x3x4设计将在设计中有24个单元。</p>
+<div id="认知治疗与药物治疗对情绪的影响" class="section level3 hasAnchor" number="4.2.1">
+<h3><span class="header-section-number">4.2.1</span> 认知治疗与药物治疗对情绪的影响<a href="交互作用.html#认知治疗与药物治疗对情绪的影响" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>让我们考虑一个简单的因子设计，并思考我们的数据可能展示方式。在从这个具体例子中了解概念之后，我们将将其映射到更抽象的统计术语上。</p>
+<p>想象一下，你正在进行一项研究，内容是两种不同类型的治疗(认知疗法和药物疗法)对抑郁症患者的影响。一半的被试被随机分配接受认知行为疗法(Cognitive Behavioral Therapy, CBT)，另一半接受其他控制操作(no-CBT)。此外，你通过随机分配进一步将你的患者分为两组：药物治疗组(接受抗抑郁药物, drug)和对照组(接受安慰剂, placebo)。接受治疗(或对照/安慰剂)后，你使用一个评分标准来测量他们的情绪，较高的数字对应较积极的情绪。</p>
+<p>让我们想象一下，下面我们得到的均值是不受测量或抽样误差影响的总体均值。我们将花一点时间考虑3种不同的可能结果，以及它们暗示这些疗法如何独立或交互地影响情绪。</p>
+<div class="yellowbox">
+<p>在分类变量-连续变量交互作用部分关于的总体和样本的提醒在这里同样适用。除非模拟数据，你几乎<strong>永远不会</strong>知道你正在研究的任何总体的真实均值。下面，我们讨论的是你实际知道总体均值并且可以在没有任何统计测试的情况下得出结论的假设情况。你观察到的任何真实样本均值都会包含抽样和测量误差，你所做的任何推断都将取决于统计检验的结果，而不是观察到的均值。</p>
+</div>
+<div id="情景a" class="section level4 unnumbered hasAnchor">
+<h4>情景A<a href="交互作用.html#情景a" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="figure"><span style="display:block;" id="fig:scenario-a-plot"></span>
+<img src="04-%E4%BA%A4%E4%BA%92%E4%BD%9C%E7%94%A8_files/figure-html/scenario-a-plot-1.png" alt="*情景A, 单元平均值图*" width="50%" />
+<p class="caption">
+图4.3: <em>情景A, 单元平均值图</em>
+</p>
+</div>
+<p>下面是一个<strong>单元均值(cell mean)</strong>和<strong>边际均值(marginal mean)</strong>的表格。单元均值是设计的每个单元中因变量(情绪)的平均值。边际均值(在表格的边缘)提供了每行和每列的均值。</p>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+No CBT
+</th>
+<th style="text-align:right;">
+CBT
+</th>
+<th style="text-align:left;">
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Placebo
+</td>
+<td style="text-align:right;">
+40
+</td>
+<td style="text-align:right;">
+60
+</td>
+<td style="text-align:left;">
+50
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Drug
+</td>
+<td style="text-align:right;">
+60
+</td>
+<td style="text-align:right;">
+80
+</td>
+<td style="text-align:left;">
+70
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+50
+</td>
+<td style="text-align:right;">
+70
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+</tbody>
+</table>
+<p>如果这是我们的结果，你会得出什么结论？认知疗法对情绪有影响吗？药物疗法呢？对于这两个问题的答案都是肯定的：接受CBT的人平均心情(70；第2列的均值)比没有接受的人高出20(50；第1列的均值)。</p>
+<p>同样，接受抗抑郁药物的人情绪(70；第2行均值)相对于接受安慰剂的人(50; 第1行均值)更好。</p>
+<p>现在我们还可以问下个问题：<strong>认知疗法的效果是否取决于患者是否同时接受药物疗法</strong>？答案是否定的。看看为什么，注意到对于安慰剂组(第1行)，认知疗法使情绪提高了20分(从40提高到60)。但对于药物组来说也是一样的：从60提高到80也是20分的提高。因此，没有证据表明一个因素对心情的影响取决于另一个因素。</p>
 
+</div>
+</div>
 </div>
 </div>
 <h3>参考文献<a href="参考文献.html#参考文献" class="anchor-section" aria-label="Anchor link to header"></a></h3>

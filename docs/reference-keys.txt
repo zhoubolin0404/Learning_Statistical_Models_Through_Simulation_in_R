@@ -12,6 +12,7 @@ fig:partial-lecture-plot
 fig:partial-nclicks
 fig:plot-urban
 fig:combined-plot
+fig:scenario-a-plot
 前言
 课程目的
 广义线性混合模型generalized-linear-mixed-effects-models-glmms
@@ -40,3 +41,4 @@ fig:combined-plot
 交互作用
 cont-by-cat
 分类变量-分类变量交互作用
+认知治疗与药物治疗对情绪的影响
