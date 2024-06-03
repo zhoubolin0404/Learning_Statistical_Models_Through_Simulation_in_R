@@ -1,13 +1,7 @@
 bookdown::gitbook:
   includes:
     in_header: _header.html
+    after_body: [include/webex.js, include/script.js]
   config:
     download: ["pdf"]
-  css: ["styles.css"]
-bookdown::pdf_book:
-  includes:
-    in_header: preamble.tex
-  latex_engine: xelatex
-  citation_package: biblatex
-  keep_tex: true
-bookdown::epub_book: default
+  css: [styles.css, include/webex.css]

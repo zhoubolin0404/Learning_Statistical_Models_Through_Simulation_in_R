@@ -3,6 +3,7 @@
 ```{r chapter-status, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
 library(corrr) 
 library(tidyverse)
+library(webexercises)
 ```
 
 单层数据包含$m$个预测变量的一般模型是：
@@ -484,6 +485,8 @@ summary(lm(bodyweight_kg ~ spring_v_winter +
 
 ## 练习答案
 
+`r hide("展开答案")`
+
 首先创建一个包含新预测变量的tibble。我们可能还想知道`nclicks`的取值范围。
 
 ```{r}
@@ -509,3 +512,5 @@ ggplot(grades, aes(nclicks, grade)) +
   geom_point() +
   geom_line(data = new_nclicks2)
 ```
+
+`r unhide()`

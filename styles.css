@@ -25,6 +25,15 @@
     margin-bottom: 1em;
 }
 
+.purplebox {
+    background-color: hsla(248, 28%, 48%, .1);
+    border: 1px solid purple;
+    border-radius: 5mm;
+    padding: 10px;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
 .blueborder {
     border: 1px solid hsla(209, 42%, 47%);
     border-radius: 5mm;

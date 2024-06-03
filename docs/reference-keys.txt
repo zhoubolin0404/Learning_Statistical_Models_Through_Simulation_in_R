@@ -39,3 +39,4 @@ fig:combined-plot
 练习答案
 交互作用
 cont-by-cat
+分类变量-分类变量交互作用
