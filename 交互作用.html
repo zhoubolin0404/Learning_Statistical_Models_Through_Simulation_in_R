@@ -4,34 +4,32 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>4 交互作用 | 学习统计模型——通过R模拟</title>
-  <meta name="description" content="4 交互作用 | 学习统计模型——通过R模拟" />
+  <title>1 交互作用 | 04-交互作用.knit</title>
+  <meta name="description" content="" />
   <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="4 交互作用 | 学习统计模型——通过R模拟" />
+  <meta property="og:title" content="1 交互作用 | 04-交互作用.knit" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="4 交互作用 | 学习统计模型——通过R模拟" />
+  <meta name="twitter:title" content="1 交互作用 | 04-交互作用.knit" />
   
   
   
 
-<meta name="author" content="Zhou Bolin" />
 
 
-<meta name="date" content="2024-06-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="多元回归.html"/>
-<link rel="next" href="参考文献.html"/>
+
+
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -137,28 +135,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   
   div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 </style>
-<style type="text/css">
-/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}
-</style>
 
 <link rel="stylesheet" href="styles.css" type="text/css" />
 <link rel="stylesheet" href="include/webex.css" type="text/css" />
@@ -174,58 +150,14 @@ div.csl-indent {
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>概述</a>
+<li class="chapter" data-level="1" data-path=""><a href="#交互作用"><i class="fa fa-check"></i><b>1</b> 交互作用</a>
 <ul>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#如何引用本书"><i class="fa fa-check"></i>如何引用本书</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#发现问题"><i class="fa fa-check"></i>发现问题？</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#教育者需知"><i class="fa fa-check"></i>教育者需知</a></li>
-</ul></li>
-<li class="chapter" data-level="1" data-path="前言.html"><a href="前言.html"><i class="fa fa-check"></i><b>1</b> 前言</a>
+<li class="chapter" data-level="1.1" data-path=""><a href="#cont-by-cat"><i class="fa fa-check"></i><b>1.1</b> 连续变量-分类变量交互作用</a></li>
+<li class="chapter" data-level="1.2" data-path=""><a href="#分类变量-分类变量交互作用"><i class="fa fa-check"></i><b>1.2</b> 分类变量-分类变量交互作用</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="前言.html"><a href="前言.html#课程目的"><i class="fa fa-check"></i><b>1.1</b> 课程目的</a></li>
-<li class="chapter" data-level="1.2" data-path="前言.html"><a href="前言.html#广义线性混合模型generalized-linear-mixed-effects-models-glmms"><i class="fa fa-check"></i><b>1.2</b> 广义线性混合模型(Generalized Linear Mixed-Effects Models, GLMMs)</a>
-<ul>
-<li class="chapter" data-level="1.2.1" data-path="前言.html"><a href="前言.html#线性模型"><i class="fa fa-check"></i><b>1.2.1</b> 线性模型</a></li>
-<li class="chapter" data-level="1.2.2" data-path="前言.html"><a href="前言.html#混合模型"><i class="fa fa-check"></i><b>1.2.2</b> 混合模型</a></li>
-</ul></li>
-<li class="chapter" data-level="1.3" data-path="前言.html"><a href="前言.html#关于可重复性的说明"><i class="fa fa-check"></i><b>1.3</b> 关于可重复性的说明</a></li>
-<li class="chapter" data-level="1.4" data-path="前言.html"><a href="前言.html#基于模拟的方法"><i class="fa fa-check"></i><b>1.4</b> 基于模拟的方法</a></li>
-</ul></li>
-<li class="chapter" data-level="2" data-path="相关和回归.html"><a href="相关和回归.html"><i class="fa fa-check"></i><b>2</b> 相关和回归</a>
-<ul>
-<li class="chapter" data-level="2.1" data-path="相关和回归.html"><a href="相关和回归.html#相关矩阵correlation-matrices"><i class="fa fa-check"></i><b>2.1</b> 相关矩阵(Correlation matrices)</a></li>
-<li class="chapter" data-level="2.2" data-path="相关和回归.html"><a href="相关和回归.html#模拟二元数据"><i class="fa fa-check"></i><b>2.2</b> 模拟二元数据</a></li>
-<li class="chapter" data-level="2.3" data-path="相关和回归.html"><a href="相关和回归.html#相关和回归的关系"><i class="fa fa-check"></i><b>2.3</b> 相关和回归的关系</a></li>
-<li class="chapter" data-level="2.4" data-path="相关和回归.html"><a href="相关和回归.html#练习"><i class="fa fa-check"></i><b>2.4</b> 练习</a></li>
-</ul></li>
-<li class="chapter" data-level="3" data-path="多元回归.html"><a href="多元回归.html"><i class="fa fa-check"></i><b>3</b> 多元回归</a>
-<ul>
-<li class="chapter" data-level="3.1" data-path="多元回归.html"><a href="多元回归.html#一个例子如何在统计学上取得好成绩"><i class="fa fa-check"></i><b>3.1</b> 一个例子：如何在统计学上取得好成绩</a>
-<ul>
-<li class="chapter" data-level="3.1.1" data-path="多元回归.html"><a href="多元回归.html#数据导入和可视化"><i class="fa fa-check"></i><b>3.1.1</b> 数据导入和可视化</a></li>
-<li class="chapter" data-level="3.1.2" data-path="多元回归.html"><a href="多元回归.html#估计和解释"><i class="fa fa-check"></i><b>3.1.2</b> 估计和解释</a></li>
-<li class="chapter" data-level="3.1.3" data-path="多元回归.html"><a href="多元回归.html#使用predict通过线性模型进行预测"><i class="fa fa-check"></i><b>3.1.3</b> 使用<code>predict()</code>通过线性模型进行预测</a></li>
-<li class="chapter" data-level="3.1.4" data-path="多元回归.html"><a href="多元回归.html#偏效应可视化"><i class="fa fa-check"></i><b>3.1.4</b> 偏效应可视化</a></li>
-<li class="chapter" data-level="3.1.5" data-path="多元回归.html"><a href="多元回归.html#标准化系数"><i class="fa fa-check"></i><b>3.1.5</b> 标准化系数</a></li>
-<li class="chapter" data-level="3.1.6" data-path="多元回归.html"><a href="多元回归.html#模型比较"><i class="fa fa-check"></i><b>3.1.6</b> 模型比较</a></li>
-</ul></li>
-<li class="chapter" data-level="3.2" data-path="多元回归.html"><a href="多元回归.html#处理分类预测变量"><i class="fa fa-check"></i><b>3.2</b> 处理分类预测变量</a>
-<ul>
-<li class="chapter" data-level="3.2.1" data-path="多元回归.html"><a href="多元回归.html#虚拟编码又称处理编码"><i class="fa fa-check"></i><b>3.2.1</b> 虚拟编码(又称“处理”编码)</a></li>
-<li class="chapter" data-level="3.2.2" data-path="多元回归.html"><a href="多元回归.html#当k-2时的虚拟编码"><i class="fa fa-check"></i><b>3.2.2</b> 当<span class="math inline">\(k &gt; 2\)</span>时的虚拟编码</a></li>
-</ul></li>
-<li class="chapter" data-level="3.3" data-path="多元回归.html"><a href="多元回归.html#多元回归和单因素方差分析one-way-anova的等价性"><i class="fa fa-check"></i><b>3.3</b> 多元回归和单因素方差分析(one-way ANOVA)的等价性</a></li>
-<li class="chapter" data-level="3.4" data-path="多元回归.html"><a href="多元回归.html#练习答案"><i class="fa fa-check"></i><b>3.4</b> 练习答案</a></li>
-</ul></li>
-<li class="chapter" data-level="4" data-path="交互作用.html"><a href="交互作用.html"><i class="fa fa-check"></i><b>4</b> 交互作用</a>
-<ul>
-<li class="chapter" data-level="4.1" data-path="交互作用.html"><a href="交互作用.html#cont-by-cat"><i class="fa fa-check"></i><b>4.1</b> 连续变量-分类变量交互作用</a></li>
-<li class="chapter" data-level="4.2" data-path="交互作用.html"><a href="交互作用.html#分类变量-分类变量交互作用"><i class="fa fa-check"></i><b>4.2</b> 分类变量-分类变量交互作用</a>
-<ul>
-<li class="chapter" data-level="4.2.1" data-path="交互作用.html"><a href="交互作用.html#认知治疗与药物治疗对情绪的影响"><i class="fa fa-check"></i><b>4.2.1</b> 认知治疗与药物治疗对情绪的影响</a></li>
+<li class="chapter" data-level="1.2.1" data-path=""><a href="#认知治疗与药物治疗对情绪的影响"><i class="fa fa-check"></i><b>1.2.1</b> 认知治疗与药物治疗对情绪的影响</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="参考文献.html"><a href="参考文献.html"><i class="fa fa-check"></i>参考文献</a></li>
 </ul>
 
       </nav>
@@ -235,7 +167,7 @@ div.csl-indent {
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">学习统计模型——通过R模拟</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"></a>
           </h1>
         </div>
 
@@ -243,12 +175,14 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="交互作用" class="section level1 hasAnchor" number="4">
-<h1><span class="header-section-number">4</span> 交互作用<a href="交互作用.html#交互作用" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<!--bookdown:title:end-->
+<!--bookdown:title:start-->
+<div id="交互作用" class="section level1 hasAnchor" number="1">
+<h1><span class="header-section-number">1</span> 交互作用<a href="#交互作用" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <!-- understand a common fallacy regarding interactions -->
 <p>到目前为止，我们一直专注于估计和解释一个变量或预测变量线性组合对响应变量的影响。然而，往往存在这样的情况，一个预测变量对响应变量的影响取决于另一个预测变量。实际上，我们可以在模型中包含一个<strong>交互</strong>项来估计和解释这种依赖性。</p>
-<div id="cont-by-cat" class="section level2 hasAnchor" number="4.1">
-<h2><span class="header-section-number">4.1</span> 连续变量-分类变量交互作用<a href="交互作用.html#cont-by-cat" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="cont-by-cat" class="section level2 hasAnchor" number="1.1">
+<h2><span class="header-section-number">1.1</span> 连续变量-分类变量交互作用<a href="#cont-by-cat" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>让我们考虑一个简单的虚构例子。假设你对声波干扰对认知表现的影响感兴趣。你的研究中的每个被试在执行一个简单的反应时任务时(尽快对闪光灯做出反应)，被随机分配接受特定水平的声波干扰。你有一种技术，可以自动生成不同水平的背景噪音（例如城市声音的频率和振幅：鸣笛声、钻地声、喧哗声、玻璃破碎声等）。每个参与者在一个随机选择的干扰水平(0到100)下执行任务。你的假设是，城市生活使人们的任务表现更不受声波干扰的影响。你想要比较城市居民和乡村居民(来自更安静的乡村环境)之间干扰与表现关系的差异。</p>
 <p>你有3个变量：</p>
 <ul>
@@ -260,24 +194,24 @@ div.csl-indent {
 <p><span class="math display">\[Y_i = 450 + 2 X_i + e_i\]</span></p>
 <p>其中<span class="math inline">\(X_i\)</span>是声音干扰的水平。</p>
 <p>让我们模拟100名被试的数据，设定<span class="math inline">\(\sigma = 80\)</span>，并在开始之前设置种子。</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="交互作用.html#cb1-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="交互作用.html#cb1-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1031</span>)</span>
-<span id="cb1-3"><a href="交互作用.html#cb1-3" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="交互作用.html#cb1-4" tabindex="-1"></a>n_subj <span class="ot">&lt;-</span> 100L  <span class="co"># 模拟100名被试的数据(注：L是说明100是整数)</span></span>
-<span id="cb1-5"><a href="交互作用.html#cb1-5" tabindex="-1"></a>b0_urban <span class="ot">&lt;-</span> <span class="dv">450</span> <span class="co"># y轴截距</span></span>
-<span id="cb1-6"><a href="交互作用.html#cb1-6" tabindex="-1"></a>b1_urban <span class="ot">&lt;-</span> <span class="dv">2</span>   <span class="co"># 斜率</span></span>
-<span id="cb1-7"><a href="交互作用.html#cb1-7" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="交互作用.html#cb1-8" tabindex="-1"></a><span class="co"># 分解表(decomposition table)</span></span>
-<span id="cb1-9"><a href="交互作用.html#cb1-9" tabindex="-1"></a>urban <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb1-10"><a href="交互作用.html#cb1-10" tabindex="-1"></a>  <span class="at">subj_id =</span> <span class="dv">1</span><span class="sc">:</span>n_subj,</span>
-<span id="cb1-11"><a href="交互作用.html#cb1-11" tabindex="-1"></a>  <span class="at">group =</span> <span class="st">&quot;urban&quot;</span>,</span>
-<span id="cb1-12"><a href="交互作用.html#cb1-12" tabindex="-1"></a>  <span class="at">b0 =</span> <span class="dv">450</span>,</span>
-<span id="cb1-13"><a href="交互作用.html#cb1-13" tabindex="-1"></a>  <span class="at">b1 =</span> <span class="dv">2</span>,</span>
-<span id="cb1-14"><a href="交互作用.html#cb1-14" tabindex="-1"></a>  <span class="at">dist_level =</span> <span class="fu">sample</span>(<span class="dv">0</span><span class="sc">:</span>n_subj, n_subj, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb1-15"><a href="交互作用.html#cb1-15" tabindex="-1"></a>  <span class="at">err =</span> <span class="fu">rnorm</span>(n_subj, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">80</span>),</span>
-<span id="cb1-16"><a href="交互作用.html#cb1-16" tabindex="-1"></a>  <span class="at">simple_rt =</span> b0 <span class="sc">+</span> b1 <span class="sc">*</span> dist_level <span class="sc">+</span> err)</span>
-<span id="cb1-17"><a href="交互作用.html#cb1-17" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="交互作用.html#cb1-18" tabindex="-1"></a>urban</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1031</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>n_subj <span class="ot">&lt;-</span> 100L  <span class="co"># 模拟100名被试的数据(注：L是说明100是整数)</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>b0_urban <span class="ot">&lt;-</span> <span class="dv">450</span> <span class="co"># y轴截距</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>b1_urban <span class="ot">&lt;-</span> <span class="dv">2</span>   <span class="co"># 斜率</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="co"># 分解表(decomposition table)</span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>urban <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>  <span class="at">subj_id =</span> <span class="dv">1</span><span class="sc">:</span>n_subj,</span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>  <span class="at">group =</span> <span class="st">&quot;urban&quot;</span>,</span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>  <span class="at">b0 =</span> <span class="dv">450</span>,</span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>  <span class="at">b1 =</span> <span class="dv">2</span>,</span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>  <span class="at">dist_level =</span> <span class="fu">sample</span>(<span class="dv">0</span><span class="sc">:</span>n_subj, n_subj, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a>  <span class="at">err =</span> <span class="fu">rnorm</span>(n_subj, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">80</span>),</span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a>  <span class="at">simple_rt =</span> b0 <span class="sc">+</span> b1 <span class="sc">*</span> dist_level <span class="sc">+</span> err)</span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a>urban</span></code></pre></div>
 <pre><code>## # A tibble: 100 × 7
 ##    subj_id group    b0    b1 dist_level     err simple_rt
 ##      &lt;int&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;      &lt;int&gt;   &lt;dbl&gt;     &lt;dbl&gt;
@@ -293,41 +227,41 @@ div.csl-indent {
 ## 10      10 urban   450     2         70   20.7       611.
 ## # ℹ 90 more rows</code></pre>
 <p>让我们绘制创建的数据，并作出最佳拟合线。</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="交互作用.html#cb3-1" tabindex="-1"></a><span class="fu">ggplot</span>(urban, <span class="fu">aes</span>(dist_level, simple_rt)) <span class="sc">+</span> </span>
-<span id="cb3-2"><a href="交互作用.html#cb3-2" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> .<span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb3-3"><a href="交互作用.html#cb3-3" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">ggplot</span>(urban, <span class="fu">aes</span>(dist_level, simple_rt)) <span class="sc">+</span> </span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> .<span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:plot-urban"></span>
 <img src="04-%E4%BA%A4%E4%BA%92%E4%BD%9C%E7%94%A8_files/figure-html/plot-urban-1.png" alt="*声波干扰对简单反应时的影响(城市组)*" width="672" />
 <p class="caption">
-图4.1: <em>声波干扰对简单反应时的影响(城市组)</em>
+图1.1: <em>声波干扰对简单反应时的影响(城市组)</em>
 </p>
 </div>
 <p>现在让我们为乡村组模拟数据。我们假设这些被试的截距可能会略高一些，可能是因为他们对技术不太熟悉。最重要的是，我们假设他们的斜率会更陡，因为他们受到噪音的影响更大。大致如下：</p>
 <p><span class="math display">\[Y_i = 500 + 3 X_i + e_i\]</span></p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="交互作用.html#cb4-1" tabindex="-1"></a>b0_rural <span class="ot">&lt;-</span> <span class="dv">500</span></span>
-<span id="cb4-2"><a href="交互作用.html#cb4-2" tabindex="-1"></a>b1_rural <span class="ot">&lt;-</span> <span class="dv">3</span></span>
-<span id="cb4-3"><a href="交互作用.html#cb4-3" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="交互作用.html#cb4-4" tabindex="-1"></a>rural <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb4-5"><a href="交互作用.html#cb4-5" tabindex="-1"></a>  <span class="at">subj_id =</span> <span class="dv">1</span><span class="sc">:</span>n_subj <span class="sc">+</span> n_subj,</span>
-<span id="cb4-6"><a href="交互作用.html#cb4-6" tabindex="-1"></a>  <span class="at">group =</span> <span class="st">&quot;rural&quot;</span>,</span>
-<span id="cb4-7"><a href="交互作用.html#cb4-7" tabindex="-1"></a>  <span class="at">b0 =</span> b0_rural,</span>
-<span id="cb4-8"><a href="交互作用.html#cb4-8" tabindex="-1"></a>  <span class="at">b1 =</span> b1_rural,</span>
-<span id="cb4-9"><a href="交互作用.html#cb4-9" tabindex="-1"></a>  <span class="at">dist_level =</span> <span class="fu">sample</span>(<span class="dv">0</span><span class="sc">:</span>n_subj, n_subj, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb4-10"><a href="交互作用.html#cb4-10" tabindex="-1"></a>  <span class="at">err =</span> <span class="fu">rnorm</span>(n_subj, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">80</span>),</span>
-<span id="cb4-11"><a href="交互作用.html#cb4-11" tabindex="-1"></a>  <span class="at">simple_rt =</span> b0 <span class="sc">+</span> b1 <span class="sc">*</span> dist_level <span class="sc">+</span> err)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>b0_rural <span class="ot">&lt;-</span> <span class="dv">500</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>b1_rural <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>rural <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>  <span class="at">subj_id =</span> <span class="dv">1</span><span class="sc">:</span>n_subj <span class="sc">+</span> n_subj,</span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>  <span class="at">group =</span> <span class="st">&quot;rural&quot;</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>  <span class="at">b0 =</span> b0_rural,</span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>  <span class="at">b1 =</span> b1_rural,</span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>  <span class="at">dist_level =</span> <span class="fu">sample</span>(<span class="dv">0</span><span class="sc">:</span>n_subj, n_subj, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>  <span class="at">err =</span> <span class="fu">rnorm</span>(n_subj, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">80</span>),</span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a>  <span class="at">simple_rt =</span> b0 <span class="sc">+</span> b1 <span class="sc">*</span> dist_level <span class="sc">+</span> err)</span></code></pre></div>
 <p>现在让我们把这两组的数据一起画出来。</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="交互作用.html#cb5-1" tabindex="-1"></a>all_data <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(urban, rural)</span>
-<span id="cb5-2"><a href="交互作用.html#cb5-2" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="交互作用.html#cb5-3" tabindex="-1"></a><span class="fu">ggplot</span>(all_data <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">group =</span> <span class="fu">fct_relevel</span>(group, <span class="st">&quot;urban&quot;</span>)), </span>
-<span id="cb5-4"><a href="交互作用.html#cb5-4" tabindex="-1"></a>       <span class="fu">aes</span>(dist_level, simple_rt, <span class="at">colour =</span> group)) <span class="sc">+</span></span>
-<span id="cb5-5"><a href="交互作用.html#cb5-5" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb5-6"><a href="交互作用.html#cb5-6" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb5-7"><a href="交互作用.html#cb5-7" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> group) <span class="sc">+</span> </span>
-<span id="cb5-8"><a href="交互作用.html#cb5-8" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>all_data <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(urban, rural)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="fu">ggplot</span>(all_data <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">group =</span> <span class="fu">fct_relevel</span>(group, <span class="st">&quot;urban&quot;</span>)), </span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>       <span class="fu">aes</span>(dist_level, simple_rt, <span class="at">colour =</span> group)) <span class="sc">+</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> group) <span class="sc">+</span> </span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:combined-plot"></span>
 <img src="04-%E4%BA%A4%E4%BA%92%E4%BD%9C%E7%94%A8_files/figure-html/combined-plot-1.png" alt="*声波干扰对简单反应时的影响(城市和乡村)*" width="672" />
 <p class="caption">
-图4.2: <em>声波干扰对简单反应时的影响(城市和乡村)</em>
+图1.2: <em>声波干扰对简单反应时的影响(城市和乡村)</em>
 </p>
 </div>
 <p>这里我们可以很清楚地看到我们在数据中建立的斜率差异。我们如何测试两个斜率是否有显著不同呢？要做到这一点，我们不能做两个单独的回归。我们需要将这两条回归线纳入同一个模型中。我们应该怎么做呢？</p>
@@ -383,15 +317,15 @@ div.csl-indent {
 <p>通常，你会对总体中斜率相同与否感兴趣，而不是样本中的情况。因此，你不能仅仅看样本数据的图表就推断出”线不平行，因此存在交互作用”，或相反”线看起来平行，所以没有交互作用”。你必须进行推论统计检验。</p>
 <p>当交互项在某个<span class="math inline">\(\alpha\)</span>水平(如0.05)上具有统计显著性时，你会拒绝交互系数为0的原假设(如<span class="math inline">\(H_0: \beta_3 = 0\)</span>)，这意味着在总体中这些线不是平行的。</p>
 <p>然而，交互项不显著并<em>不一定</em>意味着在总体中这些线是平行的。它们可能是平行的，但也可能不是，而你的研究只是缺乏足够的统计效力(power)来检测出差异。</p>
-<p>为了获得关于原假设的证据，最好的方法是进行所谓的等效性检验(equivalence test)。在这个检验中你试图拒绝一个原假设，该原假设是总体效应大于某个你感兴趣的最小效应值；教程详见<span class="citation">(<a href="#ref-Lakens_Scheel_Isager_2018">Lakens et al., 2018</a>)</span>。</p>
+<p>为了获得关于原假设的证据，最好的方法是进行所谓的等效性检验(equivalence test)。在这个检验中你试图拒绝一个原假设，该原假设是总体效应大于某个你感兴趣的最小效应值；教程详见<span class="citation">[@Lakens_Scheel_Isager_2018]</span>。</p>
 </div>
 <p>我们已经创建了结合两组模拟数据的数据集<code>all_data</code>。我们使用R公式语法表示模型的方式是<code>Y ~ X1 + X2 + X1:X2</code>，其中<code>X1:X2</code>告诉R创建一个预测变量，该预测变量是<code>X1</code>和<code>X2</code>的乘积。还有一个缩写方式<code>Y ~ X1 * X2</code>，它告诉R计算所有可能的主效应和交互效应。首先，我们将向模型添加一个虚拟预测变量，并将结果存储在<code>all_data2</code>中。</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="交互作用.html#cb6-1" tabindex="-1"></a>all_data2 <span class="ot">&lt;-</span> all_data <span class="sc">%&gt;%</span></span>
-<span id="cb6-2"><a href="交互作用.html#cb6-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">grp =</span> <span class="fu">if_else</span>(group <span class="sc">==</span> <span class="st">&quot;rural&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="交互作用.html#cb7-1" tabindex="-1"></a>sonic_mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(simple_rt <span class="sc">~</span> dist_level <span class="sc">+</span> grp <span class="sc">+</span> dist_level<span class="sc">:</span>grp,</span>
-<span id="cb7-2"><a href="交互作用.html#cb7-2" tabindex="-1"></a>                all_data2)</span>
-<span id="cb7-3"><a href="交互作用.html#cb7-3" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="交互作用.html#cb7-4" tabindex="-1"></a><span class="fu">summary</span>(sonic_mod)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>all_data2 <span class="ot">&lt;-</span> all_data <span class="sc">%&gt;%</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">grp =</span> <span class="fu">if_else</span>(group <span class="sc">==</span> <span class="st">&quot;rural&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>sonic_mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(simple_rt <span class="sc">~</span> dist_level <span class="sc">+</span> grp <span class="sc">+</span> dist_level<span class="sc">:</span>grp,</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>                all_data2)</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="fu">summary</span>(sonic_mod)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = simple_rt ~ dist_level + grp + dist_level:grp, data = all_data2)
@@ -447,8 +381,8 @@ div.csl-indent {
 </div>
 </div>
 </div>
-<div id="分类变量-分类变量交互作用" class="section level2 hasAnchor" number="4.2">
-<h2><span class="header-section-number">4.2</span> 分类变量-分类变量交互作用<a href="交互作用.html#分类变量-分类变量交互作用" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="分类变量-分类变量交互作用" class="section level2 hasAnchor" number="1.2">
+<h2><span class="header-section-number">1.2</span> 分类变量-分类变量交互作用<a href="#分类变量-分类变量交互作用" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>因子设计(factorial design)</strong>在心理学中很常见，通常使用基于ANOVA的技术进行分析，这可能掩盖了ANOVA与回归一样也假设了一个潜在的线性模型的事实。</p>
 <p>因子是一种所有预测变量(自变量，IVs)都是分类变量的设计：每个都是具有固定数量<strong>水平</strong>的<strong>因子</strong>。在一个全因子设计(full-factorial design)中，因子之间完全交叉，以表示每种可能的因子组合。我们称每个唯一的组合为设计的一个<strong>单元(cell)</strong>。你经常会听到设计被称为“二乘二(two-by-two)设计”(2x2)，这意味着有2个因子，每个因子有2个水平。一个“三乘三设计”(3x3)是其中有2个因子，每个因子有3个水平的设计；一个“二乘二乘二设计”(2x2x2)是其中有3个因子，每个因子有2个水平，以此类推。</p>
 <p>通常，因子设计都以表格形式给出，显示所有因子水平的组合。下面是一个2x2设计的表格表示。</p>
@@ -625,8 +559,8 @@ div.csl-indent {
 <p>不存在只有一个水平的因子。</p>
 </div>
 <p>你可以通过将每个因子的水平数相乘来确定设计中有多少个单元。因此，一个2x3x4设计将在设计中有24个单元。</p>
-<div id="认知治疗与药物治疗对情绪的影响" class="section level3 hasAnchor" number="4.2.1">
-<h3><span class="header-section-number">4.2.1</span> 认知治疗与药物治疗对情绪的影响<a href="交互作用.html#认知治疗与药物治疗对情绪的影响" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="认知治疗与药物治疗对情绪的影响" class="section level3 hasAnchor" number="1.2.1">
+<h3><span class="header-section-number">1.2.1</span> 认知治疗与药物治疗对情绪的影响<a href="#认知治疗与药物治疗对情绪的影响" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>让我们考虑一个简单的因子设计，并思考我们的数据可能展示方式。在从这个具体例子中了解概念之后，我们将将其映射到更抽象的统计术语上。</p>
 <p>想象一下，你正在进行一项研究，内容是两种不同类型的治疗(认知疗法和药物疗法)对抑郁症患者的影响。一半的被试被随机分配接受认知行为疗法(Cognitive Behavioral Therapy, CBT)，另一半接受其他控制操作(no-CBT)。此外，你通过随机分配进一步将你的患者分为两组：药物治疗组(接受抗抑郁药物, drug)和对照组(接受安慰剂, placebo)。接受治疗(或对照/安慰剂)后，你使用一个评分标准来测量他们的情绪，较高的数字对应较积极的情绪。</p>
 <p>让我们想象一下，下面我们得到的均值是不受测量或抽样误差影响的总体均值。我们将花一点时间考虑3种不同的可能结果，以及它们暗示这些疗法如何独立或交互地影响情绪。</p>
@@ -634,11 +568,11 @@ div.csl-indent {
 <p>在分类变量-连续变量交互作用部分关于的总体和样本的提醒在这里同样适用。除非模拟数据，你几乎<strong>永远不会</strong>知道你正在研究的任何总体的真实均值。下面，我们讨论的是你实际知道总体均值并且可以在没有任何统计测试的情况下得出结论的假设情况。你观察到的任何真实样本均值都会包含抽样和测量误差，你所做的任何推断都将取决于统计检验的结果，而不是观察到的均值。</p>
 </div>
 <div id="情景a" class="section level4 unnumbered hasAnchor">
-<h4>情景A<a href="交互作用.html#情景a" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<h4>情景A<a href="#情景a" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <div class="figure"><span style="display:block;" id="fig:scenario-a-plot"></span>
 <img src="04-%E4%BA%A4%E4%BA%92%E4%BD%9C%E7%94%A8_files/figure-html/scenario-a-plot-1.png" alt="*情景A, 单元平均值图*" width="50%" />
 <p class="caption">
-图4.3: <em>情景A, 单元平均值图</em>
+图1.3: <em>情景A, 单元平均值图</em>
 </p>
 </div>
 <p>下面是一个<strong>单元均值(cell mean)</strong>和<strong>边际均值(marginal mean)</strong>的表格。单元均值是设计的每个单元中因变量(情绪)的平均值。边际均值(在表格的边缘)提供了每行和每列的均值。</p>
@@ -705,28 +639,36 @@ Drug
 <p>现在我们还可以问下个问题：<strong>认知疗法的效果是否取决于患者是否同时接受药物疗法</strong>？答案是否定的。看看为什么，注意到对于安慰剂组(第1行)，认知疗法使情绪提高了20分(从40提高到60)。但对于药物组来说也是一样的：从60提高到80也是20分的提高。因此，没有证据表明一个因素对心情的影响取决于另一个因素。</p>
 </div>
 <div id="情景b" class="section level4 unnumbered hasAnchor">
-<h4>情景B<a href="交互作用.html#情景b" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<h4>情景B<a href="#情景b" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <div class="figure"><span style="display:block;" id="fig:scenario-b-plot"></span>
 <img src="04-%E4%BA%A4%E4%BA%92%E4%BD%9C%E7%94%A8_files/figure-html/scenario-b-plot-1.png" alt="*情景B, 单元平均值图*" width="50%" />
 <p class="caption">
-图4.4: <em>情景B, 单元平均值图</em>
+图1.4: <em>情景B, 单元平均值图</em>
 </p>
 </div>
-<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
-<caption>
-<span id="tab:scenario-b-means">表4.1: </span><span id="tab:scenario-b-means">表4.2: </span><em>Scenario B, Table of Means.</em>
-</caption>
+<table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
-<th style="text-align:left;">
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="4">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Scenario B, Table of Means.
+</div>
 </th>
-<th style="text-align:right;">
+</tr>
+<tr>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="4">
+</th>
+</tr>
+<tr>
+<th style="text-align:left;font-weight: bold;">
+</th>
+<th style="text-align:right;font-weight: bold;">
 No CBT
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;font-weight: bold;">
 CBT
 </th>
-<th style="text-align:left;">
+<th style="text-align:left;font-weight: bold;">
 </th>
 </tr>
 </thead>
@@ -773,15 +715,8 @@ Drug
 </tr>
 </tbody>
 </table>
-
 </div>
 </div>
-</div>
-</div>
-<h3>参考文献<a href="参考文献.html#参考文献" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
-<div id="ref-Lakens_Scheel_Isager_2018" class="csl-entry">
-Lakens, D., Scheel, A. M., &amp; Isager, P. M. (2018). Equivalence testing for psychological research: A tutorial. <em>Advances in Methods and Practices in Psychological Science</em>, <em>1</em>, 259–269. <a href="https://journals.sagepub.com/doi/abs/10.1177/2515245918770963">https://journals.sagepub.com/doi/abs/10.1177/2515245918770963</a>
 </div>
 </div>
 <script>
@@ -908,8 +843,8 @@ $( document ).ready(function() {
           </div>
         </div>
       </div>
-<a href="多元回归.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="参考文献.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -951,11 +886,8 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["CBook.pdf"],
-"search": {
-"engine": "fuse",
-"options": null
-},
+"download": null,
+"search": false,
 "toc": {
 "collapse": "subsection"
 }

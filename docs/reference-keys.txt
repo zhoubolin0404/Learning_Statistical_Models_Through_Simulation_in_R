@@ -13,6 +13,8 @@ fig:partial-nclicks
 fig:plot-urban
 fig:combined-plot
 fig:scenario-a-plot
+fig:scenario-b-plot
+fig:scenario-c-plot
 前言
 课程目的
 广义线性混合模型generalized-linear-mixed-effects-models-glmms
@@ -38,7 +40,15 @@ fig:scenario-a-plot
 当k-2时的虚拟编码
 多元回归和单因素方差分析one-way-anova的等价性
 练习答案
-交互作用
+交互效应
 cont-by-cat
-分类变量-分类变量交互作用
+分类变量-分类变量交互效应
 认知治疗与药物治疗对情绪的影响
+因子设计中的效应
+主效应main-effect
+简单效应simple-effect
+交互效应-1
+高阶设计higher-order-designs
+用于因子设计的glm
+估计方程estimation-equations
+因子设计app
