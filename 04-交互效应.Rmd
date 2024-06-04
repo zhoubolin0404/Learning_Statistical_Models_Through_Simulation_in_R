@@ -548,5 +548,39 @@ decomp %>%
 
 ![](images/04-interactions_factorial_app.png)
 
-[启动这个网页APP](https://rstudio-connect.psy.gla.ac.uk/factorial){target="_blank"}，尝试因子设计，直到你理解因子设计中的主效应和交互效应的关键概念。
+[启动这个网页APP](https://rstudio-connect.psy.gla.ac.uk/factorial){target="_blank"}，尝试因子设计，直到你理解因子设计中主效应和交互效应的关键概念。
+
+## 在因子设计中对分类预测因子进行编码
+
+```{r setup2, include=FALSE}
+## paste
+.p <- paste0
+
+## .fraction
+.f <- function(x, y) {
+  paste0("\\frac{", x, "}{", y, "}")
+}
+
+## y-bar
+.yb1 <- function(x) {
+  paste0("$\\bar{Y}_{", x, "}$")
+}
+
+.yb2 <- function(x) {
+  paste0("\\bar{Y}_{", x, "}")
+}
+
+## subtraction term
+.st <- function(x, y, bracket = NULL) {
+  if (is.null(bracket)) {
+    paste0(x, " - ", y)
+  } else {
+    paste0(bracket[1], x, " - ", y, bracket[2])
+  }
+}
+
+.rb <- c("(", ")")
+.dr <- c("\\displaystyle\\left(", "\\right)")
+.ds <- c("\\displaystyle\\left[", "\\right]")
+```
 

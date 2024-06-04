@@ -52,3 +52,4 @@ cont-by-cat
 用于因子设计的glm
 估计方程estimation-equations
 因子设计app
+在因子设计中对分类预测因子进行编码
