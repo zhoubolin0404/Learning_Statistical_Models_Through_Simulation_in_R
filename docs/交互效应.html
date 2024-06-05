@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>4 交互效应 | 学习统计模型——通过R模拟</title>
-  <meta name="description" content="4 交互效应 | 学习统计模型——通过R模拟" />
+  <title>4 交互效应 | 学习统计模型——通过R模拟(施工中)</title>
+  <meta name="description" content="4 交互效应 | 学习统计模型——通过R模拟(施工中)" />
   <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="4 交互效应 | 学习统计模型——通过R模拟" />
+  <meta property="og:title" content="4 交互效应 | 学习统计模型——通过R模拟(施工中)" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="4 交互效应 | 学习统计模型——通过R模拟" />
+  <meta name="twitter:title" content="4 交互效应 | 学习统计模型——通过R模拟(施工中)" />
   
   
   
@@ -253,7 +253,7 @@ div.csl-indent {
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">学习统计模型——通过R模拟</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">学习统计模型——通过R模拟(施工中)</a>
           </h1>
         </div>
 
@@ -1432,7 +1432,6 @@ deviation
 </tbody>
 </table>
 <p>请注意，尽管求和编码的参数估计值为其他方案的八分之一，但<span class="math inline">\(A \times B \times C\)</span>的推断检验结果全部相同。对于所有低阶效应(lower-order effects)，求和编码和偏差编码将给出不同的参数估计，但相同的推断结果。这两种编码方案都对主效应和主交互效应提供了和3因素ANOVA中相同的检测。相反，处理(虚拟)编码将提供简单效应和简单交互效应的推断检测。因此，如果您感兴趣的是获得方差分析中的“经典”检测结果，请使用求和编码或偏差编码。</p>
-<p>注：配合这篇<a href="https://zhuanlan.zhihu.com/p/513227882?ssr_src=heifetz">知乎帖子</a>阅读，有助理解。</p>
 </div>
 <div id="超过2水平的因子呢" class="section level3 hasAnchor" number="4.5.3">
 <h3><span class="header-section-number">4.5.3</span> 超过2水平的因子呢？<a href="交互效应.html#超过2水平的因子呢" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -1441,6 +1440,7 @@ deviation
 <p>对于求和编码，水平的总和必须为零，因此对于给定的预测变量，目标水平被赋值为1，基线水平被赋值为-1，任何其他水平被赋值为0。</p>
 <p>对于偏差编码，值也必须总和为0。无论哪种情况，建议在尝试进行ANOVA式推断时使用偏差编码。根据这种方案，目标水平的值为<span class="math inline">\(\frac{k-1}{k}\)</span>，而任何非目标水平的值为<span class="math inline">\(-\frac{1}{k}\)</span>。</p>
 <p><strong>有趣的事实</strong>：对平衡数据进行均值中心处理编码(Mean-centering treatment codes)，你会得到偏差编码。</p>
+<p>注：配合这篇<a href="https://zhuanlan.zhihu.com/p/513227882?ssr_src=heifetz">知乎帖子</a>阅读，有助理解。</p>
 </div>
 <div id="举例3水平因子" class="section level3 hasAnchor" number="4.5.4">
 <h3><span class="header-section-number">4.5.4</span> 举例：3水平因子<a href="交互效应.html#举例3水平因子" class="anchor-section" aria-label="Anchor link to header"></a></h3>
