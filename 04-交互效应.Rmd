@@ -927,7 +927,7 @@ dat_dev <- dat %>%
          A3v1 = if_else(A == "A3", 2/3, -1/3)) # 目标A3
 ```
 
-`r hide("点击查看结")`
+`r hide("点击查看结果")`
 
 ```{r dat-dev}
 dat_dev
