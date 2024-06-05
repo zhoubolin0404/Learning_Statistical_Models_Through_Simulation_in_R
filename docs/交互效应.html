@@ -23,7 +23,7 @@
 <meta name="author" content="周博霖" />
 
 
-<meta name="date" content="2024-06-04" />
+<meta name="date" content="2024-06-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -233,6 +233,15 @@ div.csl-indent {
 <li class="chapter" data-level="4.3.2" data-path="交互效应.html"><a href="交互效应.html#因子设计app"><i class="fa fa-check"></i><b>4.3.2</b> 因子设计App</a></li>
 </ul></li>
 <li class="chapter" data-level="4.4" data-path="交互效应.html"><a href="交互效应.html#在因子设计中对分类预测因子进行编码"><i class="fa fa-check"></i><b>4.4</b> 在因子设计中对分类预测因子进行编码</a></li>
+<li class="chapter" data-level="4.5" data-path="交互效应.html"><a href="交互效应.html#分类变量的编码方案"><i class="fa fa-check"></i><b>4.5</b> 分类变量的编码方案</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="交互效应.html"><a href="交互效应.html#简单效应-vs.-主效应"><i class="fa fa-check"></i><b>4.5.1</b> 简单效应 vs. 主效应</a></li>
+<li class="chapter" data-level="4.5.2" data-path="交互效应.html"><a href="交互效应.html#主要编码方案"><i class="fa fa-check"></i><b>4.5.2</b> 主要编码方案</a></li>
+<li class="chapter" data-level="4.5.3" data-path="交互效应.html"><a href="交互效应.html#超过2水平的因子呢"><i class="fa fa-check"></i><b>4.5.3</b> 超过2水平的因子呢？</a></li>
+<li class="chapter" data-level="4.5.4" data-path="交互效应.html"><a href="交互效应.html#举例3水平因子"><i class="fa fa-check"></i><b>4.5.4</b> 举例：3水平因子</a></li>
+<li class="chapter" data-level="4.5.5" data-path="交互效应.html"><a href="交互效应.html#如何创建你自己的数值型预测变量"><i class="fa fa-check"></i><b>4.5.5</b> 如何创建你自己的数值型预测变量</a></li>
+<li class="chapter" data-level="4.5.6" data-path="交互效应.html"><a href="交互效应.html#小结"><i class="fa fa-check"></i><b>4.5.6</b> 小结</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="参考文献.html"><a href="参考文献.html"><i class="fa fa-check"></i>参考文献</a></li>
 </ul>
@@ -952,7 +961,1212 @@ Drug
 </div>
 <div id="在因子设计中对分类预测因子进行编码" class="section level2 hasAnchor" number="4.4">
 <h2><span class="header-section-number">4.4</span> 在因子设计中对分类预测因子进行编码<a href="交互效应.html#在因子设计中对分类预测因子进行编码" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>心理学研究(尤其是实验心理学)经常涉及分类自变量。分析这些研究的数据时，需要仔细指定预测变量，因为R中的默认设置对实验情景而言并不理想。主要问题是分类预测变量的默认编码在输出中给出的是<strong>简单效应</strong>而非<strong>主效应</strong>，但后者通常是你所需要的。人们有时没有意识到这一点，误读了他们的输出结果。研究人员有时会报告含有分类预测变量的回归结果，但未明确报告他们是如何编码这些变量的，这使得他们的研究结果难以解读和再现。为了确保可重复性、透明度和准确解释，学习如何“手动”编码分类预测变量并在报告中习惯性地报告这些编码是一个好主意。</p>
+<p>由于R的默认设置不适合因子设计，我建议在将分类变量作为线性模型中的预测变量时，应该总是手动编码分类变量。不要将它们包括为<code>factor</code>变量。</p>
+</div>
+<div id="分类变量的编码方案" class="section level2 hasAnchor" number="4.5">
+<h2><span class="header-section-number">4.5</span> 分类变量的编码方案<a href="交互效应.html#分类变量的编码方案" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>许多实验研究者在尝试从方差分析(ANOVA)转向使用R进行线性混合模型(linear mixed-effects models，LMEMs)时，都会在编码分类预测变量时遇到困难。这比预期的要复杂得多，而R提供的默认设置对于因子实验来说完全不合适。实际上，在因子实验中使用这些默认设置可能会导致研究人员从数据中得出错误的结论。</p>
+<p>为了简化问题，我们将从设计因子不超过两水平的情况开始，然后再讨论具有三个以上水平的设计。</p>
+<div id="简单效应-vs.-主效应" class="section level3 hasAnchor" number="4.5.1">
+<h3><span class="header-section-number">4.5.1</span> 简单效应 vs. 主效应<a href="交互效应.html#简单效应-vs.-主效应" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>理解<strong>简单效应(simple effect)</strong>和<strong>主效应(main effect)</strong>以及<strong>简单交互效应(simple interaction)</strong>和<strong>主交互效应(main interaction)</strong>在三因素设计中的区别是非常重要的。</p>
+<p>在<span class="math inline">\(A{\times}B\)</span>设计中，<span class="math inline">\(A\)</span>的简单效应是<strong>控制</strong><span class="math inline">\(B\)</span>后的<span class="math inline">\(A\)</span>的效应，而<span class="math inline">\(A\)</span>的主效应是<strong>忽略</strong><span class="math inline">\(B\)</span>后<span class="math inline">\(A\)</span>的效应。另一种看待这个问题的方法是考虑因子设计中的单元均值(<span class="math inline">\(\bar{Y}_{11}\)</span>，<span class="math inline">\(\bar{Y}_{12}\)</span>，<span class="math inline">\(\bar{Y}_{21}\)</span>和<span class="math inline">\(\bar{Y}_{22}\)</span>)以及边际均值(<span class="math inline">\(\bar{Y}_{1.}\)</span>，<span class="math inline">\(\bar{Y}_{2.}\)</span>，<span class="math inline">\(\bar{Y}_{.1}\)</span>和<span class="math inline">\(\bar{Y}_{.2}\)</span>)。(下标的点告诉你“忽略”该点的维度；例如：<span class="math inline">\(\bar{Y}_{.1}\)</span>告诉你忽略行变量取第1列的均值)。测试<span class="math inline">\(A\)</span>的主效应是测试原假设<span class="math inline">\(\bar{Y}_{1.}=\bar{Y}_{2.}\)</span>。测试<span class="math inline">\(A\)</span>的简单效应，即在<span class="math inline">\(B\)</span>的特定水平上<span class="math inline">\(A\)</span>的效应，例如，测试原假设<span class="math inline">\(\bar{Y}_{11}=\bar{Y}_{21}\)</span>。</p>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:center;">
+</th>
+<th style="text-align:center;">
+<span class="math inline">\(B_1\)</span>
+</th>
+<th style="text-align:center;">
+<span class="math inline">\(B_2\)</span>
+</th>
+<th style="text-align:center;">
+</th>
+<th style="text-align:center;">
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+<span class="math inline">\(A_1\)</span>
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(\bar{Y}_{11}\)</span>
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(\bar{Y}_{12}\)</span>
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(\bar{Y}_{1.}\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+<span class="math inline">\(A_2\)</span>
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(\bar{Y}_{21}\)</span>
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(\bar{Y}_{22}\)</span>
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(\bar{Y}_{2.}\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(\bar{Y}_{.1}\)</span>
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(\bar{Y}_{.2}\)</span>
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+</tbody>
+</table>
+<p>区别<strong>简单交互效应</strong>和<strong>主交互效应</strong>的逻辑相同：在<span class="math inline">\(ABC\)</span>设计中，<span class="math inline">\(AB\)</span>的简单交互效应是在<span class="math inline">\(C\)</span>的特定水平上<span class="math inline">\(AB\)</span>交互效应；而<span class="math inline">\(AB\)</span>的主交互效应是<strong>忽略</strong><span class="math inline">\(C\)</span>后<span class="math inline">\(AB\)</span>的交互效应。后者是我们在三因子设计中通常讨论的低阶交互效应(lower-order interaction)。这也是标准ANOVA程序(如R的<code>aov()</code>函数、SPSS、SAS等)输出中所提供的内容。</p>
+</div>
+<div id="主要编码方案" class="section level3 hasAnchor" number="4.5.2">
+<h3><span class="header-section-number">4.5.2</span> 主要编码方案<a href="交互效应.html#主要编码方案" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>通常，编码方案的选择会影响对数据的解释：</p>
+<ol style="list-style-type: decimal">
+<li>截距项的解释</li>
+<li>因子设计中除最高阶效应和(最高阶)交互效应之外的所有测试的解释。</li>
+</ol>
+<p>它还会影响混合效应模型中随机效应的解释/估计(详见这篇<a href="https://talklab.psy.gla.ac.uk/simgen/rsonly.html">博客</a>)。如果你的设计只有一个两水平因素，并且使用了<a href="https://www.sciencedirect.com/science/article/pii/S0749596X12001180">最大随机效应结构</a>( maximal random-effects structure)，那么编码方案的选择实际上并不重要。</p>
+<p>有许多可能的编码方案(详见<code>?contr.treatment</code>)。最相关的编码方案是<strong>处理(treatment)编码</strong>、<strong>求和(sum)编码</strong>和<strong>偏差(deviation)编码</strong>。求和编码和偏差编码可以被视为<strong>效应编码(effect coding)</strong>的特例——人们通常把那些编码总和为0的编码称为效应编码。</p>
+<p>对于2水平因子，你可以使用下面代码：</p>
+<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Scheme
+</th>
+<th style="text-align:right;">
+<span class="math inline">\(A_1\)</span>
+</th>
+<th style="text-align:right;">
+<span class="math inline">\(A_2\)</span>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Treatment (dummy)
+</td>
+<td style="text-align:right;">
+<span class="math inline">\(0\)</span>
+</td>
+<td style="text-align:right;">
+<span class="math inline">\(1\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Sum
+</td>
+<td style="text-align:right;">
+<span class="math inline">\(-1\)</span>
+</td>
+<td style="text-align:right;">
+<span class="math inline">\(1\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Deviation
+</td>
+<td style="text-align:right;">
+<span class="math inline">\(-\frac{1}{2}\)</span>
+</td>
+<td style="text-align:right;">
+<span class="math inline">\(\frac{1}{2}\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p>默认情况下，R对模型中定义为=factor=的任何变量使用处理编码(详见<code>?factor</code>和<code>?contrasts</code>)。要了解为什么这对因子设计而言并不理想，可以考虑一个2x2x2的因子设计，因子包括<span class="math inline">\(A\)</span>、<span class="math inline">\(B\)</span> 和<span class="math inline">\(C\)</span>。我们将只考虑一个完全的被试内设计，每个被试只有一个观测值，因为这允许我们使用最简单的可能的误差结构(error structure)。我们将使用<code>lm()</code>来拟合一个这样的模型：</p>
+<p><code>lm(Y ~ A * B * C)</code></p>
+<p>下图详细说明了2x2x2设计的各种单元均值和边际均值的符号。</p>
+<p><span class="math display">\[C_1\]</span></p>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:center;">
+</th>
+<th style="text-align:center;">
+<span class="math inline">\(B_1\)</span>
+</th>
+<th style="text-align:center;">
+<span class="math inline">\(B_2\)</span>
+</th>
+<th style="text-align:center;">
+</th>
+<th style="text-align:center;">
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+<span class="math inline">\(A_1\)</span>
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(\bar{Y}_{111}\)</span>
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(\bar{Y}_{121}\)</span>
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(\bar{Y}_{1.1}\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+<span class="math inline">\(A_2\)</span>
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(\bar{Y}_{211}\)</span>
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(\bar{Y}_{221}\)</span>
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(\bar{Y}_{2.1}\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(\bar{Y}_{.11}\)</span>
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(\bar{Y}_{.21}\)</span>
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+</tbody>
+</table>
+<p><span class="math display">\[C_2\]</span></p>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:center;">
+</th>
+<th style="text-align:center;">
+<span class="math inline">\(B_1\)</span>
+</th>
+<th style="text-align:center;">
+<span class="math inline">\(B_2\)</span>
+</th>
+<th style="text-align:center;">
+</th>
+<th style="text-align:center;">
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+<span class="math inline">\(A_1\)</span>
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(\bar{Y}_{112}\)</span>
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(\bar{Y}_{122}\)</span>
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(\bar{Y}_{1.2}\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+<span class="math inline">\(A_2\)</span>
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(\bar{Y}_{212}\)</span>
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(\bar{Y}_{222}\)</span>
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(\bar{Y}_{2.2}\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(\bar{Y}_{.12}\)</span>
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(\bar{Y}_{.22}\)</span>
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+</tbody>
+</table>
+<p>下表提供了在三种不同编码方案下模型中各种效应的解释。注意，<span class="math inline">\(Y\)</span>是因变量，下标的点表示“忽略”相应的维度。因此，<span class="math inline">\(\bar{Y}_{.1.}\)</span>是B_1的均值(忽略因子<span class="math inline">\(A\)</span>和因子<span class="math inline">\(C\)</span>)，而<span class="math inline">\(\bar{Y}_{...}\)</span>是“总均值”(忽略所有因子)。</p>
+<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:center;">
+term
+</th>
+<th style="text-align:center;">
+treatment
+</th>
+<th style="text-align:center;">
+sum
+</th>
+<th style="text-align:center;">
+deviation
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+<span class="math inline">\(\mu\)</span>
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(\bar{Y}_{111}\)</span>
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(\bar{Y}_{...}\)</span>
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(\bar{Y}_{...}\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+<span class="math inline">\(A\)</span>
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(\bar{Y}_{211} - \bar{Y}_{111}\)</span>
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(\frac{(\bar{Y}_{2..} - \bar{Y}_{1..})}{2}\)</span>
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(\bar{Y}_{2..} - \bar{Y}_{1..}\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+<span class="math inline">\(B\)</span>
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(\bar{Y}_{121} - \bar{Y}_{111}\)</span>
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(\frac{(\bar{Y}_{.2.} - \bar{Y}_{.1.})}{2}\)</span>
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(\bar{Y}_{.2.} - \bar{Y}_{.1.}\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+<span class="math inline">\(C\)</span>
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(\bar{Y}_{112} - \bar{Y}_{111}\)</span>
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(\frac{(\bar{Y}_{..2} - \bar{Y}_{..1})}{2}\)</span>
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(\bar{Y}_{..2} - \bar{Y}_{..1}\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+<span class="math inline">\(AB\)</span>
+</td>
+<td style="text-align:center;">
+<span class="math inline">\((\bar{Y}_{221} - \bar{Y}_{121}) - (\bar{Y}_{211} - \bar{Y}_{111})\)</span>
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(\frac{(\bar{Y}_{22.} - \bar{Y}_{12.}) - (\bar{Y}_{21.} - \bar{Y}_{11.})}{4}\)</span>
+</td>
+<td style="text-align:center;">
+<span class="math inline">\((\bar{Y}_{22.} - \bar{Y}_{12.}) - (\bar{Y}_{21.} - \bar{Y}_{11.})\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+<span class="math inline">\(AC\)</span>
+</td>
+<td style="text-align:center;">
+<span class="math inline">\((\bar{Y}_{212} - \bar{Y}_{211}) - (\bar{Y}_{112} - \bar{Y}_{111})\)</span>
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(\frac{(\bar{Y}_{2.2} - \bar{Y}_{1.2}) - (\bar{Y}_{2.1} - \bar{Y}_{1.1})}{4}\)</span>
+</td>
+<td style="text-align:center;">
+<span class="math inline">\((\bar{Y}_{2.2} - \bar{Y}_{1.2}) - (\bar{Y}_{2.1} - \bar{Y}_{1.1})\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+<span class="math inline">\(BC\)</span>
+</td>
+<td style="text-align:center;">
+<span class="math inline">\((\bar{Y}_{122} - \bar{Y}_{112}) - (\bar{Y}_{121} - \bar{Y}_{111})\)</span>
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(\frac{(\bar{Y}_{.22} - \bar{Y}_{.12}) - (\bar{Y}_{.21} - \bar{Y}_{.11})}{4}\)</span>
+</td>
+<td style="text-align:center;">
+<span class="math inline">\((\bar{Y}_{.22} - \bar{Y}_{.12}) - (\bar{Y}_{.21} - \bar{Y}_{.11})\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p>对于三因子<span class="math inline">\(A \times B \times C\)</span>的交互效应：</p>
+<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:center;">
+scheme
+</th>
+<th style="text-align:center;">
+interpretation
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+treatment
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(\displaystyle\left[\displaystyle\left(\bar{Y}_{221} - \bar{Y}_{121}\right) - \displaystyle\left(\bar{Y}_{211} - \bar{Y}_{111}\right)\right] - \displaystyle\left[\displaystyle\left(\bar{Y}_{222} - \bar{Y}_{122}\right) - \displaystyle\left(\bar{Y}_{212} - \bar{Y}_{112}\right)\right]\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+sum
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(\frac{\displaystyle\left[\displaystyle\left(\bar{Y}_{221} - \bar{Y}_{121}\right) - \displaystyle\left(\bar{Y}_{211} - \bar{Y}_{111}\right)\right] - \displaystyle\left[\displaystyle\left(\bar{Y}_{222} - \bar{Y}_{122}\right) - \displaystyle\left(\bar{Y}_{212} - \bar{Y}_{112}\right)\right]}{8}\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+deviation
+</td>
+<td style="text-align:center;">
+<span class="math inline">\(\displaystyle\left[\displaystyle\left(\bar{Y}_{221} - \bar{Y}_{121}\right) - \displaystyle\left(\bar{Y}_{211} - \bar{Y}_{111}\right)\right] - \displaystyle\left[\displaystyle\left(\bar{Y}_{222} - \bar{Y}_{122}\right) - \displaystyle\left(\bar{Y}_{212} - \bar{Y}_{112}\right)\right]\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p>请注意，尽管求和编码的参数估计值为其他方案的八分之一，但<span class="math inline">\(A \times B \times C\)</span>的推断检验结果全部相同。对于所有低阶效应(lower-order effects)，求和编码和偏差编码将给出不同的参数估计，但相同的推断结果。这两种编码方案都对主效应和主交互效应提供了和3因素ANOVA中相同的检测。相反，处理(虚拟)编码将提供简单效应和简单交互效应的推断检测。因此，如果您感兴趣的是获得方差分析中的“经典”检测结果，请使用求和编码或偏差编码。</p>
+<p>注：配合这篇<a href="https://zhuanlan.zhihu.com/p/513227882?ssr_src=heifetz">知乎帖子</a>阅读，有助理解。</p>
+</div>
+<div id="超过2水平的因子呢" class="section level3 hasAnchor" number="4.5.3">
+<h3><span class="header-section-number">4.5.3</span> 超过2水平的因子呢？<a href="交互效应.html#超过2水平的因子呢" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>一个具有<span class="math inline">\(k\)</span>水平的因子需要<span class="math inline">\(k-1\)</span>个变量。每个预测变量将因子的特定“目标”水平与你(任意地)选择为“基线”的水平进行对比。例如，对于一个3水平因子<span class="math inline">\(A\)</span>，选择<span class="math inline">\(A1\)</span>作为基线，你将有两个预测变量，一个比较<span class="math inline">\(A2\)</span>和<span class="math inline">\(A1\)</span>，另一个比较<span class="math inline">\(A3\)</span>和<span class="math inline">\(A1\)</span>。</p>
+<p>对于处理(虚拟)编码，目标水平设置为1，否则为0。</p>
+<p>对于求和编码，水平的总和必须为零，因此对于给定的预测变量，目标水平被赋值为1，基线水平被赋值为-1，任何其他水平被赋值为0。</p>
+<p>对于偏差编码，值也必须总和为0。无论哪种情况，建议在尝试进行ANOVA式推断时使用偏差编码。根据这种方案，目标水平的值为<span class="math inline">\(\frac{k-1}{k}\)</span>，而任何非目标水平的值为<span class="math inline">\(-\frac{1}{k}\)</span>。</p>
+<p><strong>有趣的事实</strong>：对平衡数据进行均值中心处理编码(Mean-centering treatment codes)，你会得到偏差编码。</p>
+</div>
+<div id="举例3水平因子" class="section level3 hasAnchor" number="4.5.4">
+<h3><span class="header-section-number">4.5.4</span> 举例：3水平因子<a href="交互效应.html#举例3水平因子" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="处理虚拟编码" class="section level4 hasAnchor" number="4.5.4.1">
+<h4><span class="header-section-number">4.5.4.1</span> 处理(虚拟)编码<a href="交互效应.html#处理虚拟编码" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+level
+</th>
+<th style="text-align:right;">
+A2v1
+</th>
+<th style="text-align:right;">
+A3v1
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+A1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+A2
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+A3
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="求和编码" class="section level4 hasAnchor" number="4.5.4.2">
+<h4><span class="header-section-number">4.5.4.2</span> 求和编码<a href="交互效应.html#求和编码" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+level
+</th>
+<th style="text-align:right;">
+A2v1
+</th>
+<th style="text-align:right;">
+A3v1
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+A1
+</td>
+<td style="text-align:right;">
+-1
+</td>
+<td style="text-align:right;">
+-1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+A2
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+A3
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="偏差编码" class="section level4 hasAnchor" number="4.5.4.3">
+<h4><span class="header-section-number">4.5.4.3</span> 偏差编码<a href="交互效应.html#偏差编码" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+level
+</th>
+<th style="text-align:right;">
+A2v1
+</th>
+<th style="text-align:right;">
+A3v1
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+A1
+</td>
+<td style="text-align:right;">
+<span class="math inline">\(-\frac{1}{3}\)</span>
+</td>
+<td style="text-align:right;">
+<span class="math inline">\(-\frac{1}{3}\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+A2
+</td>
+<td style="text-align:right;">
+<span class="math inline">\(\frac{2}{3}\)</span>
+</td>
+<td style="text-align:right;">
+<span class="math inline">\(-\frac{1}{3}\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+A3
+</td>
+<td style="text-align:right;">
+<span class="math inline">\(-\frac{1}{3}\)</span>
+</td>
+<td style="text-align:right;">
+<span class="math inline">\(\frac{2}{3}\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="举例5水平因子" class="section level4 hasAnchor" number="4.5.4.4">
+<h4><span class="header-section-number">4.5.4.4</span> 举例：5水平因子<a href="交互效应.html#举例5水平因子" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+</div>
+<div id="处理虚拟编码-1" class="section level4 hasAnchor" number="4.5.4.5">
+<h4><span class="header-section-number">4.5.4.5</span> 处理(虚拟)编码<a href="交互效应.html#处理虚拟编码-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+level
+</th>
+<th style="text-align:right;">
+A2v1
+</th>
+<th style="text-align:right;">
+A3v1
+</th>
+<th style="text-align:right;">
+A4v1
+</th>
+<th style="text-align:right;">
+A5v1
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+A1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+A2
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+A3
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+A4
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+A5
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="求和编码-1" class="section level4 hasAnchor" number="4.5.4.6">
+<h4><span class="header-section-number">4.5.4.6</span> 求和编码<a href="交互效应.html#求和编码-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+level
+</th>
+<th style="text-align:right;">
+A2v1
+</th>
+<th style="text-align:right;">
+A3v1
+</th>
+<th style="text-align:right;">
+A4v1
+</th>
+<th style="text-align:right;">
+A5v1
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+A1
+</td>
+<td style="text-align:right;">
+-1
+</td>
+<td style="text-align:right;">
+-1
+</td>
+<td style="text-align:right;">
+-1
+</td>
+<td style="text-align:right;">
+-1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+A2
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+A3
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+A4
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+A5
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="偏差编码-1" class="section level4 hasAnchor" number="4.5.4.7">
+<h4><span class="header-section-number">4.5.4.7</span> 偏差编码<a href="交互效应.html#偏差编码-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+level
+</th>
+<th style="text-align:right;">
+A2v1
+</th>
+<th style="text-align:right;">
+A3v1
+</th>
+<th style="text-align:right;">
+A4v1
+</th>
+<th style="text-align:right;">
+A5v1
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+A1
+</td>
+<td style="text-align:right;">
+<span class="math inline">\(-\frac{1}{5}\)</span>
+</td>
+<td style="text-align:right;">
+<span class="math inline">\(-\frac{1}{5}\)</span>
+</td>
+<td style="text-align:right;">
+<span class="math inline">\(-\frac{1}{5}\)</span>
+</td>
+<td style="text-align:right;">
+<span class="math inline">\(-\frac{1}{5}\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+A2
+</td>
+<td style="text-align:right;">
+<span class="math inline">\(\frac{4}{5}\)</span>
+</td>
+<td style="text-align:right;">
+<span class="math inline">\(-\frac{1}{5}\)</span>
+</td>
+<td style="text-align:right;">
+<span class="math inline">\(-\frac{1}{5}\)</span>
+</td>
+<td style="text-align:right;">
+<span class="math inline">\(-\frac{1}{5}\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+A3
+</td>
+<td style="text-align:right;">
+<span class="math inline">\(-\frac{1}{5}\)</span>
+</td>
+<td style="text-align:right;">
+<span class="math inline">\(\frac{4}{5}\)</span>
+</td>
+<td style="text-align:right;">
+<span class="math inline">\(-\frac{1}{5}\)</span>
+</td>
+<td style="text-align:right;">
+<span class="math inline">\(-\frac{1}{5}\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+A4
+</td>
+<td style="text-align:right;">
+<span class="math inline">\(-\frac{1}{5}\)</span>
+</td>
+<td style="text-align:right;">
+<span class="math inline">\(-\frac{1}{5}\)</span>
+</td>
+<td style="text-align:right;">
+<span class="math inline">\(\frac{4}{5}\)</span>
+</td>
+<td style="text-align:right;">
+<span class="math inline">\(-\frac{1}{5}\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+A5
+</td>
+<td style="text-align:right;">
+<span class="math inline">\(-\frac{1}{5}\)</span>
+</td>
+<td style="text-align:right;">
+<span class="math inline">\(-\frac{1}{5}\)</span>
+</td>
+<td style="text-align:right;">
+<span class="math inline">\(-\frac{1}{5}\)</span>
+</td>
+<td style="text-align:right;">
+<span class="math inline">\(\frac{4}{5}\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="如何创建你自己的数值型预测变量" class="section level3 hasAnchor" number="4.5.5">
+<h3><span class="header-section-number">4.5.5</span> 如何创建你自己的数值型预测变量<a href="交互效应.html#如何创建你自己的数值型预测变量" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>让我们假设你的数据包含在如下所示的表<code>dat</code>中。</p>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="交互效应.html#cb107-1" tabindex="-1"></a> <span class="do">## 创建你自己的数值型预测变量</span></span>
+<span id="cb107-2"><a href="交互效应.html#cb107-2" tabindex="-1"></a> <span class="do">## 创建一个示例表</span></span>
+<span id="cb107-3"><a href="交互效应.html#cb107-3" tabindex="-1"></a> dat <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">Y =</span> <span class="fu">rnorm</span>(<span class="dv">12</span>),</span>
+<span id="cb107-4"><a href="交互效应.html#cb107-4" tabindex="-1"></a>               <span class="at">A =</span> <span class="fu">rep</span>(<span class="fu">paste0</span>(<span class="st">&quot;A&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>), <span class="at">each =</span> <span class="dv">4</span>))</span></code></pre></div>
+<div class="webex-solution">
+<button>
+单击查看示例数据
+</button>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+Y
+</th>
+<th style="text-align:left;">
+A
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+-0.41
+</td>
+<td style="text-align:left;">
+A1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+-1.44
+</td>
+<td style="text-align:left;">
+A1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+-2.01
+</td>
+<td style="text-align:left;">
+A1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.56
+</td>
+<td style="text-align:left;">
+A1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+-0.67
+</td>
+<td style="text-align:left;">
+A2
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+A2
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+-1.61
+</td>
+<td style="text-align:left;">
+A2
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.32
+</td>
+<td style="text-align:left;">
+A2
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+-0.44
+</td>
+<td style="text-align:left;">
+A3
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1.19
+</td>
+<td style="text-align:left;">
+A3
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.87
+</td>
+<td style="text-align:left;">
+A3
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+-0.50
+</td>
+<td style="text-align:left;">
+A3
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="mutateif_elsecase_when-方法操作3水平因子" class="section level4 hasAnchor" number="4.5.5.1">
+<h4><span class="header-section-number">4.5.5.1</span> <code>mutate()</code>、<code>if_else()</code>、<code>case_when()</code> 方法操作3水平因子<a href="交互效应.html#mutateif_elsecase_when-方法操作3水平因子" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+</div>
+<div id="处理编码" class="section level4 hasAnchor" number="4.5.5.2">
+<h4><span class="header-section-number">4.5.5.2</span> 处理编码<a href="交互效应.html#处理编码" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="交互效应.html#cb108-1" tabindex="-1"></a>  <span class="do">## 3水平因子示例</span></span>
+<span id="cb108-2"><a href="交互效应.html#cb108-2" tabindex="-1"></a>  <span class="do">## 处理编码</span></span>
+<span id="cb108-3"><a href="交互效应.html#cb108-3" tabindex="-1"></a>  dat_treat <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span></span>
+<span id="cb108-4"><a href="交互效应.html#cb108-4" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">A2v1 =</span> <span class="fu">if_else</span>(A <span class="sc">==</span> <span class="st">&quot;A2&quot;</span>, 1L, 0L),</span>
+<span id="cb108-5"><a href="交互效应.html#cb108-5" tabindex="-1"></a>       <span class="at">A3v1 =</span> <span class="fu">if_else</span>(A <span class="sc">==</span> <span class="st">&quot;A3&quot;</span>, 1L, 0L))</span></code></pre></div>
+<div class="webex-solution">
+<button>
+点击查看结果
+</button>
+<pre><code>## # A tibble: 12 × 4
+##         Y A      A2v1  A3v1
+##     &lt;dbl&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt;
+##  1 -0.410 A1        0     0
+##  2 -1.44  A1        0     0
+##  3 -2.01  A1        0     0
+##  4  0.562 A1        0     0
+##  5 -0.671 A2        1     0
+##  6  1.00  A2        1     0
+##  7 -1.61  A2        1     0
+##  8  0.322 A2        1     0
+##  9 -0.443 A3        0     1
+## 10  1.19  A3        0     1
+## 11  0.868 A3        0     1
+## 12 -0.500 A3        0     1</code></pre>
+</div>
+</div>
+<div id="求和编码-2" class="section level4 hasAnchor" number="4.5.5.3">
+<h4><span class="header-section-number">4.5.5.3</span> 求和编码<a href="交互效应.html#求和编码-2" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="交互效应.html#cb110-1" tabindex="-1"></a><span class="do">## 求和编码</span></span>
+<span id="cb110-2"><a href="交互效应.html#cb110-2" tabindex="-1"></a>dat_sum <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span></span>
+<span id="cb110-3"><a href="交互效应.html#cb110-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">A2v1 =</span> <span class="fu">case_when</span>(A <span class="sc">==</span> <span class="st">&quot;A1&quot;</span> <span class="sc">~</span> <span class="sc">-</span>1L, <span class="co"># 基线</span></span>
+<span id="cb110-4"><a href="交互效应.html#cb110-4" tabindex="-1"></a>                          A <span class="sc">==</span> <span class="st">&quot;A2&quot;</span> <span class="sc">~</span> 1L,  <span class="co"># 目标</span></span>
+<span id="cb110-5"><a href="交互效应.html#cb110-5" tabindex="-1"></a>                          <span class="cn">TRUE</span>      <span class="sc">~</span> 0L), <span class="co"># 其他</span></span>
+<span id="cb110-6"><a href="交互效应.html#cb110-6" tabindex="-1"></a>         <span class="at">A3v1 =</span> <span class="fu">case_when</span>(A <span class="sc">==</span> <span class="st">&quot;A1&quot;</span> <span class="sc">~</span> <span class="sc">-</span>1L, <span class="co"># 基线</span></span>
+<span id="cb110-7"><a href="交互效应.html#cb110-7" tabindex="-1"></a>                          A <span class="sc">==</span> <span class="st">&quot;A3&quot;</span> <span class="sc">~</span>  1L, <span class="co"># 目标</span></span>
+<span id="cb110-8"><a href="交互效应.html#cb110-8" tabindex="-1"></a>                          <span class="cn">TRUE</span>      <span class="sc">~</span> 0L)) <span class="co"># 其他</span></span></code></pre></div>
+<div class="webex-solution">
+<button>
+点击查看结果
+</button>
+<pre><code>## # A tibble: 12 × 4
+##         Y A      A2v1  A3v1
+##     &lt;dbl&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt;
+##  1 -0.410 A1       -1    -1
+##  2 -1.44  A1       -1    -1
+##  3 -2.01  A1       -1    -1
+##  4  0.562 A1       -1    -1
+##  5 -0.671 A2        1     0
+##  6  1.00  A2        1     0
+##  7 -1.61  A2        1     0
+##  8  0.322 A2        1     0
+##  9 -0.443 A3        0     1
+## 10  1.19  A3        0     1
+## 11  0.868 A3        0     1
+## 12 -0.500 A3        0     1</code></pre>
+</div>
+</div>
+<div id="偏差编码-2" class="section level4 hasAnchor" number="4.5.5.4">
+<h4><span class="header-section-number">4.5.5.4</span> 偏差编码<a href="交互效应.html#偏差编码-2" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="交互效应.html#cb112-1" tabindex="-1"></a><span class="do">## 偏差编码</span></span>
+<span id="cb112-2"><a href="交互效应.html#cb112-2" tabindex="-1"></a><span class="do">## 基线A1</span></span>
+<span id="cb112-3"><a href="交互效应.html#cb112-3" tabindex="-1"></a>dat_dev <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span></span>
+<span id="cb112-4"><a href="交互效应.html#cb112-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">A2v1 =</span> <span class="fu">if_else</span>(A <span class="sc">==</span> <span class="st">&quot;A2&quot;</span>, <span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>, <span class="sc">-</span><span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>), <span class="co"># 目标A2</span></span>
+<span id="cb112-5"><a href="交互效应.html#cb112-5" tabindex="-1"></a>         <span class="at">A3v1 =</span> <span class="fu">if_else</span>(A <span class="sc">==</span> <span class="st">&quot;A3&quot;</span>, <span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>, <span class="sc">-</span><span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>)) <span class="co"># 目标A3</span></span></code></pre></div>
+<div class="webex-solution">
+<button>
+点击查看结
+</button>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="交互效应.html#cb113-1" tabindex="-1"></a>dat_dev</span></code></pre></div>
+<pre><code>## # A tibble: 12 × 4
+##         Y A       A2v1   A3v1
+##     &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+##  1 -0.410 A1    -0.333 -0.333
+##  2 -1.44  A1    -0.333 -0.333
+##  3 -2.01  A1    -0.333 -0.333
+##  4  0.562 A1    -0.333 -0.333
+##  5 -0.671 A2     0.667 -0.333
+##  6  1.00  A2     0.667 -0.333
+##  7 -1.61  A2     0.667 -0.333
+##  8  0.322 A2     0.667 -0.333
+##  9 -0.443 A3    -0.333  0.667
+## 10  1.19  A3    -0.333  0.667
+## 11  0.868 A3    -0.333  0.667
+## 12 -0.500 A3    -0.333  0.667</code></pre>
+</div>
+</div>
+</div>
+<div id="小结" class="section level3 hasAnchor" number="4.5.6">
+<h3><span class="header-section-number">4.5.6</span> 小结<a href="交互效应.html#小结" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>除最高阶效应外，所有效应的解释都取决于编码方案</strong>。</p>
+<p>使用处理编码，你将查看<strong>简单</strong>效应和<strong>简单</strong>交互效应，而不是<strong>主</strong>效应和<strong>主</strong>交互效应。</p>
+<p><strong>求和编码的参数估计与偏差编码只在参数估计的大小上有所不同，但具有相同的解释</strong>。</p>
+<p>由于偏差编码不受求和编码中的缩放效应的影响，因此在ANOVA式设计中应默认(建议)使用偏差编码。</p>
+<p><strong>R中因子的默认编码方案是“处理”编码</strong>。</p>
+<p>因此，每当你将一个变量声明为<code>factor</code>类型，并将该变量用作回归模型中的预测变量时，R将自动创建处理编码操作后的变量。</p>
+<div class="yellowbox">
+<p><strong>要点：在R中使用回归来分析因子设计时，为了获得主效应和交互效应的经典ANOVA式解释，请使用偏差编码，而不是默认的处理编码</strong>。</p>
+</div>
 
+</div>
 </div>
 </div>
 <h3>参考文献<a href="参考文献.html#参考文献" class="anchor-section" aria-label="Anchor link to header"></a></h3>
