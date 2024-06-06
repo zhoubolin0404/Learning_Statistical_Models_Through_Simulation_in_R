@@ -1,7 +1,7 @@
 ---
 title: "学习统计模型——通过R模拟(施工中)"
 author: "周博霖"
-date: "2024-06-05"
+date: "2024-06-06"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]

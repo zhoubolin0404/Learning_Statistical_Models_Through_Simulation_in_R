@@ -23,7 +23,7 @@
 <meta name="author" content="周博霖" />
 
 
-<meta name="date" content="2024-06-05" />
+<meta name="date" content="2024-06-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -242,6 +242,11 @@ div.csl-indent {
 <li class="chapter" data-level="4.5.5" data-path="交互效应.html"><a href="交互效应.html#如何创建你自己的数值型预测变量"><i class="fa fa-check"></i><b>4.5.5</b> 如何创建你自己的数值型预测变量</a></li>
 <li class="chapter" data-level="4.5.6" data-path="交互效应.html"><a href="交互效应.html#小结"><i class="fa fa-check"></i><b>4.5.6</b> 小结</a></li>
 </ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="介绍线性混合模型.html"><a href="介绍线性混合模型.html"><i class="fa fa-check"></i><b>5</b> 介绍线性混合模型</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="介绍线性混合模型.html"><a href="介绍线性混合模型.html#多层数据建模"><i class="fa fa-check"></i><b>5.1</b> 多层数据建模</a></li>
+<li class="chapter" data-level="5.2" data-path="介绍线性混合模型.html"><a href="介绍线性混合模型.html#如何对这些数据进行建模"><i class="fa fa-check"></i><b>5.2</b> 如何对这些数据进行建模</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="参考文献.html"><a href="参考文献.html"><i class="fa fa-check"></i>参考文献</a></li>
 </ul>
@@ -474,7 +479,7 @@ div.csl-indent {
 </tbody>
 </table>
 <p>对<code>n</code>和<code>mu</code>的描述可以理解，但“一个正定对称矩阵(positive-definite symmetric matrix)，用于指定变量的协方差矩阵”是什么意思呢？</p>
-<p>当你有个多元数据时，<strong>协方差矩阵</strong>(也叫<strong>方差-协方差矩阵</strong>)反映了各个变量的方差及其相互关系。它类似于<strong>标准差</strong>的多维版本。要充分描述单变量正态分布，你只需要知道均值和标准差；要描述双变量正态分布，你需要分别知道两个变量的均值、标准差和他们的相关性；对于包含两个以上变量的多元分布，你需要知道所有变量的均值、它们的标准差以及所有可能的成对相关性。<strong>这些概念在我们开始讨论混合效应模型时会变得非常重要。</strong></p>
+<p>当你有个多层数据时，<strong>协方差矩阵</strong>(也叫<strong>方差-协方差矩阵</strong>)反映了各个变量的方差及其相互关系。它类似于<strong>标准差</strong>的多维版本。要充分描述单变量正态分布，你只需要知道均值和标准差；要描述双变量正态分布，你需要分别知道两个变量的均值、标准差和他们的相关性；对于包含两个以上变量的多元分布，你需要知道所有变量的均值、它们的标准差以及所有可能的成对相关性。<strong>这些概念在我们开始讨论混合效应模型时会变得非常重要。</strong></p>
 <p>你可以将协方差矩阵看作类似于之前见过的相关矩阵；实际上，通过一些计算，你可以将协方差矩阵转换为相关矩阵。</p>
 <div class="bluebox">
 <p><strong>你在说什么《黑客帝国(Matrix)》？那不是从上世纪90年代开始的科幻电影系列吗？</strong></p>

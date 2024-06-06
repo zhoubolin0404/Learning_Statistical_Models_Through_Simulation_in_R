@@ -15,6 +15,9 @@ fig:combined-plot
 fig:scenario-a-plot
 fig:scenario-b-plot
 fig:scenario-c-plot
+fig:one-subject
+fig:plot-solution0
+fig:plot-solution2
 前言
 课程目的
 广义线性混合模型generalized-linear-mixed-effects-models-glmms
@@ -71,3 +74,6 @@ mutateif_elsecase_when-方法操作3水平因子
 求和编码-2
 偏差编码-2
 小结
+介绍线性混合模型
+多层数据建模
+如何对这些数据进行建模
