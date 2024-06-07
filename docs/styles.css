@@ -1,0 +1,55 @@
+.yellowbox {
+    background-color: hsla(49, 87%, 70%, .1);
+    border: 1px solid yellow;
+    border-radius: 5mm;
+    padding: 10px;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.bluebox {
+    background-color: hsla(209, 42%, 47%, .1);
+    border: 1px solid blue;
+    border-radius: 5mm;
+    padding: 10px;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.pinkbox {
+    background-color: hsla(315, 42%, 42%, .1);
+    border: 1px solid pink;
+    border-radius: 5mm;
+    padding: 10px;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.purplebox {
+    background-color: hsla(248, 28%, 48%, .1);
+    border: 1px solid purple;
+    border-radius: 5mm;
+    padding: 10px;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.blueborder {
+    border: 1px solid hsla(209, 42%, 47%);
+    border-radius: 5mm;
+    padding: 10px;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.yellowborder {
+    border: 1px solid hslahsla(49, 87%, 70%);
+    border-radius: 5mm;
+    padding: 10px;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.noborder {
+    border: none;
+}

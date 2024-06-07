@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>1 前言 | 学习统计模型——通过R模拟(施工中)</title>
+  <meta name="description" content="1 前言 | 学习统计模型——通过R模拟(施工中)" />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="1 前言 | 学习统计模型——通过R模拟(施工中)" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="1 前言 | 学习统计模型——通过R模拟(施工中)" />
+  
+  
+  
+
+<meta name="author" content="周博霖" />
+
+
+<meta name="date" content="2024-06-07" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="相关和回归.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  jax: ["input/TeX","output/SVG"],
+  extensions: ["tex2jax.js","MathMenu.js","MathZoom.js"],
+  TeX: {
+    extensions: ["AMSmath.js","AMSsymbols.js","noErrors.js","noUndefined.js"]
+  }
+});
+</script>
+<script type="text/javascript"
+   src="../../../MathJax/MathJax.js">
+</script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+<link rel="stylesheet" href="include/webex.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>概述</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#译者按"><i class="fa fa-check"></i>译者按</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#如何引用本书"><i class="fa fa-check"></i>如何引用本书</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#发现问题"><i class="fa fa-check"></i>发现问题？</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#教育者需知"><i class="fa fa-check"></i>教育者需知</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="前言.html"><a href="前言.html"><i class="fa fa-check"></i><b>1</b> 前言</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="前言.html"><a href="前言.html#课程目的"><i class="fa fa-check"></i><b>1.1</b> 课程目的</a></li>
+<li class="chapter" data-level="1.2" data-path="前言.html"><a href="前言.html#广义线性混合效应模型generalized-linear-mixed-effects-models-glmms"><i class="fa fa-check"></i><b>1.2</b> 广义线性混合效应模型(Generalized Linear Mixed-Effects Models, GLMMs)</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="前言.html"><a href="前言.html#线性模型"><i class="fa fa-check"></i><b>1.2.1</b> 线性模型</a></li>
+<li class="chapter" data-level="1.2.2" data-path="前言.html"><a href="前言.html#混合模型"><i class="fa fa-check"></i><b>1.2.2</b> 混合模型</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="前言.html"><a href="前言.html#关于可重复性的说明"><i class="fa fa-check"></i><b>1.3</b> 关于可重复性的说明</a></li>
+<li class="chapter" data-level="1.4" data-path="前言.html"><a href="前言.html#基于模拟的方法"><i class="fa fa-check"></i><b>1.4</b> 基于模拟的方法</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="相关和回归.html"><a href="相关和回归.html"><i class="fa fa-check"></i><b>2</b> 相关和回归</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="相关和回归.html"><a href="相关和回归.html#相关矩阵correlation-matrices"><i class="fa fa-check"></i><b>2.1</b> 相关矩阵(Correlation matrices)</a></li>
+<li class="chapter" data-level="2.2" data-path="相关和回归.html"><a href="相关和回归.html#模拟二元数据"><i class="fa fa-check"></i><b>2.2</b> 模拟二元数据</a></li>
+<li class="chapter" data-level="2.3" data-path="相关和回归.html"><a href="相关和回归.html#相关和回归的关系"><i class="fa fa-check"></i><b>2.3</b> 相关和回归的关系</a></li>
+<li class="chapter" data-level="2.4" data-path="相关和回归.html"><a href="相关和回归.html#练习"><i class="fa fa-check"></i><b>2.4</b> 练习</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="多元回归.html"><a href="多元回归.html"><i class="fa fa-check"></i><b>3</b> 多元回归</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="多元回归.html"><a href="多元回归.html#一个例子如何在统计学上取得好成绩"><i class="fa fa-check"></i><b>3.1</b> 一个例子：如何在统计学上取得好成绩</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="多元回归.html"><a href="多元回归.html#数据导入和可视化"><i class="fa fa-check"></i><b>3.1.1</b> 数据导入和可视化</a></li>
+<li class="chapter" data-level="3.1.2" data-path="多元回归.html"><a href="多元回归.html#估计和解释"><i class="fa fa-check"></i><b>3.1.2</b> 估计和解释</a></li>
+<li class="chapter" data-level="3.1.3" data-path="多元回归.html"><a href="多元回归.html#使用predict通过线性模型进行预测"><i class="fa fa-check"></i><b>3.1.3</b> 使用<code>predict()</code>通过线性模型进行预测</a></li>
+<li class="chapter" data-level="3.1.4" data-path="多元回归.html"><a href="多元回归.html#偏效应可视化"><i class="fa fa-check"></i><b>3.1.4</b> 偏效应可视化</a></li>
+<li class="chapter" data-level="3.1.5" data-path="多元回归.html"><a href="多元回归.html#标准化系数"><i class="fa fa-check"></i><b>3.1.5</b> 标准化系数</a></li>
+<li class="chapter" data-level="3.1.6" data-path="多元回归.html"><a href="多元回归.html#模型比较"><i class="fa fa-check"></i><b>3.1.6</b> 模型比较</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="多元回归.html"><a href="多元回归.html#处理分类预测变量"><i class="fa fa-check"></i><b>3.2</b> 处理分类预测变量</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="多元回归.html"><a href="多元回归.html#虚拟编码又称处理编码"><i class="fa fa-check"></i><b>3.2.1</b> 虚拟编码(又称“处理”编码)</a></li>
+<li class="chapter" data-level="3.2.2" data-path="多元回归.html"><a href="多元回归.html#当k-2时的虚拟编码"><i class="fa fa-check"></i><b>3.2.2</b> 当<span class="math inline">\(k &gt; 2\)</span>时的虚拟编码</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="多元回归.html"><a href="多元回归.html#多元回归和单因素方差分析one-way-anova的等价性"><i class="fa fa-check"></i><b>3.3</b> 多元回归和单因素方差分析(one-way ANOVA)的等价性</a></li>
+<li class="chapter" data-level="3.4" data-path="多元回归.html"><a href="多元回归.html#练习答案"><i class="fa fa-check"></i><b>3.4</b> 练习答案</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="交互效应.html"><a href="交互效应.html"><i class="fa fa-check"></i><b>4</b> 交互效应</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="交互效应.html"><a href="交互效应.html#cont-by-cat"><i class="fa fa-check"></i><b>4.1</b> 连续变量-分类变量交互效应</a></li>
+<li class="chapter" data-level="4.2" data-path="交互效应.html"><a href="交互效应.html#分类变量-分类变量交互效应"><i class="fa fa-check"></i><b>4.2</b> 分类变量-分类变量交互效应</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="交互效应.html"><a href="交互效应.html#认知治疗与药物治疗对情绪的影响"><i class="fa fa-check"></i><b>4.2.1</b> 认知治疗与药物治疗对情绪的影响</a></li>
+<li class="chapter" data-level="4.2.2" data-path="交互效应.html"><a href="交互效应.html#因子设计中的效应"><i class="fa fa-check"></i><b>4.2.2</b> 因子设计中的效应</a></li>
+<li class="chapter" data-level="4.2.3" data-path="交互效应.html"><a href="交互效应.html#高阶设计higher-order-designs"><i class="fa fa-check"></i><b>4.2.3</b> 高阶设计(Higher-order designs)</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="交互效应.html"><a href="交互效应.html#用于因子设计的glm"><i class="fa fa-check"></i><b>4.3</b> 用于因子设计的GLM</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="交互效应.html"><a href="交互效应.html#估计方程estimation-equations"><i class="fa fa-check"></i><b>4.3.1</b> 估计方程(estimation equations)</a></li>
+<li class="chapter" data-level="4.3.2" data-path="交互效应.html"><a href="交互效应.html#因子设计app"><i class="fa fa-check"></i><b>4.3.2</b> 因子设计App</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="交互效应.html"><a href="交互效应.html#在因子设计中对分类预测因子进行编码"><i class="fa fa-check"></i><b>4.4</b> 在因子设计中对分类预测因子进行编码</a></li>
+<li class="chapter" data-level="4.5" data-path="交互效应.html"><a href="交互效应.html#分类变量的编码方案"><i class="fa fa-check"></i><b>4.5</b> 分类变量的编码方案</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="交互效应.html"><a href="交互效应.html#简单效应-vs.-主效应"><i class="fa fa-check"></i><b>4.5.1</b> 简单效应 vs. 主效应</a></li>
+<li class="chapter" data-level="4.5.2" data-path="交互效应.html"><a href="交互效应.html#主要编码方案"><i class="fa fa-check"></i><b>4.5.2</b> 主要编码方案</a></li>
+<li class="chapter" data-level="4.5.3" data-path="交互效应.html"><a href="交互效应.html#超过2水平的因子呢"><i class="fa fa-check"></i><b>4.5.3</b> 超过2水平的因子呢？</a></li>
+<li class="chapter" data-level="4.5.4" data-path="交互效应.html"><a href="交互效应.html#举例3水平因子"><i class="fa fa-check"></i><b>4.5.4</b> 举例：3水平因子</a></li>
+<li class="chapter" data-level="4.5.5" data-path="交互效应.html"><a href="交互效应.html#如何创建你自己的数值型预测变量"><i class="fa fa-check"></i><b>4.5.5</b> 如何创建你自己的数值型预测变量</a></li>
+<li class="chapter" data-level="4.5.6" data-path="交互效应.html"><a href="交互效应.html#小结"><i class="fa fa-check"></i><b>4.5.6</b> 小结</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="介绍线性混合效应模型.html"><a href="介绍线性混合效应模型.html"><i class="fa fa-check"></i><b>5</b> 介绍线性混合效应模型</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="介绍线性混合效应模型.html"><a href="介绍线性混合效应模型.html#多层数据建模"><i class="fa fa-check"></i><b>5.1</b> 多层数据建模</a></li>
+<li class="chapter" data-level="5.2" data-path="介绍线性混合效应模型.html"><a href="介绍线性混合效应模型.html#如何对这些数据进行建模"><i class="fa fa-check"></i><b>5.2</b> 如何对这些数据进行建模</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="介绍线性混合效应模型.html"><a href="介绍线性混合效应模型.html#完全混合一刀切"><i class="fa fa-check"></i><b>5.2.1</b> 完全混合：一刀切</a></li>
+<li class="chapter" data-level="5.2.2" data-path="介绍线性混合效应模型.html"><a href="介绍线性混合效应模型.html#不混合"><i class="fa fa-check"></i><b>5.2.2</b> 不混合</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="介绍线性混合效应模型.html"><a href="介绍线性混合效应模型.html#使用混合效果模型的部分混合"><i class="fa fa-check"></i><b>5.3</b> 使用混合效果模型的部分混合</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="参考文献.html"><a href="参考文献.html"><i class="fa fa-check"></i>参考文献</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">学习统计模型——通过R模拟(施工中)</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="前言" class="section level1 hasAnchor" number="1">
+<h1><span class="header-section-number">1</span> 前言<a href="前言.html#前言" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="课程目的" class="section level2 hasAnchor" number="1.1">
+<h2><span class="header-section-number">1.1</span> 课程目的<a href="前言.html#课程目的" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>本课程的目的是教你如何分析(还有模拟!)作为心理学家你可能遇到的各种数据集。重点是行为数据——反应时、知觉判断、选择、决策、李克特量表评分、眼动、睡眠时间等。这些数据通常是在有计划的研究或实验中收集到的。</p>
+<p>本课程旨在教授<strong>灵活</strong>、<strong>可推广</strong>、<strong>可重复</strong>的分析技术。你将学习到的技术是灵活的，这意味着它们可以应用到各式各样的研究设计和不同类型的数据上。通过充分考虑抽样对统计推断的潜在偏倚影响，它们在最大程度上具有可推广性——这有助于支持超越特定被试和实验中涉及的刺激得出结论。最后，你将学习到的技术会尽可能地做到可完全重复，因为你的分析将以R代码的纯文本脚本形式明确记录从原始数据到研究结果的每一个步骤。</p>
+</div>
+<div id="广义线性混合效应模型generalized-linear-mixed-effects-models-glmms" class="section level2 hasAnchor" number="1.2">
+<h2><span class="header-section-number">1.2</span> 广义线性混合效应模型(Generalized Linear Mixed-Effects Models, GLMMs)<a href="前言.html#广义线性混合效应模型generalized-linear-mixed-effects-models-glmms" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>本课程强调一个灵活的回归模型框架而不是教授处理不同类型数据的”公式”。课程假设你需要分析的基本数据类型将是多层的(multilevel)，而且你不仅仅需要处理连续测量数据，还要处理有序测量数据（李克特量表评分）、计数数据（特定事件发生的次数）以及名义数据（某物所属的类别）。</p>
+<p>本课程结束时，你将学会如何使用广义线性混合效应模型(GLMMs)来量化因变量和一组预测变量之间的关系。要理解GLMMs，你需要学习以下三部分：</p>
+<ol style="list-style-type: decimal">
+<li>“线性模型”部分，包括如何捕捉不同类型的预测变量及其交互效应；</li>
+<li>“混合”部分，包括如何使用随机效应来表示通过对同一批被试或刺激进行重复测量而产生的多层次依赖关系；</li>
+<li>“广义”部分，包括拓展线性模型来表示非完全正态自变量，包括计数、有序和二元变量。</li>
+</ol>
+<div id="线性模型" class="section level3 hasAnchor" number="1.2.1">
+<h3><span class="header-section-number">1.2.1</span> 线性模型<a href="前言.html#线性模型" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>GLMMs是一般线性模型的扩展。一般线性模型是方差分析(ANOVA)、t检验和古典回归等更简单方法的基础。本课程的主要观点是：<strong>你可能遇到的几乎所有实验得到的数据都可以用GLMMs进行分析</strong>。</p>
+<p>一个线性模型的简单例子：</p>
+<p><span class="math display">\[Y_i = \beta_0 + \beta_1 X_i + e_i\]</span></p>
+<p>其中<span class="math inline">\(Y_i\)</span>是样本<span class="math inline">\(i\)</span>的因变量的观测值，由截距加上被系数<span class="math inline">\(\beta_1\)</span>加权的预测值<span class="math inline">\(X_i\)</span>以及误差项构成。表示线性关系<span class="math inline">\(Y_i = 3 + 2X_i + e_i\)</span>的模拟数据如图<a href="前言.html#fig:basic-glm">1.1</a>所示。</p>
+<div class="figure"><span style="display:block;" id="fig:basic-glm"></span>
+<img src="01-%E5%BC%95%E8%A8%80_files/figure-html/basic-glm-1.png" alt="线性模型Y = 3 + 2X的模拟数据" width="672" />
+<p class="caption">
+图1.1: 线性模型Y = 3 + 2X的模拟数据
+</p>
+</div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="前言.html#cb1-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;tidyverse&quot;</span>) <span class="co"># if needed</span></span>
+<span id="cb1-2"><a href="前言.html#cb1-2" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="前言.html#cb1-3" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">62</span>)</span>
+<span id="cb1-4"><a href="前言.html#cb1-4" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="前言.html#cb1-5" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">X =</span> <span class="fu">runif</span>(<span class="dv">100</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>),</span>
+<span id="cb1-6"><a href="前言.html#cb1-6" tabindex="-1"></a>              <span class="at">Y =</span> <span class="dv">3</span> <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> X <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">100</span>))</span>
+<span id="cb1-7"><a href="前言.html#cb1-7" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="前言.html#cb1-8" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(X, Y)) <span class="sc">+</span></span>
+<span id="cb1-9"><a href="前言.html#cb1-9" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb1-10"><a href="前言.html#cb1-10" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">3</span>, <span class="at">slope =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
+<p>你可能会发现上述方程表示的是一条直线(<span class="math inline">\(y = mx + b\)</span>)，其中<span class="math inline">\(\beta_0\)</span>是截距，<span class="math inline">\(\beta_1\)</span>是斜率。<span class="math inline">\(e_i\)</span>是样本<span class="math inline">\(i\)</span>的模型误差，表示样本观测值<span class="math inline">\(Y_i\)</span>与给定<span class="math inline">\(X_i\)</span>的模型预测值之间的差距。</p>
+<div class="yellowbox">
+<p><strong>表示法惯例</strong></p>
+<p>希腊字母(<span class="math inline">\(\beta\)</span>, <span class="math inline">\(\rho\)</span>, <span class="math inline">\(\tau\)</span>)表示总体参数，通常是未观测到的，需要从数据中估计得到的。当我们想要区分<strong>估计</strong>参数和真实值时，我们会使用”hat”：如<span class="math inline">\(\hat{\beta}_0\)</span>表示从数据中估计得到的<span class="math inline">\(\beta_0\)</span>的值。</p>
+<p>大写拉丁字母(<span class="math inline">\(X\)</span>、<span class="math inline">\(Y\)</span>)表示观测值——即你已经测量过的值，因此是已知的。你也会看到小写拉丁字母(如<span class="math inline">\(e_i\)</span>)，表示统计误差或其他我将称之为派生量或虚拟量的东西(这将在课程后面进行解释)。</p>
+</div>
+<div class="bluebox">
+<p><strong>线性模型中的”线性”并不像你想象的那样!</strong></p>
+<p>许多人认为”线性模型”只能捕捉线性关系，即可以用直线(或平面)来描述的关系。这是错误的。</p>
+<p>线性模型是各种项的加权和，每个项都有一个预测变量(或常数)乘上一个系数。在上述模型中，系数是<span class="math inline">\(\beta_0\)</span>和<span class="math inline">\(\beta_1\)</span>。你可以用线性模型拟合各种复杂的关系，包括非线性关系，如下所示。</p>
+<div class="figure"><span style="display:block;" id="fig:tryptych"></span>
+<img src="01-%E5%BC%95%E8%A8%80_files/figure-html/tryptych-1.png" alt="用线性模型建模的非线性关系" width="768" />
+<p class="caption">
+图1.2: 用线性模型建模的非线性关系
+</p>
+</div>
+<p>在左边面板中，我们使用线性模型<span class="math inline">\(Y = \beta_0 + \beta_1 X + \beta_2 X^2\)</span>捕捉了一个二次(抛物线)函数。X和Y之间的关系是非线性的，但模型本身是线性的。我们对预测变量<span class="math inline">\(X\)</span>进行了平方处理，但系数<span class="math inline">\(\beta_0\)</span>、<span class="math inline">\(\beta_1\)</span>和<span class="math inline">\(\beta_2\)</span>并没有被平方、立方或类似的处理(它们都是”一次幂”)。</p>
+<p>在中间面板中，我们使用线性模型捕捉了一个S形函数。在这里，Y变量表示某个事件的概率，例如基于学习时间来预测通过考试的概率。在这种情况下，我们通过在一个特殊的转换空间中估计线性模型来建模X和Y之间的关系，使得X-Y关系是线性的，然后将模型投影回非线性的概率空间(使用”链接函数”)。非线性来自于”链接函数”，但模型本身是线性的。</p>
+<p>最后，右边面板展示了一种略显任意的波动模式，由广义可加混合模型捕获——这是一种我们在本课程中不会学到的高级技术。但从根本上说，它仍然是一个线性模型，因为它还是一系列复杂事物(在这种情况下是”基础函数”)的加权和，而系数提供了权重。</p>
+<p>线性模型是一个<strong>系数是线性</strong>的模型；模型中的每个系数(<span class="math inline">\(\beta_0\)</span>、<span class="math inline">\(\beta_1\)</span>)只允许被设置为一次幂，并且每个项<span class="math inline">\(\beta_i X_j\)</span>都只涉及单个系数。这些项只能与涉及其他系数的项相加，但不能相乘或相除(如<span class="math inline">\(Y = \frac{\beta_1}{\beta_2} X\)</span>是不允许的)。</p>
+</div>
+<p>当前课程的一个局限性是主要关注单变量数据，即将单一响应变量作为分析的焦点。通常情况下，你会处理相同对象的多个响应变量，但是同时对它们进行建模在技术上是非常困难的，并且超出了本课程的范围。一种更简单的方法(也是这里采用的方法)是对每个响应变量进行单独的单变量分析。</p>
+</div>
+<div id="混合模型" class="section level3 hasAnchor" number="1.2.2">
+<h3><span class="header-section-number">1.2.2</span> 混合模型<a href="前言.html#混合模型" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>研究结果的推断或解释的可推广性指的是它能够被轻松应用于超出特定研究背景(对象、刺激、任务等)的情境的程度。最理想的情况是，我们的发现能够适用于人类物种的所有成员，涵盖各种各样的刺激和任务；最糟糕的情况是，它们只能适用于那些受到我们使用的特定刺激的特定的人，在我们研究的特定背景下才观察得到。</p>
+<p>研究结果的可推广性取决于几个因素：研究的设计方式、所使用的材料、被试的招募方式、给予被试的任务的性质以及<strong>数据分析的方式</strong>。在这门课程中我们将重点关注最后一点。在分析一个数据集时，如果你想要提出具有推广性的论断，你必须决定哪些可以算作你研究的重复——关于哪些方面应该在复制中保持不变，以及哪些方面允许变化。</p>
+<p>不幸的是，有时你会发现数据以一种不太支持广泛意义上的可推广性的方式进行分析，这往往是因为低估了刺激材料或实验任务的独特特征对观测结果的影响 <span class="citation">(<a href="#ref-yarkoni_2019">Yarkoni, 2019</a>)</span>。</p>
+</div>
+</div>
+<div id="关于可重复性的说明" class="section level2 hasAnchor" number="1.3">
+<h2><span class="header-section-number">1.3</span> 关于可重复性的说明<a href="前言.html#关于可重复性的说明" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>本课程的数据分析是使用R编写脚本进行的。</p>
+<p>可重复性指的是在不同情况下重现研究结果的可能性程度。</p>
+<p>如果我们能在给定原始数据的情况下得到相同的结果，我们会说这个发现在<em>分析(analytically)</em>或<em>计算(computationally)</em>上是可重复的。需要注意的是，这与说一个发现<strong>可复制(replicable)</strong>是不同的。可复制指的是能够在<strong>新样本</strong>中复制这一发现。对于这些术语并没有广泛的共识，但方便起见，我们可以将分析上的可重复性(reproducibility)和可复制性(replicability)视为两种不同但相关的可重复性(reproducibility)类型，前者反映分析员之间(或同一分析员随时间变化)的可重复性，而后者反映了在被试样本或亚群体之间的可重复性。</p>
+<p>确保分析可重复性是一个难题。如果你未能正确记录自己的分析过程，或者你使用的软件被修改或过时并且变得不可用，你可能会在重现自己的发现时遇到麻烦！</p>
+<p>分析的另一个重要属性是透明度——在某种研究中所有步骤都可以公开的程度。一项研究可能是透明的但不可重复，反之亦然。使用促进透明度的工作流程非常重要。这使得脚本编程的“编辑–执行”工作流程对于数据分析来说是理想的选择，远远优于大多数商业统计软件的“指向–点击”的工作流程。通过编写代码，你可以使逻辑和决策过程对他人明确，并易于重建。</p>
+</div>
+<div id="基于模拟的方法" class="section level2 hasAnchor" number="1.4">
+<h2><span class="header-section-number">1.4</span> 基于模拟的方法<a href="前言.html#基于模拟的方法" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>本课程最后一个重要特点是采用了<strong>基于模拟的方法</strong>来学习统计模型。通过数据模拟，我们定义一个特定模型来描述感兴趣的总体，然后利用计算机的随机数生成器来模拟从该总体中抽样的过程。我们将在下面看一个简单的例子。</p>
+<p>在分析数据时，你会面临的经典问题是你不知道你正在研究的总体的“真实情况”。你从该总体中抽取一个样本，对观测到的数据获取方式做出一些假设，然后利用观察到的数据来估计未知的总体参数及这些参数的不确定性。</p>
+<p>数据模拟颠倒了这个过程。你会定义一个模型的参数，代表关于(假设的)总体的真实情况，从中获取数据。然后，你可以像平常一样分析获得的数据，并考察参数估计与真实值之间的对应程度。</p>
+<p>让我们看一个例子。假设你对以下问题感兴趣：作为学步幼儿的父母是否会“提高”你的反应能力。如果你曾经照顾过一个幼儿，你就会知道身体危险似乎总是在即——他们可能从刚刚爬上的椅子上摔下来，被门里夹到，头撞在桌子角上等等——所以你需要保持警惕并准备迅速行动。你假设这种警惕会转化为在幼儿不在场的其他情况下的更快反应时间，比如在心理实验室里。因此，你招募了一组有幼儿的父母来实验室。你让每个父母在闪烁的灯光出现时尽快按下按钮，并测量他们的反应时(以毫秒为单位)。对于每个父母，你计算了他们在所有试验中的平均反应时。我们可以使用R中的<code>rnorm()</code>函数模拟50个父母的平均反应时。但在我们开始之前，我们将加载我们需要的包（tidyverse）并设置随机种子(random seed)，以确保你(读者)得到和我(作者)相同的随机值。</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="前言.html#cb2-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</span>
+<span id="cb2-2"><a href="前言.html#cb2-2" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="前言.html#cb2-3" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2021</span>)  <span class="co"># 可以是任意整数</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="前言.html#cb3-1" tabindex="-1"></a>parents <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">50</span>, <span class="at">mean =</span> <span class="dv">480</span>, <span class="at">sd =</span> <span class="dv">40</span>)</span></code></pre></div>
+<pre><code>##  [1] 475.1016 502.0983 493.9460 494.3853 515.9221 403.0972 490.4698 516.6227
+##  [9] 480.5509 549.1985 436.7118 469.0870 487.2798 540.3417 544.1788 406.3410
+## [17] 544.9324 485.2556 539.2449 540.5327 442.3023 472.5726 435.9550 528.3246
+## [25] 415.0025 484.2151 421.7823 465.8394 476.2520 524.0267 401.4470 422.0822
+## [33] 520.7777 423.1433 455.8187 416.6610 428.5627 421.8126 476.5172 500.1895
+## [41] 484.6555 550.4085 466.1953 564.8000 478.6249 448.3138 539.0206 450.9777
+## [49] 492.4952 507.6786</code></pre>
+<p>我们选择使用<code>rnorm()</code>来生成数据，这是一个从正态分布中生成随机数的函数，这反映了我们的假设——平均反应时在总体中呈正态分布。正态分布由两个参数定义，一个是均值(通常用希腊字母<span class="math inline">\(\mu\)</span>表示，发音为”myoo”)，另一个是标准差(通常用希腊字母<span class="math inline">\(\sigma\)</span>表示，发音为”sigma”)。由于我们自己生成了数据，所以<span class="math inline">\(\mu\)</span>和<span class="math inline">\(\sigma\)</span>都是已知的，在调用<code>rnorm()</code>时，我们将它们分别设置为480和40。</p>
+<p>当然，为了验证我们的假设，我们需要一个对照组，所以我们定义了一个非父母的对照组。我们用相同的方式从这个对照组生成数据，但改变了平均值。</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="前言.html#cb5-1" tabindex="-1"></a>control <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">50</span>, <span class="at">mean =</span> <span class="dv">500</span>, <span class="at">sd =</span> <span class="dv">40</span>)</span></code></pre></div>
+<p>让我们将它们放入数据框(tibble)中，以便更容易绘制和分析数据。该数据框中的每一行表示来自特定被试的平均反应时。</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="前言.html#cb6-1" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">group =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;parent&quot;</span>, <span class="st">&quot;control&quot;</span>), <span class="at">each =</span> <span class="dv">50</span>),</span>
+<span id="cb6-2"><a href="前言.html#cb6-2" tabindex="-1"></a>              <span class="at">rt =</span> <span class="fu">c</span>(parents, control))</span>
+<span id="cb6-3"><a href="前言.html#cb6-3" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="前言.html#cb6-4" tabindex="-1"></a>dat</span></code></pre></div>
+<pre><code>## # A tibble: 100 × 2
+##    group     rt
+##    &lt;chr&gt;  &lt;dbl&gt;
+##  1 parent  475.
+##  2 parent  502.
+##  3 parent  494.
+##  4 parent  494.
+##  5 parent  516.
+##  6 parent  403.
+##  7 parent  490.
+##  8 parent  517.
+##  9 parent  481.
+## 10 parent  549.
+## # ℹ 90 more rows</code></pre>
+<p>下面是对模拟数据的一些尝试。</p>
+<ol style="list-style-type: decimal">
+<li>以某种合理的方式绘制数据。</li>
+<li>计算平均值和标准差。它们与总体参数相比如何?</li>
+<li>对这些数据进行t检验。群组效应显著吗?</li>
+</ol>
+<p>做完这些后，再做一次，但改变样本量、总体参数或两者都改变。</p>
+
+</div>
+</div>
+<h3>参考文献<a href="参考文献.html#参考文献" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="ref-yarkoni_2019" class="csl-entry">
+Yarkoni, T. (2019). <em>The generalizability crisis</em>. <a href="https://doi.org/10.31234/osf.io/jqw35">https://doi.org/10.31234/osf.io/jqw35</a>
+</div>
+</div>
+<script>
+
+/* update total correct if #webex-total_correct exists */
+update_total_correct = function() {
+  if (t = document.getElementById("webex-total_correct")) {
+    t.innerHTML =
+      document.getElementsByClassName("webex-correct").length + " of " +
+      document.getElementsByClassName("webex-solveme").length + " correct";
+  }
+}
+
+/* webex-solution button toggling function */
+b_func = function() {
+  var cl = this.parentElement.classList;
+  if (cl.contains('open')) {
+    cl.remove("open");
+  } else {
+    cl.add("open");
+  }
+}
+
+/* function for checking solveme answers */
+solveme_func = function(e) {
+  var real_answers = JSON.parse(this.dataset.answer);
+  var my_answer = this.value;
+  var cl = this.classList;
+  if (cl.contains("ignorecase")) {
+    my_answer = my_answer.toLowerCase();
+  }
+  if (cl.contains("nospaces")) {
+    my_answer = my_answer.replace(/ /g, "")
+  }
+
+  if (my_answer == "") {
+    cl.remove("webex-correct");
+    cl.remove("webex-incorrect");
+  } else if (real_answers.includes(my_answer)) {
+    cl.add("webex-correct");
+    cl.remove("webex-incorrect");
+  } else {
+    cl.add("webex-incorrect");
+    cl.remove("webex-correct");
+  }
+
+  // match numeric answers within a specified tolerance
+  if(this.dataset.tol > 0){
+    var tol = JSON.parse(this.dataset.tol);
+    var matches = real_answers.map(x => Math.abs(x - my_answer) < tol)
+    if (matches.reduce((a, b) => a + b, 0) > 0) {
+      cl.add("webex-correct");
+    } else {
+      cl.remove("webex-correct");
+    }
+  }
+
+  // added regex bit
+  if (cl.contains("regex")){
+    answer_regex = RegExp(real_answers.join("|"))
+    if (answer_regex.test(my_answer)) {
+      cl.add("webex-correct");
+    }
+  }
+
+  update_total_correct();
+}
+
+window.onload = function() {
+  /* set up solution buttons */
+  var buttons = document.getElementsByTagName("button");
+
+  for (var i = 0; i < buttons.length; i++) {
+    if (buttons[i].parentElement.classList.contains('webex-solution')) {
+      buttons[i].onclick = b_func;
+    }
+  }
+
+  /* set up webex-solveme inputs */
+  var solveme = document.getElementsByClassName("webex-solveme");
+
+  for (var i = 0; i < solveme.length; i++) {
+    /* make sure input boxes don't auto-anything */
+    solveme[i].setAttribute("autocomplete","off");
+    solveme[i].setAttribute("autocorrect", "off");
+    solveme[i].setAttribute("autocapitalize", "off");
+    solveme[i].setAttribute("spellcheck", "false");
+    solveme[i].value = "";
+
+    /* adjust answer for ignorecase or nospaces */
+    var cl = solveme[i].classList;
+    var real_answer = solveme[i].dataset.answer;
+    if (cl.contains("ignorecase")) {
+      real_answer = real_answer.toLowerCase();
+    }
+    if (cl.contains("nospaces")) {
+      real_answer = real_answer.replace(/ /g, "");
+    }
+    solveme[i].dataset.answer = real_answer;
+
+    /* attach checking function */
+    solveme[i].onkeyup = solveme_func;
+    solveme[i].onchange = solveme_func;
+  }
+
+  update_total_correct();
+}
+
+</script>
+<script>
+$( document ).ready(function() {
+  var cite = ' ';
+  var psyteachr = ' <a href="https://psyteachr.github.io/"><img src="images/logos/psyteachr_logo.png" style="height: 31px; color: white;" alt="psyTeachR: Reproducible Research" /></a>';
+  var license = ' <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/" target="blank"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png"></a>';
+
+  $("footer div.row div:eq(1) p").html(
+    psyteachr + license + cite
+  );
+});
+</script>
+
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="相关和回归.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["CBook.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
