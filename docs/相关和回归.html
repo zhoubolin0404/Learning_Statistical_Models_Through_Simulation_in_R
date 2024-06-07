@@ -23,7 +23,7 @@
 <meta name="author" content="周博霖" />
 
 
-<meta name="date" content="2024-06-06" />
+<meta name="date" content="2024-06-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -246,7 +246,12 @@ div.csl-indent {
 <li class="chapter" data-level="5" data-path="介绍线性混合模型.html"><a href="介绍线性混合模型.html"><i class="fa fa-check"></i><b>5</b> 介绍线性混合模型</a>
 <ul>
 <li class="chapter" data-level="5.1" data-path="介绍线性混合模型.html"><a href="介绍线性混合模型.html#多层数据建模"><i class="fa fa-check"></i><b>5.1</b> 多层数据建模</a></li>
-<li class="chapter" data-level="5.2" data-path="介绍线性混合模型.html"><a href="介绍线性混合模型.html#如何对这些数据进行建模"><i class="fa fa-check"></i><b>5.2</b> 如何对这些数据进行建模</a></li>
+<li class="chapter" data-level="5.2" data-path="介绍线性混合模型.html"><a href="介绍线性混合模型.html#如何对这些数据进行建模"><i class="fa fa-check"></i><b>5.2</b> 如何对这些数据进行建模</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="介绍线性混合模型.html"><a href="介绍线性混合模型.html#完全混合一刀切"><i class="fa fa-check"></i><b>5.2.1</b> 完全混合：一刀切</a></li>
+<li class="chapter" data-level="5.2.2" data-path="介绍线性混合模型.html"><a href="介绍线性混合模型.html#不混合"><i class="fa fa-check"></i><b>5.2.2</b> 不混合</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="介绍线性混合模型.html"><a href="介绍线性混合模型.html#使用混合效果模型的部分混合"><i class="fa fa-check"></i><b>5.3</b> 使用混合效果模型的部分混合</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="参考文献.html"><a href="参考文献.html"><i class="fa fa-check"></i>参考文献</a></li>
 </ul>
@@ -448,7 +453,7 @@ div.csl-indent {
 <p><strong><code>MASS</code></strong>包提供<code>mvrnorm()</code>函数，这是rnorm的”多元”(multivariate)版(因此函数的名字是’mv’ + ‘rnorm’，这样更容易记住)。</p>
 <div class="blueborder">
 <p>R预装了<strong><code>MASS</code></strong>包。但<strong><code>MASS</code></strong>包中你唯一可能会用到的函数只是<code>mvrnorm()</code>，因此相比于使用<code>library("MASS")</code>加载包，使用<code>MASS::mvrnorm()</code>是更好的办法，尤其是在<strong><code>MASS</code></strong>和<strong><code>tidyverse</code></strong>里的<strong><code>dplyr</code></strong>包不太合得来的情况下(因为两个包都有<code>select()</code>函数)。因此，如果在加载<strong><code>tidyverse</code></strong>之后加载<strong><code>MASS</code></strong>，那么最终得到的<code>select()</code>是<strong><code>MASS</code></strong>版本，而不是<strong><code>dplyr</code></strong>版本。这会让你绞尽脑汁来找出代码的问题所在，所以总在不加载的情况下使用<code>MASS::mvrnorm()</code>吧。</p>
-<p>这里作者贴了一则他在Twitter(现X)上吐槽<strong><code>MASS</code></strong>的打油诗，不过现在已经查不到了QwQ，考虑到翻译水平不佳，附上原文！</p>
+<p>注：这里作者贴了一则他在Twitter(现X)上吐槽<strong><code>MASS</code></strong>的打油诗，不过现在已经查不到了QwQ，考虑到翻译水平不佳，附上原文！</p>
 <blockquote>
 <p>MASS before dplyr, clashes not dire; <br> dplyr before MASS, pain in the ass.</p>
 <p>—— Dale Barr(September 30, 2014)</p>

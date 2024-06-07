@@ -170,7 +170,7 @@ starwars %>%
 
 R预装了**`MASS`**包。但**`MASS`**包中你唯一可能会用到的函数只是`mvrnorm()`，因此相比于使用`library("MASS")`加载包，使用`MASS::mvrnorm()`是更好的办法，尤其是在**`MASS`**和**`tidyverse`**里的**`dplyr`**包不太合得来的情况下(因为两个包都有`select()`函数)。因此，如果在加载**`tidyverse`**之后加载**`MASS`**，那么最终得到的`select()`是**`MASS`**版本，而不是**`dplyr`**版本。这会让你绞尽脑汁来找出代码的问题所在，所以总在不加载的情况下使用`MASS::mvrnorm()`吧。
 
-这里作者贴了一则他在Twitter(现X)上吐槽**`MASS`**的打油诗，不过现在已经查不到了QwQ，考虑到翻译水平不佳，附上原文！
+注：这里作者贴了一则他在Twitter(现X)上吐槽**`MASS`**的打油诗，不过现在已经查不到了QwQ，考虑到翻译水平不佳，附上原文！
 
 > MASS before dplyr, clashes not dire; <br> dplyr before MASS, pain in the ass.
 >
