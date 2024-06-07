@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="多元回归.html"/>
-<link rel="next" href="介绍线性混合模型.html"/>
+<link rel="next" href="介绍线性混合效应模型.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -184,7 +184,7 @@ div.csl-indent {
 <li class="chapter" data-level="1" data-path="前言.html"><a href="前言.html"><i class="fa fa-check"></i><b>1</b> 前言</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="前言.html"><a href="前言.html#课程目的"><i class="fa fa-check"></i><b>1.1</b> 课程目的</a></li>
-<li class="chapter" data-level="1.2" data-path="前言.html"><a href="前言.html#广义线性混合模型generalized-linear-mixed-effects-models-glmms"><i class="fa fa-check"></i><b>1.2</b> 广义线性混合模型(Generalized Linear Mixed-Effects Models, GLMMs)</a>
+<li class="chapter" data-level="1.2" data-path="前言.html"><a href="前言.html#广义线性混合效应模型generalized-linear-mixed-effects-models-glmms"><i class="fa fa-check"></i><b>1.2</b> 广义线性混合效应模型(Generalized Linear Mixed-Effects Models, GLMMs)</a>
 <ul>
 <li class="chapter" data-level="1.2.1" data-path="前言.html"><a href="前言.html#线性模型"><i class="fa fa-check"></i><b>1.2.1</b> 线性模型</a></li>
 <li class="chapter" data-level="1.2.2" data-path="前言.html"><a href="前言.html#混合模型"><i class="fa fa-check"></i><b>1.2.2</b> 混合模型</a></li>
@@ -243,15 +243,15 @@ div.csl-indent {
 <li class="chapter" data-level="4.5.6" data-path="交互效应.html"><a href="交互效应.html#小结"><i class="fa fa-check"></i><b>4.5.6</b> 小结</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="介绍线性混合模型.html"><a href="介绍线性混合模型.html"><i class="fa fa-check"></i><b>5</b> 介绍线性混合模型</a>
+<li class="chapter" data-level="5" data-path="介绍线性混合效应模型.html"><a href="介绍线性混合效应模型.html"><i class="fa fa-check"></i><b>5</b> 介绍线性混合效应模型</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="介绍线性混合模型.html"><a href="介绍线性混合模型.html#多层数据建模"><i class="fa fa-check"></i><b>5.1</b> 多层数据建模</a></li>
-<li class="chapter" data-level="5.2" data-path="介绍线性混合模型.html"><a href="介绍线性混合模型.html#如何对这些数据进行建模"><i class="fa fa-check"></i><b>5.2</b> 如何对这些数据进行建模</a>
+<li class="chapter" data-level="5.1" data-path="介绍线性混合效应模型.html"><a href="介绍线性混合效应模型.html#多层数据建模"><i class="fa fa-check"></i><b>5.1</b> 多层数据建模</a></li>
+<li class="chapter" data-level="5.2" data-path="介绍线性混合效应模型.html"><a href="介绍线性混合效应模型.html#如何对这些数据进行建模"><i class="fa fa-check"></i><b>5.2</b> 如何对这些数据进行建模</a>
 <ul>
-<li class="chapter" data-level="5.2.1" data-path="介绍线性混合模型.html"><a href="介绍线性混合模型.html#完全混合一刀切"><i class="fa fa-check"></i><b>5.2.1</b> 完全混合：一刀切</a></li>
-<li class="chapter" data-level="5.2.2" data-path="介绍线性混合模型.html"><a href="介绍线性混合模型.html#不混合"><i class="fa fa-check"></i><b>5.2.2</b> 不混合</a></li>
+<li class="chapter" data-level="5.2.1" data-path="介绍线性混合效应模型.html"><a href="介绍线性混合效应模型.html#完全混合一刀切"><i class="fa fa-check"></i><b>5.2.1</b> 完全混合：一刀切</a></li>
+<li class="chapter" data-level="5.2.2" data-path="介绍线性混合效应模型.html"><a href="介绍线性混合效应模型.html#不混合"><i class="fa fa-check"></i><b>5.2.2</b> 不混合</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="介绍线性混合模型.html"><a href="介绍线性混合模型.html#使用混合效果模型的部分混合"><i class="fa fa-check"></i><b>5.3</b> 使用混合效果模型的部分混合</a></li>
+<li class="chapter" data-level="5.3" data-path="介绍线性混合效应模型.html"><a href="介绍线性混合效应模型.html#使用混合效果模型的部分混合"><i class="fa fa-check"></i><b>5.3</b> 使用混合效果模型的部分混合</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="参考文献.html"><a href="参考文献.html"><i class="fa fa-check"></i>参考文献</a></li>
 </ul>
@@ -976,7 +976,7 @@ Drug
 </div>
 <div id="分类变量的编码方案" class="section level2 hasAnchor" number="4.5">
 <h2><span class="header-section-number">4.5</span> 分类变量的编码方案<a href="交互效应.html#分类变量的编码方案" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>许多实验研究者在尝试从方差分析(ANOVA)转向使用R进行线性混合模型(linear mixed-effects models，LMEMs)时，都会在编码分类预测变量时遇到困难。这比预期的要复杂得多，而R提供的默认设置对于因子实验来说完全不合适。实际上，在因子实验中使用这些默认设置可能会导致研究人员从数据中得出错误的结论。</p>
+<p>许多实验研究者在尝试从方差分析(ANOVA)转向使用R进行线性混合效应模型(linear mixed-effects models，LMEMs)时，都会在编码分类预测变量时遇到困难。这比预期的要复杂得多，而R提供的默认设置对于因子实验来说完全不合适。实际上，在因子实验中使用这些默认设置可能会导致研究人员从数据中得出错误的结论。</p>
 <p>为了简化问题，我们将从设计因子不超过两水平的情况开始，然后再讨论具有三个以上水平的设计。</p>
 <div id="简单效应-vs.-主效应" class="section level3 hasAnchor" number="4.5.1">
 <h3><span class="header-section-number">4.5.1</span> 简单效应 vs. 主效应<a href="交互效应.html#简单效应-vs.-主效应" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -2310,7 +2310,7 @@ $( document ).ready(function() {
         </div>
       </div>
 <a href="多元回归.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="介绍线性混合模型.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="介绍线性混合效应模型.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

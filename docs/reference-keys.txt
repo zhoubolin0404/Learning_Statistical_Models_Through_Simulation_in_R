@@ -22,7 +22,7 @@ fig:cp-model-plot
 fig:np-model-fits
 前言
 课程目的
-广义线性混合模型generalized-linear-mixed-effects-models-glmms
+广义线性混合效应模型generalized-linear-mixed-effects-models-glmms
 线性模型
 混合模型
 关于可重复性的说明
@@ -76,7 +76,7 @@ mutateif_elsecase_when-方法操作3水平因子
 求和编码-2
 偏差编码-2
 小结
-介绍线性混合模型
+介绍线性混合效应模型
 多层数据建模
 如何对这些数据进行建模
 完全混合一刀切
