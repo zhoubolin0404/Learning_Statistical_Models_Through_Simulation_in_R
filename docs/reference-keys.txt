@@ -20,6 +20,7 @@ fig:plot-solution0
 fig:plot-solution2
 fig:cp-model-plot
 fig:np-model-fits
+fig:pp-plot
 前言
 课程目的
 广义线性混合效应模型generalized-linear-mixed-effects-models-glmms
@@ -82,3 +83,6 @@ mutateif_elsecase_when-方法操作3水平因子
 完全混合一刀切
 不混合
 使用混合效果模型的部分混合
+方差-协方差矩阵
+估计模型参数
+解释lmer输出结果并提取估计值

@@ -23,7 +23,7 @@
 <meta name="author" content="周博霖" />
 
 
-<meta name="date" content="2024-06-07" />
+<meta name="date" content="2024-06-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -251,7 +251,12 @@ div.csl-indent {
 <li class="chapter" data-level="5.2.1" data-path="介绍线性混合效应模型.html"><a href="介绍线性混合效应模型.html#完全混合一刀切"><i class="fa fa-check"></i><b>5.2.1</b> 完全混合：一刀切</a></li>
 <li class="chapter" data-level="5.2.2" data-path="介绍线性混合效应模型.html"><a href="介绍线性混合效应模型.html#不混合"><i class="fa fa-check"></i><b>5.2.2</b> 不混合</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="介绍线性混合效应模型.html"><a href="介绍线性混合效应模型.html#使用混合效果模型的部分混合"><i class="fa fa-check"></i><b>5.3</b> 使用混合效果模型的部分混合</a></li>
+<li class="chapter" data-level="5.3" data-path="介绍线性混合效应模型.html"><a href="介绍线性混合效应模型.html#使用混合效果模型的部分混合"><i class="fa fa-check"></i><b>5.3</b> 使用混合效果模型的部分混合</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="介绍线性混合效应模型.html"><a href="介绍线性混合效应模型.html#方差-协方差矩阵"><i class="fa fa-check"></i><b>5.3.1</b> 方差-协方差矩阵</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="介绍线性混合效应模型.html"><a href="介绍线性混合效应模型.html#估计模型参数"><i class="fa fa-check"></i><b>5.4</b> 估计模型参数</a></li>
+<li class="chapter" data-level="5.5" data-path="介绍线性混合效应模型.html"><a href="介绍线性混合效应模型.html#解释lmer输出结果并提取估计值"><i class="fa fa-check"></i><b>5.5</b> 解释<code>lmer()</code>输出结果并提取估计值</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="参考文献.html"><a href="参考文献.html"><i class="fa fa-check"></i>参考文献</a></li>
 </ul>
@@ -409,9 +414,9 @@ sleepstudy                package:lme4                 R Documentation
 <span id="cb123-4"><a href="介绍线性混合效应模型.html#cb123-4" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Subject) <span class="sc">+</span></span>
 <span id="cb123-5"><a href="介绍线性混合效应模型.html#cb123-5" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;反应时&quot;</span>, <span class="at">x =</span> <span class="st">&quot;睡眠剥夺的天数(0 = 基线)&quot;</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:plot-solution2"></span>
-<img src="05-%E4%BB%8B%E7%BB%8D%E7%BA%BF%E6%80%A7%E6%B7%B7%E5%90%88%E6%95%88%E5%BA%94%E6%A8%A1%E5%9E%8B_files/figure-html/plot-solution2-1.png" alt="*数据来自Belenky et al.(2003)，显示了基线(0天)和每天睡眠剥夺后的反应时*" width="672" />
+<img src="05-%E4%BB%8B%E7%BB%8D%E7%BA%BF%E6%80%A7%E6%B7%B7%E5%90%88%E6%95%88%E5%BA%94%E6%A8%A1%E5%9E%8B_files/figure-html/plot-solution2-1.png" alt="*数据来自Belenky et al.(2003)，表示基线(0天)和每天睡眠剥夺后的反应时*" width="672" />
 <p class="caption">
-图5.3: <em>数据来自Belenky et al.(2003)，显示了基线(0天)和每天睡眠剥夺后的反应时</em>
+图5.3: <em>数据来自Belenky et al.(2003)，表示基线(0天)和每天睡眠剥夺后的反应时</em>
 </p>
 </div>
 <p>请稍作思考，我们如何对<code>days_deprived</code>和<code>Reaction</code>之间的关系建模。随着睡眠剥夺的增加，反应时间是增加还是减少？这种关系大致稳定还是随时间变化？</p>
@@ -463,9 +468,9 @@ sleepstudy                package:lme4                 R Documentation
 <span id="cb128-7"><a href="介绍线性混合效应模型.html#cb128-7" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Subject) <span class="sc">+</span></span>
 <span id="cb128-8"><a href="介绍线性混合效应模型.html#cb128-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;反应时&quot;</span>, <span class="at">x =</span> <span class="st">&quot;睡眠剥夺的天数(0 = 基线)&quot;</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:cp-model-plot"></span>
-<img src="05-%E4%BB%8B%E7%BB%8D%E7%BA%BF%E6%80%A7%E6%B7%B7%E5%90%88%E6%95%88%E5%BA%94%E6%A8%A1%E5%9E%8B_files/figure-html/cp-model-plot-1.png" alt="数据根据完全混合模型的预测结果绘制" width="672" />
+<img src="05-%E4%BB%8B%E7%BB%8D%E7%BA%BF%E6%80%A7%E6%B7%B7%E5%90%88%E6%95%88%E5%BA%94%E6%A8%A1%E5%9E%8B_files/figure-html/cp-model-plot-1.png" alt="原始数据和完全混合模型的拟合结果对比图" width="672" />
 <p class="caption">
-图5.4: 数据根据完全混合模型的预测结果绘制
+图5.4: 原始数据和完全混合模型的拟合结果对比图
 </p>
 </div>
 <p>这个模型与数据不太吻合。我们需要一种不同的方法。</p>
@@ -619,9 +624,9 @@ sleepstudy                package:lme4                 R Documentation
 <span id="cb137-8"><a href="介绍线性混合效应模型.html#cb137-8" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Subject) <span class="sc">+</span></span>
 <span id="cb137-9"><a href="介绍线性混合效应模型.html#cb137-9" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;反应时&quot;</span>, <span class="at">x =</span> <span class="st">&quot;睡眠剥夺的天数(0 = 基线)&quot;</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:np-model-fits"></span>
-<img src="05-%E4%BB%8B%E7%BB%8D%E7%BA%BF%E6%80%A7%E6%B7%B7%E5%90%88%E6%95%88%E5%BA%94%E6%A8%A1%E5%9E%8B_files/figure-html/np-model-fits-1.png" alt="数据根据不混合方法的拟合结果绘制" width="672" />
+<img src="05-%E4%BB%8B%E7%BB%8D%E7%BA%BF%E6%80%A7%E6%B7%B7%E5%90%88%E6%95%88%E5%BA%94%E6%A8%A1%E5%9E%8B_files/figure-html/np-model-fits-1.png" alt="原始数据和不混合方法的拟合结果对比图" width="672" />
 <p class="caption">
-图5.5: 数据根据不混合方法的拟合结果绘制
+图5.5: 原始数据和不混合方法的拟合结果对比图
 </p>
 </div>
 <p>这比完全混合模型要好得多。如果要检验固定斜率为0的原假设，可以用单样本检验。</p>
@@ -678,8 +683,8 @@ e_{sd} \sim N\left(0, \sigma^2\right)
 <table>
 <colgroup>
 <col width="22%" />
-<col width="9%" />
-<col width="67%" />
+<col width="11%" />
+<col width="65%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -765,7 +770,192 @@ e_{sd} \sim N\left(0, \sigma^2\right)
 <p>让我们从模型的第1层方程开始，它表示预测变量和响应变量之间的总体关系。它捕捉了反应时<span class="math inline">\(Y_{sd}\)</span>和睡眠剥夺<span class="math inline">\(X_{sd}\)</span>之间主要关系的函数形式：一条截距为<span class="math inline">\(\beta_{0s}\)</span>和斜率为<span class="math inline">\(\beta_{1s}\)</span>的直线。现在<span class="math inline">\(\beta_{0s}\)</span>和<span class="math inline">\(\beta_{1s}\)</span>使它看起来像完全混合模型，在这种模型中，我们为整个数据集估计一个截距和一个斜率；然而，我们实际上并没有直接估计这些值。相反，我们将<span class="math inline">\(\beta_{0s}\)</span>和<span class="math inline">\(\beta_{1s}\)</span>视为派生值：它们完全由模型第2层的变量定义。</p>
 <p>模型的第2层由两个方程定义，表示被试层次的关系。在这里，我们通过固定效应<span class="math inline">\(\gamma_0\)</span>和<em>随机截距</em><span class="math inline">\(S_{0s}\)</span>来定义截距<span class="math inline">\(\beta_{0s}\)</span>；同样地，我们通过固定斜率<span class="math inline">\(\gamma_1\)</span>和<em>随机斜率</em><span class="math inline">\(S_{1s}\)</span>来定义斜率<span class="math inline">\(\beta_{1s}\)</span>。</p>
 <p>最后的方程代表模型的<em>方差成分</em>。我们将在下面更详细地讨论这一点。</p>
-<p>让我们将第2层方程代入第1层方程，看看以多层方式表示事物的优势。</p>
+<p>让我们将第2层方程代入第1层方程，看看以多层的方式表示的优势。</p>
+<p><span class="math display">\[\begin{equation}
+Y_{sd} = \gamma_{0} + S_{0s} + \left(\gamma_{1} + S_{1s}\right) X_{sd} + e_{sd}
+\end{equation}\]</span></p>
+<p>虽然“组合”公式语法在这种特定情况下足够容易理解，但多层的形式更清楚地向我们展示了模型的功能形式：一条直线。我们可以轻松地改变功能形式，例如捕捉非线性趋势：</p>
+<p><span class="math display">\[Y_{sd} = \beta_{0s} + \beta_{1s} X_{sd} + \beta_{2s} X_{sd}^2 + e_{sd}\]</span></p>
+<p>这种功能形式在组合语法中变得模糊不清。多层语法还使得容易看清哪些项与截距相关，哪些项与斜率相关。而且，随着设计变得更加复杂——例如，如果我们将被试分配到不同的实验条件中，在第2层就要引入更多的预测变量——组合方程将变得越来越难以解析和理解。</p>
+<p>固定效应参数如<span class="math inline">\(\gamma_0\)</span>和<span class="math inline">\(\gamma_1\)</span>是从数据中估计得到的，反映了总体的稳定特性。在这个例子中，<span class="math inline">\(\gamma_0\)</span>是总体截距，<span class="math inline">\(\gamma_1\)</span>是总体斜率。你可以将这些<strong>固定效应参数</strong>视为代表总体中的<strong>平均截距和斜率</strong>。这些是“固定”的，因为我们假设它们反映了总体中的真实潜在值(underlying value)；我们假设它们不会随着样本的变化而变。这些固定效应参数通常是主要的理论关注点；我们希望在数据允许的情况下，以一种尽可能公正和精确的方式来衡量它们和它们的标准差。在实验设置中，它们通常是假设检验的目标。</p>
+<p>随机效应如<span class="math inline">\(S_{0i}\)</span>和<span class="math inline">\(S_{1i}\)</span>分别允许截距和斜率在不同被试之间变化。这些随机效应是<em>偏移量</em>：相对于总体“总体均值”的偏差。有些被试的反应就是比别人慢，因此他们在第0天的截距(mean RT)高于总计估计值<span class="math inline">\(\hat{\gamma_0}\)</span>。这些比平均速度更慢的被试会有正的<span class="math inline">\(S_{0i}\)</span>值；比平均速度更快的被试会有负的<span class="math inline">\(S_{0i}\)</span>值。同样，一些被试的睡眠剥夺效应比估计的总体效应<span class="math inline">\(\hat{\gamma_1}\)</span>更强(更陡的斜率)，这意味着正的偏移量<span class="math inline">\(S_{1s}\)</span>，而另一些可能显示出较弱的效应或几乎没有效应(负的偏移量)。</p>
+<p>每个被试都可以表示为一个向量对<span class="math inline">\(\langle S_{0i}, S_{1i} \rangle\)</span>。如果我们的样本中的被试包含了整个总体，我们将有理由将其视为固定效应并估计它们的值，像上文的“无混合”方法那样。然而情况并非如此。鉴于它们是抽样而来的，我们把被试视为随机因子而不是固定因子。我们不会估计我们恰好选中的被试的值，而是估计<strong>代表这些值的二元分布的协方差矩阵</strong>。通过这样做，我们允许样本中的被试向我们提供有关总体特征的信息。</p>
+<div id="方差-协方差矩阵" class="section level3 hasAnchor" number="5.3.1">
+<h3><span class="header-section-number">5.3.1</span> 方差-协方差矩阵<a href="介绍线性混合效应模型.html#方差-协方差矩阵" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><span class="math display">\[\begin{equation}
+\langle S_{0s}, S_{1s} \rangle \sim N\left(\langle 0, 0 \rangle, \mathbf{\Sigma}\right)
+\end{equation}\]</span></p>
+<p><span class="math display">\[\begin{equation}
+\mathbf{\Sigma} = \left(\begin{array}{cc}{\tau_{00}}^2 &amp; \rho\tau_{00}\tau_{11} \\
+         \rho\tau_{00}\tau_{11} &amp; {\tau_{11}}^2 \\
+         \end{array}\right)
+\end{equation}\]</span></p>
+<p><em>方差分量</em>中的方程描述了我们对变异性(variability)的估计。第一个方程说明了我们的假设，即随机截距/随机斜率对<span class="math inline">\(\langle S_{0s}, S_{1s} \rangle\)</span>是从一个二元正态分布中抽取的，该分布根据<span class="math inline">\(\mathbf{\Sigma}\)</span>以原点<span class="math inline">\(\langle 0, 0 \rangle\)</span>为中心。</p>
+<p>协方差矩阵是关键：它决定了从总体中抽取随机效应对<span class="math inline">\(\langle S_{0s}, S_{1s} \rangle\)</span>的概率。你在<a href="相关和回归.html#相关和回归">相关和回归</a>一章中已经见过这些。协方差矩阵总是一个方阵(列数和行数相等)。主对角线(左上角和右下角的单元格)表示随机效应方差<span class="math inline">\({\tau_{00}}^2\)</span>和<span class="math inline">\({\tau_{11}}^2\)</span>。<span class="math inline">\({\tau_{00}}^2\)</span>是随机截距方差，它捕捉了被试在第0天(没有任何睡眠剥夺前)的平均反应时的变化程度。<span class="math inline">\({\tau_{11}}^2\)</span>是随机斜率方差，它捕捉了被试对睡眠剥夺效应敏感性的变化程度。</p>
+<p>非对角线的单元格包含协方差，但这些信息在矩阵中是冗余表示；左下角元素与右上角元素相同，两者都捕捉了随机截距和斜率之间的协方差，如<span class="math inline">\(\rho\tau_{00}\tau_{11}\)</span>所示。在这个方程中，<span class="math inline">\(\rho\)</span>是截距和斜率之间的相关性。因此，矩阵中的所有信息都可以通过三个参数来捕捉：<span class="math inline">\(\tau_{00}\)</span>、<span class="math inline">\(\tau_{11}\)</span>和<span class="math inline">\(\rho\)</span>。</p>
+</div>
+</div>
+<div id="估计模型参数" class="section level2 hasAnchor" number="5.4">
+<h2><span class="header-section-number">5.4</span> 估计模型参数<a href="介绍线性混合效应模型.html#估计模型参数" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>为了估计参数，我们将使用lme4包的<code>lmer()</code>函数<span class="citation">(<a href="#ref-Bates_et_al_2015">Bates et al., 2015</a>)</span>。<code>lmer()</code>的基本公式如下：</p>
+<pre><code>lmer(formula, data, ...)</code></pre>
+<p>其中<code>formula</code>以精简的形式表示底层模型的结构，<code>data</code>是<code>formula</code>中提到的变量所在的数据框。</p>
+<p>N个固定效应(<code>fix</code>)和K个随机效应(<code>ran</code>)的模型公式一般格式为：</p>
+<p><code>DV ~ fix1 + fix2 + ... + fixN + (ran1 + ran2 + ... + ranK | random_factor1)</code></p>
+<p>因子A和因子B之间的交互效应可以用<code>A * B</code>(交互效应和主效应)或<code>A:B</code>(仅仅是交互效应)来指定。</p>
+<p>与标准的R模型语法的一个关键区别是存在一个随机效应项，该项在括号内，即<code>(ran1 + ran2 + ... + ranK | random_factor)</code>。每个括号中的表达式表示与单个随机因子相关的随机效应。当我们讨论交叉随机因子时，你会看到在一个公式中可以有多个随机效应项。你应该将随机效应项看作为<code>lmer()</code>提供<strong>构造方差-协方差矩阵的指示</strong>。</p>
+<p>在竖线<code>|</code>的左侧(注：建议大家了解一下英文中符号的表达，如<code>|</code>是竖线，bar；<code>/</code>是正斜杠或除号，forward slash或division sign；<code>\</code>是反斜杠，backward slash，有时也用backslash等，这样便于阅读技术手册和工作交流)，放置你希望允许随右侧随机因子的不同水平变化的效应。通常右边的变量是可以唯一地标识单个被试的变量(如<code>subject_id</code>)。</p>
+<p>考虑下方<code>sleep2</code>数据的可能模型公式及其构造的方差-协方差矩阵。</p>
+<table>
+<colgroup>
+<col width="2%" />
+<col width="35%" />
+<col width="61%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>模型</th>
+<th>语法</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>仅随机截距</td>
+<td><code>Reaction ~ days_deprived + (1 | Subject)</code></td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>随机截距和斜率</td>
+<td><code>Reaction ~ days_deprived + (1 + days_deprived | Subject)</code></td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>模型2的备选语法</td>
+<td><code>Reaction ~ days_deprived + (days_deprived | Subject)</code></td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>仅随机斜率</td>
+<td><code>Reaction ~ days_deprived + (0 + days_deprived | Subject)</code></td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>模型2 + 0协方差(zero-covariances)</td>
+<td><code>Reaction ~ days_deprived + (days_deprived || Subject)</code></td>
+</tr>
+</tbody>
+</table>
+<p><em>模型1:</em></p>
+<p><span class="math display">\[\begin{equation*}
+  \mathbf{\Sigma} = \left(
+  \begin{array}{cc}
+    {\tau_{00}}^2 &amp; 0 \\
+                0 &amp; 0 \\
+  \end{array}\right)
+\end{equation*}\]</span></p>
+<p><em>模型2和3:</em></p>
+<p><span class="math display">\[\begin{equation*}
+  \mathbf{\Sigma} = \left(
+  \begin{array}{cc}
+             {\tau_{00}}^2 &amp; \rho\tau_{00}\tau_{11} \\
+    \rho\tau_{00}\tau_{11} &amp;          {\tau_{11}}^2 \\
+  \end{array}\right)
+\end{equation*}\]</span></p>
+<p><em>模型4:</em></p>
+<p><span class="math display">\[\begin{equation*}
+  \mathbf{\Sigma} = \left(
+  \begin{array}{cc}
+    0 &amp;             0 \\
+    0 &amp; {\tau_{11}}^2 \\
+  \end{array}\right)
+\end{equation*}\]</span></p>
+<p><em>模型5:</em></p>
+<p><span class="math display">\[\begin{equation*}
+  \mathbf{\Sigma} = \left(
+  \begin{array}{cc}
+    {\tau_{00}}^2 &amp;             0 \\
+                0 &amp; {\tau_{11}}^2 \\
+  \end{array}\right)
+\end{equation*}\]</span></p>
+<p>对于这些数据来说，最合理的模型是模型2，所以我们继续使用它。</p>
+<p>让我们拟合模型，将结果存储在<code>pp_mod</code>中。</p>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="介绍线性混合效应模型.html#cb141-1" tabindex="-1"></a>pp_mod <span class="ot">&lt;-</span> <span class="fu">lmer</span>(Reaction <span class="sc">~</span> days_deprived <span class="sc">+</span> (days_deprived <span class="sc">|</span> Subject), sleep2)</span>
+<span id="cb141-2"><a href="介绍线性混合效应模型.html#cb141-2" tabindex="-1"></a></span>
+<span id="cb141-3"><a href="介绍线性混合效应模型.html#cb141-3" tabindex="-1"></a><span class="fu">summary</span>(pp_mod)</span></code></pre></div>
+<pre><code>## Linear mixed model fit by REML [&#39;lmerMod&#39;]
+## Formula: Reaction ~ days_deprived + (days_deprived | Subject)
+##    Data: sleep2
+## 
+## REML criterion at convergence: 1404.1
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -4.0157 -0.3541  0.0069  0.4681  5.0732 
+## 
+## Random effects:
+##  Groups   Name          Variance Std.Dev. Corr
+##  Subject  (Intercept)   958.35   30.957       
+##           days_deprived  45.78    6.766   0.18
+##  Residual               651.60   25.526       
+## Number of obs: 144, groups:  Subject, 18
+## 
+## Fixed effects:
+##               Estimate Std. Error t value
+## (Intercept)    267.967      8.266  32.418
+## days_deprived   11.435      1.845   6.197
+## 
+## Correlation of Fixed Effects:
+##             (Intr)
+## days_deprvd -0.062</code></pre>
+<p>在讨论如何解释输出结果之前，我们先绘制原始数据与模型预测值的对比图。我们可以使用<code>predict()</code>函数获取模型预测值(有关与混合效应模型一起使用的更多信息，请参见<code>?predict.merMod</code>)。</p>
+<p>首先为<code>Subject</code>和<code>days_deprivation</code>的预测值创建一个新的数据集。</p>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="介绍线性混合效应模型.html#cb143-1" tabindex="-1"></a>newdata <span class="ot">&lt;-</span> <span class="fu">crossing</span>(</span>
+<span id="cb143-2"><a href="介绍线性混合效应模型.html#cb143-2" tabindex="-1"></a>  <span class="at">Subject =</span> sleep2 <span class="sc">%&gt;%</span> <span class="fu">pull</span>(Subject) <span class="sc">%&gt;%</span> <span class="fu">levels</span>() <span class="sc">%&gt;%</span> <span class="fu">factor</span>(),</span>
+<span id="cb143-3"><a href="介绍线性混合效应模型.html#cb143-3" tabindex="-1"></a>  <span class="at">days_deprived =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">7</span>)</span>
+<span id="cb143-4"><a href="介绍线性混合效应模型.html#cb143-4" tabindex="-1"></a></span>
+<span id="cb143-5"><a href="介绍线性混合效应模型.html#cb143-5" tabindex="-1"></a><span class="fu">head</span>(newdata, <span class="dv">17</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 17 × 2
+##    Subject days_deprived
+##    &lt;fct&gt;           &lt;int&gt;
+##  1 308                 0
+##  2 308                 1
+##  3 308                 2
+##  4 308                 3
+##  5 308                 4
+##  6 308                 5
+##  7 308                 6
+##  8 308                 7
+##  9 309                 0
+## 10 309                 1
+## 11 309                 2
+## 12 309                 3
+## 13 309                 4
+## 14 309                 5
+## 15 309                 6
+## 16 309                 7
+## 17 310                 0</code></pre>
+<p>然后，通过<code>predict()</code>运行这个数据框。通常我们会将预测值作为新变量添加到新的数据框中，并将其命名为与我们的因变量(<code>Reaction</code>)相同的名称。</p>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="介绍线性混合效应模型.html#cb145-1" tabindex="-1"></a>newdata2 <span class="ot">&lt;-</span> newdata <span class="sc">%&gt;%</span></span>
+<span id="cb145-2"><a href="介绍线性混合效应模型.html#cb145-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Reaction =</span> <span class="fu">predict</span>(pp_mod, newdata))</span></code></pre></div>
+<p>现在我们准备好绘图了。</p>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="介绍线性混合效应模型.html#cb146-1" tabindex="-1"></a><span class="fu">ggplot</span>(sleep2, <span class="fu">aes</span>(<span class="at">x =</span> days_deprived, <span class="at">y =</span> Reaction)) <span class="sc">+</span></span>
+<span id="cb146-2"><a href="介绍线性混合效应模型.html#cb146-2" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> newdata2,</span>
+<span id="cb146-3"><a href="介绍线性混合效应模型.html#cb146-3" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">&#39;blue&#39;</span>) <span class="sc">+</span></span>
+<span id="cb146-4"><a href="介绍线性混合效应模型.html#cb146-4" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb146-5"><a href="介绍线性混合效应模型.html#cb146-5" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">7</span>) <span class="sc">+</span></span>
+<span id="cb146-6"><a href="介绍线性混合效应模型.html#cb146-6" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Subject) <span class="sc">+</span></span>
+<span id="cb146-7"><a href="介绍线性混合效应模型.html#cb146-7" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;反应时&quot;</span>, <span class="at">x =</span> <span class="st">&quot;睡眠剥夺的天数(0 = 基线)&quot;</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:pp-plot"></span>
+<img src="05-%E4%BB%8B%E7%BB%8D%E7%BA%BF%E6%80%A7%E6%B7%B7%E5%90%88%E6%95%88%E5%BA%94%E6%A8%A1%E5%9E%8B_files/figure-html/pp-plot-1.png" alt="原始数据和部分混合方法的拟合结果对比图" width="672" />
+<p class="caption">
+图5.6: 原始数据和部分混合方法的拟合结果对比图
+</p>
+</div>
+</div>
+<div id="解释lmer输出结果并提取估计值" class="section level2 hasAnchor" number="5.5">
+<h2><span class="header-section-number">5.5</span> 解释<code>lmer()</code>输出结果并提取估计值<a href="介绍线性混合效应模型.html#解释lmer输出结果并提取估计值" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 
 </div>
 </div>
