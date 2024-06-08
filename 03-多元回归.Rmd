@@ -241,7 +241,7 @@ if (coef(my_model_scaled)[[2]] > coef(my_model_scaled)[[1]]) "nclicks_c" else "l
 -   当存在强相关时，解释单个回归系数时要谨慎；
 -   目前没有已知的"补救措施"，也不清楚是否需要任何此类补救措施，许多所谓的补救措施弊大于利。
 
-更多信息和指导请查阅[@Vanhove_2021]。
+更多信息和指导请查阅 @Vanhove_2021 。
 :::
 
 ### 模型比较
@@ -428,7 +428,7 @@ lm(bodyweight_kg ~ spring_v_winter + summer_v_winter + fall_v_winter,
    season_wt3)
 ```
 
-发生了什么？让我们看看数据来找到答案。我们将使用`distinct`函数找出原始变量`season`和我们创建的三个变量的不同组合(详细信息参阅`?dplyr::distinct`)。
+发生了什么？让我们看看数据来找到答案。我们将使用`distinct`函数找出原始变量`season`和我们创建的三个变量的不同组合(详细信息参见`?dplyr::distinct`)。
 
 ```{r the-test}
 season_wt3 %>%
