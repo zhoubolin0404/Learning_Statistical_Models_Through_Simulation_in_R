@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="介绍线性混合效应模型.html"/>
-<link rel="next" href="参考文献.html"/>
+<link rel="next" href="交叉随机因子线性混合效应模型.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -266,8 +266,16 @@ div.csl-indent {
 <li class="chapter" data-level="6" data-path="单随机因子线性混合效应模型.html"><a href="单随机因子线性混合效应模型.html"><i class="fa fa-check"></i><b>6</b> 单随机因子线性混合效应模型</a>
 <ul>
 <li class="chapter" data-level="6.1" data-path="单随机因子线性混合效应模型.html"><a href="单随机因子线性混合效应模型.html#什么时候为什么你想用线性混合效应建模取代传统的分析"><i class="fa fa-check"></i><b>6.1</b> 什么时候，为什么，你想用线性混合效应建模取代传统的分析?</a></li>
-<li class="chapter" data-level="6.2" data-path="单随机因子线性混合效应模型.html"><a href="单随机因子线性混合效应模型.html#示例多层次数据上的独立样本t检验"><i class="fa fa-check"></i><b>6.2</b> 示例：多层次数据上的独立样本<span class="math inline">\(t\)</span>检验</a></li>
+<li class="chapter" data-level="6.2" data-path="单随机因子线性混合效应模型.html"><a href="单随机因子线性混合效应模型.html#示例多层数据上的独立样本t检验"><i class="fa fa-check"></i><b>6.2</b> 示例：多层数据上的独立样本<span class="math inline">\(t\)</span>检验</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="单随机因子线性混合效应模型.html"><a href="单随机因子线性混合效应模型.html#什么时候使用随机截距模型是合适的"><i class="fa fa-check"></i><b>6.2.1</b> 什么时候使用随机截距模型是合适的?</a></li>
 </ul></li>
+<li class="chapter" data-level="6.3" data-path="单随机因子线性混合效应模型.html"><a href="单随机因子线性混合效应模型.html#用回归表达研究设计和进行检验"><i class="fa fa-check"></i><b>6.3</b> 用回归表达研究设计和进行检验</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="单随机因子线性混合效应模型.html"><a href="单随机因子线性混合效应模型.html#水平以上的因子"><i class="fa fa-check"></i><b>6.3.1</b> 2水平以上的因子</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="交叉随机因子线性混合效应模型.html"><a href="交叉随机因子线性混合效应模型.html"><i class="fa fa-check"></i><b>7</b> 交叉随机因子线性混合效应模型</a></li>
 <li class="chapter" data-level="" data-path="参考文献.html"><a href="参考文献.html"><i class="fa fa-check"></i>参考文献</a></li>
 </ul>
 
@@ -302,25 +310,25 @@ div.csl-indent {
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">单层次</td>
+<td align="left">单层</td>
 <td align="left">连续、正态分布</td>
 <td align="left"><code>base::lm()</code></td>
 <td align="left">简单线性模型</td>
 </tr>
 <tr class="even">
-<td align="left">单层次</td>
+<td align="left">单层</td>
 <td align="left">计数或分类</td>
 <td align="left"><code>base::glm()</code></td>
 <td align="left">广义线性模型</td>
 </tr>
 <tr class="odd">
-<td align="left">多层次</td>
+<td align="left">多层</td>
 <td align="left">连续、正态分布</td>
 <td align="left"><code>lme4::lmer()</code></td>
 <td align="left">线性混合效应模型</td>
 </tr>
 <tr class="even">
-<td align="left">多层次</td>
+<td align="left">多层</td>
 <td align="left">计数或分类</td>
 <td align="left"><code>lme4::glmer()</code></td>
 <td align="left">广义线性混合效应模型</td>
@@ -336,10 +344,10 @@ div.csl-indent {
 <p>要决定使用四个回归函数中的哪一个，你需要回答两个问题。</p>
 <ol style="list-style-type: decimal">
 <li>因变量代表哪种类型的数据，它是如何分布的？</li>
-<li>数据是多层次(multilevel)的还是单层次(single level)的？</li>
+<li>数据是多层(multilevel)的还是单层(single level)的？</li>
 </ol>
 <p>这些函数的参数在所有四个版本中都非常相似。我们将在本课程后面部分学习如何分析计数和分类数据。现在，我们将重点放在连续数据上，但原理可以推广到其他类型的数据上。</p>
-<p>以下是单层次数据(没有重复测量的数据)的对比表：</p>
+<p>以下是单层数据(没有重复测量的数据)的对比表：</p>
 <table>
 <thead>
 <tr class="header">
@@ -372,7 +380,7 @@ div.csl-indent {
 </tbody>
 </table>
 <p>以上所有设计都是<em>被试间</em>设计，没有重复测量(请注意，在多因子情况下，我们可能会将<code>a</code>和<code>b</code>替换为偏差编码的数值型预测变量，原因已在<a href="交互效应.html">交互章节</a>中讨论过)。</p>
-<p>混合效应模型在处理多层次数据时可以发挥作用。数据通常是多层次的，原因有如下三种(多个原因可能同时适用)：</p>
+<p>混合效应模型在处理多层数据时可以发挥作用。数据通常是多层的，原因有如下三种(多个原因可能同时适用)：</p>
 <ol style="list-style-type: decimal">
 <li>你有一个被试内因子，和/或</li>
 <li>你有<strong>假重复(pseudoreplications)</strong>，和/或</li>
@@ -380,7 +388,7 @@ div.csl-indent {
 </ol>
 <p>此时，回顾一下被试间因子与被试内因子的意义是个好主意。在<code>sleepstudy</code>数据中，你有被试内因子<code>Day</code>(实际上它更像是一个数值型变量，而不是一个因子；但它在每个被试内有多个变动值)。</p>
 <p><strong>假重复</strong>发生在同一条件下进行多次测量的情况下。例如，设想一个研究，你随机分配被试饮用两种饮料中的一种——酒精或水——然后进行一个简单的反应时任务，当灯光闪烁时尽快按下按钮。你可能会对每个被试进行多次反应时测量；假设你在100次试验中测量它。你有一个被试间因子(饮料类型)和每个被试的100次观测，对于每组的20个被试来说。一些新手在分析这些数据时常犯的错误是尝试进行t检验。<strong>当你有假重复(或多个刺激)时，你不能直接使用传统的t检验</strong>。你必须首先为每个被试计算均值，然后对<strong>均值而不是原始数据</strong>进行分析。虽然ANOVA的一些版本可以处理假重复，但使用线性混合效应模型可能更好，它可以更好地处理复杂的依赖结构(dependency structure)。</p>
-<p>以下是多层次数据的对比表：</p>
+<p>以下是多层数据的对比表：</p>
 <table>
 <colgroup>
 <col width="26%" />
@@ -434,8 +442,8 @@ div.csl-indent {
 </table>
 <p>广义线性模型/回归框架相比t检验和ANOVA的主要卖点之一就是灵活性。在上一章中，我们使用了<code>sleepstudy</code>数据，发现只有在线性混合效应模型框架才能妥善处理这些数据。尽管回归有许多优点，但如果你的数据是平衡的，且在不违反任何检验假设的情况下可以合理使用t检验或ANOVA，那么这样做是可取的；这些方法在心理学中有悠久的历史，并且更为广泛地被理解。</p>
 </div>
-<div id="示例多层次数据上的独立样本t检验" class="section level2 hasAnchor" number="6.2">
-<h2><span class="header-section-number">6.2</span> 示例：多层次数据上的独立样本<span class="math inline">\(t\)</span>检验<a href="单随机因子线性混合效应模型.html#示例多层次数据上的独立样本t检验" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="示例多层数据上的独立样本t检验" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">6.2</span> 示例：多层数据上的独立样本<span class="math inline">\(t\)</span>检验<a href="单随机因子线性混合效应模型.html#示例多层数据上的独立样本t检验" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>让我们考虑一种情况，你在测试酒精摄入对简单反应时的影响(例如，灯亮后尽快按下按钮)。为了简化，假设你收集了14个被试的数据，这些被试被随机分配在两种干预后进行10次简单反应时试验：饮用一品脱酒精(处理条件)或饮用安慰剂饮料(安慰剂条件)。你在每组中有7名被试。请注意，实际研究中需要更多的被试。</p>
 <p>这个<a href="https://rstudio-connect.psy.gla.ac.uk/icc" target="_blank">网页app</a>展示了这种研究的模拟数据。被试P01到P07属于安慰剂条件，而被试T01到T07属于处理条件。请停下并查看！</p>
 <p>如果我们要对这些数据进行t检验，首先需要计算被试的均值，否则观测值不是独立的。你可以按如下方法进行操作。(如果你想运行下面的代码，可以从上面的网页app下载示例数据，并将其保存为<code>independent_samples.csv</code>)。</p>
@@ -498,7 +506,92 @@ S_{0s} \sim N\left(0, {\tau_{00}}^2\right)
 <p><span class="math display">\[\begin{equation}
 e_{st} \sim N\left(0, \sigma^2\right)
 \end{equation}\]</span></p>
+<p>在上面的方程中，<span class="math inline">\(X_s\)</span>是一个数值型预测变量，用于编码被试<span class="math inline">\(s\)</span>的条件；例如：0表示安慰剂，1表示处理。</p>
+<p>相比于一个简单模型，多层方程显得有些繁琐，但是当我们遇到更复杂的设计时，熟悉一下多层格式是值得的；我们可以将第1层和第2层简化为</p>
+<p><span class="math display">\[\begin{equation}
+Y_{st} = \gamma_{00} + S_{0s} + \gamma_{10} X_s + e_{st},
+\end{equation}\]</span></p>
+<p>与上章节中的<code>sleepstudy</code>数据不同，现在的数据每个被试只有一个随机效应<span class="math inline">\(S_{0s}\)</span>，没有随机斜率。每个被试只出现在两个处理条件中的一个中，因此不可能估计安慰剂与酒精的效应在被试之间的变化情况。对于这些数据，我们拟合的混合效应模型，具有随机截距但没有随机斜率，被称为<strong>随机截距模型(random intercepts model)</strong>。</p>
+<p>随机截距模型可以充分捕捉上述两种变异来源：参数<span class="math inline">\({\tau_{00}}^2\)</span>中的总体平均反应时的被试间变异，以及参数<span class="math inline">\(\sigma^2\)</span>中的逐试次变异。我们可以使用下面的公式计算个体差异在总变异中所占的比例。</p>
+<p><span class="math display">\[ICC = \frac{{\tau_{00}}^2}{{\tau_{00}}^2 + \sigma^2}\]</span></p>
+<p>这一数值被称为<strong>组内相关系数(intra-class correlation coefficient)</strong>，告诉你数据中的聚类程度。它的范围从0到1，0表示所有变异都归因于残差变异，1表示所有变异都归因于被试间差异。</p>
+<p>拟合随机截距模型的lmer语法是<code>lmer(RT ~ cond + (1 | subject), dat, REML=FALSE)</code>。首先让我们创建自己的数值型预测变量，以明确我们在使用虚拟编码。</p>
+<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="单随机因子线性混合效应模型.html#cb182-1" tabindex="-1"></a>dat2 <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span></span>
+<span id="cb182-2"><a href="单随机因子线性混合效应模型.html#cb182-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cond_d =</span> <span class="fu">if_else</span>(cond <span class="sc">==</span> <span class="st">&quot;T&quot;</span>, 1L, 0L))</span>
+<span id="cb182-3"><a href="单随机因子线性混合效应模型.html#cb182-3" tabindex="-1"></a></span>
+<span id="cb182-4"><a href="单随机因子线性混合效应模型.html#cb182-4" tabindex="-1"></a><span class="fu">distinct</span>(dat2, cond, cond_d)  <span class="do">## 再次确认</span></span></code></pre></div>
+<pre><code>## # A tibble: 2 × 2
+##   cond  cond_d
+##   &lt;chr&gt;  &lt;int&gt;
+## 1 P          0
+## 2 T          1</code></pre>
+<p>现在估计模型。</p>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="单随机因子线性混合效应模型.html#cb184-1" tabindex="-1"></a><span class="fu">library</span>(lme4)</span>
+<span id="cb184-2"><a href="单随机因子线性混合效应模型.html#cb184-2" tabindex="-1"></a></span>
+<span id="cb184-3"><a href="单随机因子线性混合效应模型.html#cb184-3" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lmer</span>(RT <span class="sc">~</span> cond_d <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> subject), dat2, <span class="at">REML =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb184-4"><a href="单随机因子线性混合效应模型.html#cb184-4" tabindex="-1"></a></span>
+<span id="cb184-5"><a href="单随机因子线性混合效应模型.html#cb184-5" tabindex="-1"></a><span class="fu">summary</span>(mod)</span></code></pre></div>
+<pre><code>## Linear mixed model fit by maximum likelihood  [&#39;lmerMod&#39;]
+## Formula: RT ~ cond_d + (1 | subject)
+##    Data: dat2
+## 
+##      AIC      BIC   logLik deviance df.resid 
+##   1451.8   1463.5   -721.9   1443.8      136 
+## 
+## Scaled residuals: 
+##      Min       1Q   Median       3Q      Max 
+## -2.67117 -0.66677  0.01656  0.75361  2.58447 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev.
+##  subject  (Intercept)  329.3   18.15   
+##  Residual             1574.7   39.68   
+## Number of obs: 140, groups:  subject, 14
+## 
+## Fixed effects:
+##             Estimate Std. Error t value
+## (Intercept)  392.314      8.339  47.045
+## cond_d        48.386     11.793   4.103
+## 
+## Correlation of Fixed Effects:
+##        (Intr)
+## cond_d -0.707</code></pre>
+<p>使用上面app中的滑块并检查lmer输出面板，直到你了解输出结果如何映射到模型参数中。</p>
+<div id="什么时候使用随机截距模型是合适的" class="section level3 hasAnchor" number="6.2.1">
+<h3><span class="header-section-number">6.2.1</span> 什么时候使用随机截距模型是合适的?<a href="单随机因子线性混合效应模型.html#什么时候使用随机截距模型是合适的" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>当然，混合效应模型仅在你有多层数据时才合适。随机截距模型适用于任何单样本或具有假重复的组间数据(如果在这种情况下你没有假重复，那么你就没有多层数据，可以直接使用普通回归，例如<code>lm()</code>)。</p>
+<p>“仅随机截距”模型也适用于设计中有被试内因素的情况，但<strong>只有当你没有假重复数据时</strong>才合适；也就是说，它<strong>只</strong>适用于每个被试在被试内因素的每个水平上只有一个观测值的情况。如果每个被试在每个水平/单元上有多个观测值，那么你需要用随机斜率来丰富你的随机效应结构，在下一节会进行讲述。如果你有多个观测值的原因是每个被试对相同的刺激集合做出反应，那么你可能需要考虑一个对被试和刺激进行交叉随机效应的混合效应模型，在<a href="交叉随机因子线性混合效应模型.html">下一章</a>会进行讲述。</p>
+<p>同样的逻辑也适用于有多个被试内因素的因子设计。在因子设计中，如果每个被试在由被试内因素相互组合形成的每个<strong>单元</strong>中只有一个观测值，那么随机截距模型是合适的。例如，如果<span class="math inline">\(A\)</span>和<span class="math inline">\(B\)</span>是2个两水平的被试内因素，你需要检查每个被试在<span class="math inline">\(A_1B_1\)</span>、<span class="math inline">\(A_1B_2\)</span>、<span class="math inline">\(A_2B_1\)</span>和<span class="math inline">\(A_2B_2\)</span>中是否只有1个观测值。如果有多个观测值，你将需要考虑在模型中加入随机斜率。</p>
+</div>
+</div>
+<div id="用回归表达研究设计和进行检验" class="section level2 hasAnchor" number="6.3">
+<h2><span class="header-section-number">6.3</span> 用回归表达研究设计和进行检验<a href="单随机因子线性混合效应模型.html#用回归表达研究设计和进行检验" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>为了在线性混合效应模型中重现所有的t检验/ANOVA风格的分析，你需要更好地理解两件事：(1)如何在回归公式中表达你的研究设计，以及(2)如何为你进行的任何检验获得p值。在线性混合效应方法中，后者并不是理所应当的，因为在许多情况下，<code>lme4::lmer()</code>的输出默认不会给出p值，这反映了存在多种获取p值的方法<span class="citation">(<a href="#ref-Luke_2017">Luke, 2017</a>)</span>。或者，你可能会为单个回归系数获得p值，但你想进行的检验是一个组合测试，需要同时测试多个参数。</p>
+<p>首先，让我们仔细看看R和<strong><code>lme4</code></strong>中的回归公式语法。对于基于被试的随机效应的回归模型<span class="math inline">\(y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \ldots + \beta_m x_m + e\)</span>，公式如下：</p>
+<p><code>y ~ 1 + x1 + x2 + ... + xm + (1 + x1 + ... | subject)</code></p>
+<p>残差项是隐含的，所以没有提及；仅列出预测变量。左边部分(波浪号<code>~</code>前面)指定响应变量，右侧是预测变量。括号中的项<code>(... | ...)</code>特定于<strong><code>lme4</code></strong>。竖线<code>|</code>的右侧指定一个变量名称(在本例中为<code>subject</code>)，用于编码随机因子的水平。左侧指定你希望在这些水平上变化的回归系数。公式开头的<code>1</code>指定你需要一个截距，默认情况下已包括在内，因此可以省略。括号内的<code>1</code>指定一个<strong>随机截距</strong>，这也是默认包含的；括号内提到的预测变量指定<strong>随机斜率</strong>。因此，你可以将上述公式等效写成：</p>
+<p><code>y ~ x1 + x2 + ... + xm + (x1 + ... | subject)</code>。</p>
+<p>R公式中还有另一种重要的缩写方式，我们已经在<a href="交互效应.html#交互效应">交互效应</a>章节中看到过，即被称为“星号语法”用于指定交互的<code>a * b</code>。如果你的设计中有两个因子<code>a</code>和<code>b</code>，并且希望模型中包含所有主效应和交互效应，可以使用：</p>
+<p><code>y ~ a * b</code></p>
+<p>这等同于<code>y ~ a + b + a:b</code>，其中<code>a</code>和<code>b</code>是编码A和B主效应的预测变量，<code>a:b</code>编码AB交互效应。使用星号语法指定交互比手动拼写它们要节省很多拼写(和错误)。这在下面的例子中更容易看出，该例子编码了一个包括因子A、B和C的2x2x2因子设计：</p>
+<p><code>y ~ a * b * c</code></p>
+<p>这等同于</p>
+<p><code>y ~ a + b + c + a:b + a:c + b:c + a:b:c</code></p>
+<p>其中<code>a:b</code>、<code>a:c</code>和<code>b:c</code>是双因子交互，<code>a:b:c</code>是三因子交互。你也可以在括号内的随机效应项中使用星号语法，例如：</p>
+<p><code>y ~ a * b * c + (a * b * c | subject)</code></p>
+<p>等同于</p>
+<p><code>y ~ a + b + c + a:b + a:c + b:c + a:b:c + (a + b + c + a:b + a:c + b:c + a:b:c | subject)</code></p>
+<p>尽管很复杂，但这种设计在心理学中并不罕见(例如，如果你所有因子都在被试内，并且每个条件有多个刺激)！</p>
+<div id="水平以上的因子" class="section level3 hasAnchor" number="6.3.1">
+<h3><span class="header-section-number">6.3.1</span> 2水平以上的因子<a href="单随机因子线性混合效应模型.html#水平以上的因子" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 
+</div>
+</div>
+</div>
+<h3>参考文献<a href="参考文献.html#参考文献" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="ref-Luke_2017" class="csl-entry">
+Luke, S. G. (2017). Evaluating significance in linear mixed-effects models in r. <em><span>Behavior Research Methods</span></em>, <em>49</em>, 1494–1502.
 </div>
 </div>
 <script>
@@ -626,7 +719,7 @@ $( document ).ready(function() {
         </div>
       </div>
 <a href="介绍线性混合效应模型.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="参考文献.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="交叉随机因子线性混合效应模型.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
