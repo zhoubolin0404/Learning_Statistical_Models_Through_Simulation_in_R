@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>参考文献 | 学习统计模型——通过R模拟(施工中)</title>
-  <meta name="description" content="参考文献 | 学习统计模型——通过R模拟(施工中)" />
+  <title>6 单随机因子线性混合效应模型 | 学习统计模型——通过R模拟(施工中)</title>
+  <meta name="description" content="6 单随机因子线性混合效应模型 | 学习统计模型——通过R模拟(施工中)" />
   <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="参考文献 | 学习统计模型——通过R模拟(施工中)" />
+  <meta property="og:title" content="6 单随机因子线性混合效应模型 | 学习统计模型——通过R模拟(施工中)" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="参考文献 | 学习统计模型——通过R模拟(施工中)" />
+  <meta name="twitter:title" content="6 单随机因子线性混合效应模型 | 学习统计模型——通过R模拟(施工中)" />
   
   
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="单随机因子线性混合效应模型.html"/>
-
+<link rel="prev" href="介绍线性混合效应模型.html"/>
+<link rel="next" href="参考文献.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -286,34 +286,219 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="参考文献" class="section level1 unnumbered hasAnchor">
-<h1>参考文献<a href="参考文献.html#参考文献" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="单随机因子线性混合效应模型" class="section level1 hasAnchor" number="6">
+<h1><span class="header-section-number">6</span> 单随机因子线性混合效应模型<a href="单随机因子线性混合效应模型.html#单随机因子线性混合效应模型" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="什么时候为什么你想用线性混合效应建模取代传统的分析" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> 什么时候，为什么，你想用线性混合效应建模取代传统的分析?<a href="单随机因子线性混合效应模型.html#什么时候为什么你想用线性混合效应建模取代传统的分析" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>我们已经反复强调了，心理学中的许多常用技术可以被视为一般线性模型的特例。这意味着可以用回归来替代这些技术。事实上，你可以使用以下四个函数之一来分析几乎任何在心理学中可以想象得到的数据集。</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">取样设计</th>
+<th align="left">数据类型</th>
+<th align="left">函数</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">单层次</td>
+<td align="left">连续、正态分布</td>
+<td align="left"><code>base::lm()</code></td>
+<td align="left">简单线性模型</td>
+</tr>
+<tr class="even">
+<td align="left">单层次</td>
+<td align="left">计数或分类</td>
+<td align="left"><code>base::glm()</code></td>
+<td align="left">广义线性模型</td>
+</tr>
+<tr class="odd">
+<td align="left">多层次</td>
+<td align="left">连续、正态分布</td>
+<td align="left"><code>lme4::lmer()</code></td>
+<td align="left">线性混合效应模型</td>
+</tr>
+<tr class="even">
+<td align="left">多层次</td>
+<td align="left">计数或分类</td>
+<td align="left"><code>lme4::glmer()</code></td>
+<td align="left">广义线性混合效应模型</td>
+</tr>
+</tbody>
+</table>
+<p>在本章结束时，你应该:</p>
+<ul>
+<li>理解如何使用回归来替代标准的ANOVA和t检验分析，适用于具有单一随机因子和连续因变量的数据；</li>
+<li>能够进行模型比较(<code>anova()</code>)以测试效果；</li>
+<li>能够使用R回归公式语法来表达各种研究设计。</li>
+</ul>
+<p>要决定使用四个回归函数中的哪一个，你需要回答两个问题。</p>
+<ol style="list-style-type: decimal">
+<li>因变量代表哪种类型的数据，它是如何分布的？</li>
+<li>数据是多层次(multilevel)的还是单层次(single level)的？</li>
+</ol>
+<p>这些函数的参数在所有四个版本中都非常相似。我们将在本课程后面部分学习如何分析计数和分类数据。现在，我们将重点放在连续数据上，但原理可以推广到其他类型的数据上。</p>
+<p>以下是单层次数据(没有重复测量的数据)的对比表：</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">检验类型</th>
+<th align="left">传统方法</th>
+<th align="left">回归方法</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">单样本t检验</td>
+<td align="left"><code>t.test(y, mu = c)</code></td>
+<td align="left"><code>lm(y ~ 1, offset = c)</code></td>
+</tr>
+<tr class="even">
+<td align="left">独立样本t检验</td>
+<td align="left"><code>t.test(x, y)</code></td>
+<td align="left"><code>lm(y ~ x)</code></td>
+</tr>
+<tr class="odd">
+<td align="left">单因素方差分析</td>
+<td align="left"><code>aov(y ~ x)</code></td>
+<td align="left"><code>lm(y ~ x)</code></td>
+</tr>
+<tr class="even">
+<td align="left">多因素方差分析</td>
+<td align="left"><code>aov(y ~ a * b)</code></td>
+<td align="left"><code>lm(y ~ a * b)</code></td>
+</tr>
+</tbody>
+</table>
+<p>以上所有设计都是<em>被试间</em>设计，没有重复测量(请注意，在多因子情况下，我们可能会将<code>a</code>和<code>b</code>替换为偏差编码的数值型预测变量，原因已在<a href="交互效应.html">交互章节</a>中讨论过)。</p>
+<p>混合效应模型在处理多层次数据时可以发挥作用。数据通常是多层次的，原因有如下三种(多个原因可能同时适用)：</p>
+<ol style="list-style-type: decimal">
+<li>你有一个被试内因子，和/或</li>
+<li>你有<strong>假重复(pseudoreplications)</strong>，和/或</li>
+<li>你有多个刺激项目(我们将在<a href="交叉随机因子线性混合效应模型.html">下一章</a>中讨论)。</li>
+</ol>
+<p>此时，回顾一下被试间因子与被试内因子的意义是个好主意。在<code>sleepstudy</code>数据中，你有被试内因子<code>Day</code>(实际上它更像是一个数值型变量，而不是一个因子；但它在每个被试内有多个变动值)。</p>
+<p><strong>假重复</strong>发生在同一条件下进行多次测量的情况下。例如，设想一个研究，你随机分配被试饮用两种饮料中的一种——酒精或水——然后进行一个简单的反应时任务，当灯光闪烁时尽快按下按钮。你可能会对每个被试进行多次反应时测量；假设你在100次试验中测量它。你有一个被试间因子(饮料类型)和每个被试的100次观测，对于每组的20个被试来说。一些新手在分析这些数据时常犯的错误是尝试进行t检验。<strong>当你有假重复(或多个刺激)时，你不能直接使用传统的t检验</strong>。你必须首先为每个被试计算均值，然后对<strong>均值而不是原始数据</strong>进行分析。虽然ANOVA的一些版本可以处理假重复，但使用线性混合效应模型可能更好，它可以更好地处理复杂的依赖结构(dependency structure)。</p>
+<p>以下是多层次数据的对比表：</p>
+<table>
+<colgroup>
+<col width="26%" />
+<col width="30%" />
+<col width="42%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">检验类型</th>
+<th align="left">传统方法</th>
+<th align="left">回归方法</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">有假重复的单样本t检验</td>
+<td align="left">计算平均值并使用<code>t.test(x_mean)</code></td>
+<td align="left"><code>lmer(y ~ (1 | subject), offset = c)</code></td>
+</tr>
+<tr class="even">
+<td align="left">无假重复的配对样本t检验</td>
+<td align="left"><code>t.test(x, y, paired = TRUE)</code></td>
+<td align="left"><code>lmer(y ~ x + (1 | subject))</code></td>
+</tr>
+<tr class="odd">
+<td align="left">有假重复的配对样本t检验</td>
+<td align="left">计算平均值并使用<code>t.test(x_mean, y_mean)</code></td>
+<td align="left"><code>lmer(y ~ x + (1 + x | subject))</code></td>
+</tr>
+<tr class="even">
+<td align="left">无假重复的重复测量方差分析</td>
+<td align="left"><code>aov(y ~ x + Error(subject))</code></td>
+<td align="left"><code>lmer(y ~ x + (1 | subject))</code></td>
+</tr>
+<tr class="odd">
+<td align="left">有假重复的重复测量方差分析</td>
+<td align="left"><code>aov(y ~ x + Error(subject/x))</code></td>
+<td align="left"><code>lmer(y ~ x + (1 + x | subject))</code></td>
+</tr>
+<tr class="even">
+<td align="left">无假重复的多因子方差分析，包含a和b</td>
+<td align="left"><code>aov(y ~ a * b + Error(subject))</code></td>
+<td align="left"><code>lmer(y ~ a * b + (1 | subject))</code></td>
+</tr>
+<tr class="odd">
+<td align="left">有假重复的多因子方差分析</td>
+<td align="left"><code>aov(y ~ a * b + Error(subject/(a * b))</code></td>
+<td align="left"><code>lmer(y ~ a * b + (1 + a * b | subject)</code></td>
+</tr>
+</tbody>
+</table>
+<p>广义线性模型/回归框架相比t检验和ANOVA的主要卖点之一就是灵活性。在上一章中，我们使用了<code>sleepstudy</code>数据，发现只有在线性混合效应模型框架才能妥善处理这些数据。尽管回归有许多优点，但如果你的数据是平衡的，且在不违反任何检验假设的情况下可以合理使用t检验或ANOVA，那么这样做是可取的；这些方法在心理学中有悠久的历史，并且更为广泛地被理解。</p>
+</div>
+<div id="示例多层次数据上的独立样本t检验" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">6.2</span> 示例：多层次数据上的独立样本<span class="math inline">\(t\)</span>检验<a href="单随机因子线性混合效应模型.html#示例多层次数据上的独立样本t检验" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>让我们考虑一种情况，你在测试酒精摄入对简单反应时的影响(例如，灯亮后尽快按下按钮)。为了简化，假设你收集了14个被试的数据，这些被试被随机分配在两种干预后进行10次简单反应时试验：饮用一品脱酒精(处理条件)或饮用安慰剂饮料(安慰剂条件)。你在每组中有7名被试。请注意，实际研究中需要更多的被试。</p>
+<p>这个<a href="https://rstudio-connect.psy.gla.ac.uk/icc" target="_blank">网页app</a>展示了这种研究的模拟数据。被试P01到P07属于安慰剂条件，而被试T01到T07属于处理条件。请停下并查看！</p>
+<p>如果我们要对这些数据进行t检验，首先需要计算被试的均值，否则观测值不是独立的。你可以按如下方法进行操作。(如果你想运行下面的代码，可以从上面的网页app下载示例数据，并将其保存为<code>independent_samples.csv</code>)。</p>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="单随机因子线性混合效应模型.html#cb178-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb178-2"><a href="单随机因子线性混合效应模型.html#cb178-2" tabindex="-1"></a></span>
+<span id="cb178-3"><a href="单随机因子线性混合效应模型.html#cb178-3" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/independent_samples.csv&quot;</span>, <span class="at">col_types =</span> <span class="st">&quot;cci&quot;</span>)</span>
+<span id="cb178-4"><a href="单随机因子线性混合效应模型.html#cb178-4" tabindex="-1"></a></span>
+<span id="cb178-5"><a href="单随机因子线性混合效应模型.html#cb178-5" tabindex="-1"></a>subj_means <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span></span>
+<span id="cb178-6"><a href="单随机因子线性混合效应模型.html#cb178-6" tabindex="-1"></a>  <span class="fu">group_by</span>(subject, cond) <span class="sc">%&gt;%</span></span>
+<span id="cb178-7"><a href="单随机因子线性混合效应模型.html#cb178-7" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_rt =</span> <span class="fu">mean</span>(RT)) <span class="sc">%&gt;%</span></span>
+<span id="cb178-8"><a href="单随机因子线性混合效应模型.html#cb178-8" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb178-9"><a href="单随机因子线性混合效应模型.html#cb178-9" tabindex="-1"></a></span>
+<span id="cb178-10"><a href="单随机因子线性混合效应模型.html#cb178-10" tabindex="-1"></a>subj_means</span></code></pre></div>
+<pre><code>## # A tibble: 14 × 3
+##    subject cond  mean_rt
+##    &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt;
+##  1 P01     P        354 
+##  2 P02     P        384.
+##  3 P03     P        391.
+##  4 P04     P        404.
+##  5 P05     P        421.
+##  6 P06     P        392 
+##  7 P07     P        400.
+##  8 T08     T        430.
+##  9 T09     T        432.
+## 10 T10     T        410.
+## 11 T11     T        455.
+## 12 T12     T        450.
+## 13 T13     T        418.
+## 14 T14     T        489.</code></pre>
+<p>然后可以使用<code>t.test()</code>进行<span class="math inline">\(t\)</span>检验。</p>
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="单随机因子线性混合效应模型.html#cb180-1" tabindex="-1"></a><span class="fu">t.test</span>(mean_rt <span class="sc">~</span> cond, subj_means)</span></code></pre></div>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  mean_rt by cond
+## t = -3.7985, df = 11.32, p-value = 0.002807
+## alternative hypothesis: true difference in means between group P and group T is not equal to 0
+## 95 percent confidence interval:
+##  -76.32580 -20.44563
+## sample estimates:
+## mean in group P mean in group T 
+##        392.3143        440.7000</code></pre>
+<p>虽然这样分析没有问题，但对数据进行聚合会丢失信息。我们可以在上面的网页app中看到，实际上存在两种不同的变异来源：简单反应时的逐试次变异(trial-by-trial variability，用<span class="math inline">\(\sigma\)</span>表示)和被试相对于总体均值(<span class="math inline">\(\gamma_{00}\)</span>)的快慢的变异。被试<span class="math inline">\(s\)</span>在试次<span class="math inline">\(t\)</span>上的反应时(<span class="math inline">\(Y_{st}\)</span>)的数据生成过程如下所示。</p>
+<p><em>第1层:</em></p>
+<p><span class="math display">\[\begin{equation}
+Y_{st} = \beta_{0s} + \beta_{1} X_{s} + e_{st}
+\end{equation}\]</span></p>
+<p><em>第2层:</em></p>
+<p><span class="math display">\[\begin{equation}
+\beta_{0s} = \gamma_{00} + S_{0s}
+\end{equation}\]</span></p>
+<p><span class="math display">\[\begin{equation}
+\beta_{1} = \gamma_{10}
+\end{equation}\]</span></p>
+<p><em>方差成分:</em></p>
+<p><span class="math display">\[\begin{equation}
+S_{0s} \sim N\left(0, {\tau_{00}}^2\right)
+\end{equation}\]</span></p>
+<p><span class="math display">\[\begin{equation}
+e_{st} \sim N\left(0, \sigma^2\right)
+\end{equation}\]</span></p>
 
-<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
-<div class="csl-entry">
-Bates, D., Maechler, M., Bolker, B., &amp; Walker, S. (2015). Fitting linear mixed-effects models using lme4. <em><span>Journal of Statistical Software</span></em>, <em>67</em>, 1–48.
-</div>
-<div class="csl-entry">
-Belenky, G., Wesensten, N. J., Thorne, D. R., Thomas, M. L., Sing, H. C., Redmond, D. P., Russo, M. B., &amp; Balkin, T. J. (2003). Patterns of performance degradation and restoration during sleep restriction and subsequent recovery: A sleep dose-response study. <em><span>Journal of Sleep Research</span></em>, <em>12</em>(1), 1–12.
-</div>
-<div class="csl-entry">
-Fraley, R. C., Gillath, O., &amp; Deboeck, P. R. (2021). Do life events lead to enduring changes in adult attachment styles? A naturalistic longitudinal investigation. <em>Journal of Personality and Social Psychology</em>, <em>120</em>(6), 1567–1606.
-</div>
-<div class="csl-entry">
-Lakens, D., Scheel, A. M., &amp; Isager, P. M. (2018). Equivalence testing for psychological research: A tutorial. <em>Advances in Methods and Practices in Psychological Science</em>, <em>1</em>, 259–269. <a href="https://journals.sagepub.com/doi/abs/10.1177/2515245918770963">https://journals.sagepub.com/doi/abs/10.1177/2515245918770963</a>
-</div>
-<div class="csl-entry">
-Luke, S. G. (2017). Evaluating significance in linear mixed-effects models in r. <em><span>Behavior Research Methods</span></em>, <em>49</em>, 1494–1502.
-</div>
-<div class="csl-entry">
-McElreath, R. (2020). <em><span class="nocase">Statistical Rethinking: A Bayesian course with examples in R and STAN</span></em>. CRC Press.
-</div>
-<div class="csl-entry">
-Vanhove, J. (2021). Collinearity isn’t a disease that needs curing. <em>Meta-Psychology</em>, <em>5</em>.
-</div>
-<div class="csl-entry">
-Yarkoni, T. (2019). <em>The generalizability crisis</em>. <a href="https://doi.org/10.31234/osf.io/jqw35">https://doi.org/10.31234/osf.io/jqw35</a>
-</div>
 </div>
 </div>
 <script>
@@ -440,8 +625,8 @@ $( document ).ready(function() {
           </div>
         </div>
       </div>
-<a href="单随机因子线性混合效应模型.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="介绍线性混合效应模型.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="参考文献.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

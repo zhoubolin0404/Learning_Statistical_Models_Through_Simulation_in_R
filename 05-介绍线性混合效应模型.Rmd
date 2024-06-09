@@ -5,7 +5,6 @@ library(kableExtra)
 library(tidyverse)
 library(webexercises)
 library(lme4)
-library(tidyverse)
 ```
 
 ```{r setup, include=FALSE}

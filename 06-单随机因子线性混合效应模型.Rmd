@@ -1,0 +1,142 @@
+# 单随机因子线性混合效应模型
+
+```{r chapter-status, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+library(tidyverse)
+```
+
+## 什么时候，为什么，你想用线性混合效应建模取代传统的分析?
+
+我们已经反复强调了，心理学中的许多常用技术可以被视为一般线性模型的特例。这意味着可以用回归来替代这些技术。事实上，你可以使用以下四个函数之一来分析几乎任何在心理学中可以想象得到的数据集。
+
+```{r lm-table, echo=FALSE}
+tribble(~`取样设计`, ~`数据类型`, ~`函数`, ~描述,
+        "单层次", "连续、正态分布", "`base::lm()`", "简单线性模型",
+        "单层次", "计数或分类", "`base::glm()`", "广义线性模型",
+        "多层次", "连续、正态分布", "`lme4::lmer()`", "线性混合效应模型",
+        "多层次", "计数或分类", "`lme4::glmer()`", "广义线性混合效应模型") %>%
+  knitr::kable(escape = FALSE)
+```
+
+在本章结束时，你应该:
+
+* 理解如何使用回归来替代标准的ANOVA和t检验分析，适用于具有单一随机因子和连续因变量的数据；
+* 能够进行模型比较(`anova()`)以测试效果；
+* 能够使用R回归公式语法来表达各种研究设计。
+
+要决定使用四个回归函数中的哪一个，你需要回答两个问题。
+
+1. 因变量代表哪种类型的数据，它是如何分布的？
+2. 数据是多层次(multilevel)的还是单层次(single level)的？
+
+
+这些函数的参数在所有四个版本中都非常相似。我们将在本课程后面部分学习如何分析计数和分类数据。现在，我们将重点放在连续数据上，但原理可以推广到其他类型的数据上。
+
+以下是单层次数据(没有重复测量的数据)的对比表：
+
+```{r comparison-chart, echo=FALSE}
+.sl <- tribble(~检验类型, ~`传统方法`, ~`回归方法`,
+               "单样本t检验", "`t.test(y, mu = c)`", "`lm(y ~ 1, offset = c)`",
+               "独立样本t检验", "`t.test(x, y)`", "`lm(y ~ x)`",
+               "单因素方差分析", "`aov(y ~ x)`", "`lm(y ~ x)`",
+               "多因素方差分析", "`aov(y ~ a * b)`", "`lm(y ~ a * b)`")
+
+if (knitr::is_html_output()) {
+  .sl %>% knitr::kable(escape = FALSE)
+} else {
+  .sl %>% knitr::kable()
+}
+```
+
+以上所有设计都是*被试间*设计，没有重复测量(请注意，在多因子情况下，我们可能会将`a`和`b`替换为偏差编码的数值型预测变量，原因已在[交互章节](交互效应.html)中讨论过)。
+
+混合效应模型在处理多层次数据时可以发挥作用。数据通常是多层次的，原因有如下三种(多个原因可能同时适用)：
+
+1. 你有一个被试内因子，和/或
+2. 你有**假重复(pseudoreplications)**，和/或
+3. 你有多个刺激项目(我们将在[下一章](交叉随机因子线性混合效应模型.html)中讨论)。
+
+此时，回顾一下被试间因子与被试内因子的意义是个好主意。在`sleepstudy`数据中，你有被试内因子`Day`(实际上它更像是一个数值型变量，而不是一个因子；但它在每个被试内有多个变动值)。
+
+**假重复**发生在同一条件下进行多次测量的情况下。例如，设想一个研究，你随机分配被试饮用两种饮料中的一种——酒精或水——然后进行一个简单的反应时任务，当灯光闪烁时尽快按下按钮。你可能会对每个被试进行多次反应时测量；假设你在100次试验中测量它。你有一个被试间因子(饮料类型)和每个被试的100次观测，对于每组的20个被试来说。一些新手在分析这些数据时常犯的错误是尝试进行t检验。**当你有假重复(或多个刺激)时，你不能直接使用传统的t检验**。你必须首先为每个被试计算均值，然后对**均值而不是原始数据**进行分析。虽然ANOVA的一些版本可以处理假重复，但使用线性混合效应模型可能更好，它可以更好地处理复杂的依赖结构(dependency structure)。
+
+以下是多层次数据的对比表：
+
+```{r comparison-chart-lmer, echo=FALSE}
+.ml <- tribble(
+  ~检验类型, ~`传统方法`, ~`回归方法`,
+  "有假重复的单样本t检验", "计算平均值并使用`t.test(x_mean)`", "<code>lmer(y ~ (1 | subject), offset = c)</code>",
+  "无假重复的配对样本t检验", "`t.test(x, y, paired = TRUE)`", "<code>lmer(y ~ x + (1 | subject))</code>",
+  "有假重复的配对样本t检验", "计算平均值并使用`t.test(x_mean, y_mean)`", "<code>lmer(y ~ x + (1 + x | subject))</code>",        
+  "无假重复的重复测量方差分析", "`aov(y ~ x + Error(subject))`", "<code>lmer(y ~ x + (1 | subject))</code>",
+  "有假重复的重复测量方差分析", "`aov(y ~ x + Error(subject/x))`", "<code>lmer(y ~ x + (1 + x | subject))</code>",
+  "无假重复的多因子方差分析，包含a和b", "`aov(y ~ a * b + Error(subject))`", "<code>lmer(y ~ a * b + (1 | subject))</code>",
+  "有假重复的多因子方差分析", "`aov(y ~ a * b + Error(subject/(a * b))`", "<code>lmer(y ~ a * b + (1 + a * b | subject)</code>")
+
+if (knitr::is_html_output()) {
+  .ml %>% knitr::kable(escape = FALSE)
+} else {
+  .ml %>% knitr::kable()
+}
+```
+
+广义线性模型/回归框架相比t检验和ANOVA的主要卖点之一就是灵活性。在上一章中，我们使用了`sleepstudy`数据，发现只有在线性混合效应模型框架才能妥善处理这些数据。尽管回归有许多优点，但如果你的数据是平衡的，且在不违反任何检验假设的情况下可以合理使用t检验或ANOVA，那么这样做是可取的；这些方法在心理学中有悠久的历史，并且更为广泛地被理解。
+
+## 示例：多层次数据上的独立样本$t$检验
+
+让我们考虑一种情况，你在测试酒精摄入对简单反应时的影响(例如，灯亮后尽快按下按钮)。为了简化，假设你收集了14个被试的数据，这些被试被随机分配在两种干预后进行10次简单反应时试验：饮用一品脱酒精(处理条件)或饮用安慰剂饮料(安慰剂条件)。你在每组中有7名被试。请注意，实际研究中需要更多的被试。
+
+这个[网页app](https://rstudio-connect.psy.gla.ac.uk/icc){target="_blank"}展示了这种研究的模拟数据。被试P01到P07属于安慰剂条件，而被试T01到T07属于处理条件。请停下并查看！
+
+如果我们要对这些数据进行t检验，首先需要计算被试的均值，否则观测值不是独立的。你可以按如下方法进行操作。(如果你想运行下面的代码，可以从上面的网页app下载示例数据，并将其保存为`independent_samples.csv`)。
+
+```{r subj-means, message = FALSE}
+library(tidyverse)
+
+dat <- read_csv("data/independent_samples.csv", col_types = "cci")
+
+subj_means <- dat %>%
+  group_by(subject, cond) %>%
+  summarise(mean_rt = mean(RT)) %>%
+  ungroup()
+
+subj_means
+```
+
+然后可以使用`t.test()`进行$t$检验。
+
+```{r run-t}
+t.test(mean_rt ~ cond, subj_means)
+```
+
+虽然这样分析没有问题，但对数据进行聚合会丢失信息。我们可以在上面的网页app中看到，实际上存在两种不同的变异来源：简单反应时的逐试次变异(trial-by-trial variability，用$\sigma$表示)和被试相对于总体均值($\gamma_{00}$)的快慢的变异。被试$s$在试次$t$上的反应时($Y_{st}$)的数据生成过程如下所示。
+
+*第1层:*
+
+\begin{equation}
+Y_{st} = \beta_{0s} + \beta_{1} X_{s} + e_{st}
+\end{equation}
+
+*第2层:*
+
+\begin{equation}
+\beta_{0s} = \gamma_{00} + S_{0s}
+\end{equation}
+
+\begin{equation}
+\beta_{1} = \gamma_{10}
+\end{equation}
+
+*方差成分:*
+
+\begin{equation}
+S_{0s} \sim N\left(0, {\tau_{00}}^2\right) 
+\end{equation}
+
+\begin{equation}
+e_{st} \sim N\left(0, \sigma^2\right)
+\end{equation}
+
+
+
+
+
