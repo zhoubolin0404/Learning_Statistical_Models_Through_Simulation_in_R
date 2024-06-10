@@ -104,7 +104,7 @@ crossing(subjects %>% select(subject_id),
 
 前两条规则很简单，但第三条需要一些解释。首先问自己：我们怎么知道某个因子是单位间还是单位内的？
 
-一个简单的方法是使用`dplyr::count()`函数(在加载tidyverse时加载)，它会提供频率计数。假设你对因子A是否在被试内还是被试者间感兴趣，对下面虚拟的2x2x2因子数据`abc_data`，其中 $A$、$B$和$C$是你的设计因子。
+一个简单的方法是使用`dplyr::count()`函数(加载tidyverse时同时加载)，它会提供频率计数。假设你对因子A是否在被试内还是被试者间感兴趣，对下面虚拟的2x2x2因子数据`abc_data`，其中 $A$、$B$和$C$是你的设计因子。
 
 ```{r count-example}
 library(tidyverse)

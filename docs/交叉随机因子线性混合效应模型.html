@@ -405,23 +405,23 @@ div.csl-indent {
 <tbody>
 <tr class="odd">
 <td align="right">1</td>
-<td align="right">69</td>
-<td align="left">2020-04-30</td>
+<td align="right">70</td>
+<td align="left">2020-05-06</td>
 </tr>
 <tr class="even">
 <td align="right">2</td>
-<td align="right">18</td>
-<td align="left">2020-05-14</td>
+<td align="right">51</td>
+<td align="left">2020-05-09</td>
 </tr>
 <tr class="odd">
 <td align="right">3</td>
-<td align="right">62</td>
-<td align="left">2020-05-21</td>
+<td align="right">64</td>
+<td align="left">2020-05-12</td>
 </tr>
 <tr class="even">
 <td align="right">4</td>
-<td align="right">22</td>
-<td align="left">2020-05-30</td>
+<td align="right">45</td>
+<td align="left">2020-05-29</td>
 </tr>
 </tbody>
 </table>
@@ -716,7 +716,7 @@ div.csl-indent {
 <li>确定所考虑的单位的被试内因子的最高阶交互效应。如果在这些组合定义的每个单元内有假重复(即每个单元的多个观测值)，那么对于该单位，你将需要该交互效应的斜率以及所有低阶效应的斜率。如果没有假重复，则不需要任何随机斜率。</li>
 </ol>
 <p>前两条规则很简单，但第三条需要一些解释。首先问自己：我们怎么知道某个因子是单位间还是单位内的？</p>
-<p>一个简单的方法是使用<code>dplyr::count()</code>函数(在加载tidyverse时加载)，它会提供频率计数。假设你对因子A是否在被试内还是被试者间感兴趣，对下面虚拟的2x2x2因子数据<code>abc_data</code>，其中 <span class="math inline">\(A\)</span>、<span class="math inline">\(B\)</span>和<span class="math inline">\(C\)</span>是你的设计因子。</p>
+<p>一个简单的方法是使用<code>dplyr::count()</code>函数(加载tidyverse时同时加载)，它会提供频率计数。假设你对因子A是否在被试内还是被试者间感兴趣，对下面虚拟的2x2x2因子数据<code>abc_data</code>，其中 <span class="math inline">\(A\)</span>、<span class="math inline">\(B\)</span>和<span class="math inline">\(C\)</span>是你的设计因子。</p>
 <div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="交叉随机因子线性混合效应模型.html#cb201-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb201-2"><a href="交叉随机因子线性混合效应模型.html#cb201-2" tabindex="-1"></a></span>
 <span id="cb201-3"><a href="交叉随机因子线性混合效应模型.html#cb201-3" tabindex="-1"></a><span class="do">## 运行代码创建&quot;abc_data&quot;表</span></span>
