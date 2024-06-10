@@ -405,23 +405,23 @@ div.csl-indent {
 <tbody>
 <tr class="odd">
 <td align="right">1</td>
-<td align="right">35</td>
-<td align="left">2020-05-03</td>
+<td align="right">69</td>
+<td align="left">2020-04-30</td>
 </tr>
 <tr class="even">
 <td align="right">2</td>
-<td align="right">43</td>
-<td align="left">2020-05-12</td>
+<td align="right">18</td>
+<td align="left">2020-05-14</td>
 </tr>
 <tr class="odd">
 <td align="right">3</td>
-<td align="right">47</td>
-<td align="left">2020-05-13</td>
+<td align="right">62</td>
+<td align="left">2020-05-21</td>
 </tr>
 <tr class="even">
 <td align="right">4</td>
-<td align="right">47</td>
-<td align="left">2020-05-14</td>
+<td align="right">22</td>
+<td align="left">2020-05-30</td>
 </tr>
 </tbody>
 </table>
@@ -708,7 +708,7 @@ div.csl-indent {
 <div id="为分类因子选择随机效应的规则" class="section level3 hasAnchor" number="7.3.1">
 <h3><span class="header-section-number">7.3.1</span> 为分类因子选择随机效应的规则<a href="交叉随机因子线性混合效应模型.html#为分类因子选择随机效应的规则" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>线性混合效应模型的随机效应结构——即关于哪些效应在什么抽样单位上变化的假设——对于确保你的参数反映抽样引入的不确定性至关重要<span class="citation">(<a href="#ref-Barr_et_al_2013">Barr et al., 2013</a>)</span>。首先，请注意我们专注于代表<strong>设计变量(design variable)</strong>的预测变量，这些变量具有理论意义，并且你将对其进行推断检验。如果你有代表<strong>控制变量(control variable)</strong>的预测变量，而你不打算对其进行统计检验，那么通常不需要随机斜率。</p>
-<p>以下规则源自<span class="citation">(<a href="#ref-Barr_et_al_2013">Barr et al., 2013</a>)</span>和<span class="citation">(<a href="#ref-Barr_2013">Barr, 2013</a>)</span>。如果你想了解这些指南的更多信息，请参考这些论文。请记住，只有当你有重复测量数据时，你才能使用混合效应模型，这可能是由于假重复和/或存在被试内(或刺激内)因子。在交叉随机因子的情况下，你不可避免地会有假重复——由于多个被试的多个刺激，每个被试的多个观测值，以及多个被试的每个刺激的多个观测值。确定随机效应结构的关键是弄清楚哪些因子是被试内或刺激内，以及设计中的假重复位于何处。你对被试使用一次规则以确定公式<code>(1 + ... | subject_id)</code>部分的形式，并对刺激使用一次规则以确定公式<code>(1 + ... | stimulus_id)</code>部分的形式。以下规则中的“单位”或“抽样单位”一词，根据需要替换为“被试”或“刺激”。</p>
+<p>以下规则源自 <span class="citation">Barr et al. (<a href="#ref-Barr_et_al_2013">2013</a>)</span> 和 <span class="citation">Barr (<a href="#ref-Barr_2013">2013</a>)</span> 。如果你想了解这些指南的更多信息，请参考这些论文。请记住，只有当你有重复测量数据时，你才能使用混合效应模型，这可能是由于假重复和/或存在被试内(或刺激内)因子。在交叉随机因子的情况下，你不可避免地会有假重复——由于多个被试的多个刺激，每个被试的多个观测值，以及多个被试的每个刺激的多个观测值。确定随机效应结构的关键是弄清楚哪些因子是被试内或刺激内，以及设计中的假重复位于何处。你对被试使用一次规则以确定公式<code>(1 + ... | subject_id)</code>部分的形式，并对刺激使用一次规则以确定公式<code>(1 + ... | stimulus_id)</code>部分的形式。以下规则中的“单位”或“抽样单位”一词，根据需要替换为“被试”或“刺激”。</p>
 <p>以下是规则：</p>
 <ol style="list-style-type: decimal">
 <li>如果对抽样单位进行了重复测量，则需要该随机因子的随机截距：<code>(1 | unit_id)</code>；</li>
