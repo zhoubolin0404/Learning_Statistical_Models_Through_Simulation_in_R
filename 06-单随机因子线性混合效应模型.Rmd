@@ -319,7 +319,7 @@ mod_tow <- update(mod, . ~ . -time_week)
 anova(mod, mod_tow)
 ```
 
-试着弄清楚如何自己检验交互效应。
+试着弄清楚如何检验交互效应。
 
 `r hide("点击查看答案")`
 

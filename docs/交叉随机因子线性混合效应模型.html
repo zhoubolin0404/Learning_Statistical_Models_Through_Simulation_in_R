@@ -276,7 +276,21 @@ div.csl-indent {
 <li class="chapter" data-level="6.3.2" data-path="单随机因子线性混合效应模型.html"><a href="单随机因子线性混合效应模型.html#多参数检验"><i class="fa fa-check"></i><b>6.3.2</b> 多参数检验</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="交叉随机因子线性混合效应模型.html"><a href="交叉随机因子线性混合效应模型.html"><i class="fa fa-check"></i><b>7</b> 交叉随机因子线性混合效应模型</a></li>
+<li class="chapter" data-level="7" data-path="交叉随机因子线性混合效应模型.html"><a href="交叉随机因子线性混合效应模型.html"><i class="fa fa-check"></i><b>7</b> 交叉随机因子线性混合效应模型</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="交叉随机因子线性混合效应模型.html"><a href="交叉随机因子线性混合效应模型.html#概括被试和刺激的组合"><i class="fa fa-check"></i><b>7.1</b> 概括被试和刺激的组合</a></li>
+<li class="chapter" data-level="7.2" data-path="交叉随机因子线性混合效应模型.html"><a href="交叉随机因子线性混合效应模型.html#lme4语法用于交叉随机因子"><i class="fa fa-check"></i><b>7.2</b> lme4语法用于交叉随机因子</a></li>
+<li class="chapter" data-level="7.3" data-path="交叉随机因子线性混合效应模型.html"><a href="交叉随机因子线性混合效应模型.html#指定随机效应"><i class="fa fa-check"></i><b>7.3</b> 指定随机效应</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="交叉随机因子线性混合效应模型.html"><a href="交叉随机因子线性混合效应模型.html#为分类因子选择随机效应的规则"><i class="fa fa-check"></i><b>7.3.1</b> 为分类因子选择随机效应的规则</a></li>
+<li class="chapter" data-level="7.3.2" data-path="交叉随机因子线性混合效应模型.html"><a href="交叉随机因子线性混合效应模型.html#排除不收敛和畸形拟合singular-fit"><i class="fa fa-check"></i><b>7.3.2</b> 排除不收敛和“畸形拟合(singular fit)”</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="交叉随机因子线性混合效应模型.html"><a href="交叉随机因子线性混合效应模型.html#模拟交叉随机因子的数据"><i class="fa fa-check"></i><b>7.4</b> 模拟交叉随机因子的数据</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="交叉随机因子线性混合效应模型.html"><a href="交叉随机因子线性混合效应模型.html#设置环境并定义dgp的参数"><i class="fa fa-check"></i><b>7.4.1</b> 设置环境并定义DGP的参数</a></li>
+<li class="chapter" data-level="7.4.2" data-path="交叉随机因子线性混合效应模型.html"><a href="交叉随机因子线性混合效应模型.html#生成一个刺激样本"><i class="fa fa-check"></i><b>7.4.2</b> 生成一个刺激样本</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="参考文献.html"><a href="参考文献.html"><i class="fa fa-check"></i>参考文献</a></li>
 </ul>
 
@@ -297,7 +311,798 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="交叉随机因子线性混合效应模型" class="section level1 hasAnchor" number="7">
 <h1><span class="header-section-number">7</span> 交叉随机因子线性混合效应模型<a href="交叉随机因子线性混合效应模型.html#交叉随机因子线性混合效应模型" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="概括被试和刺激的组合" class="section level2 hasAnchor" number="7.1">
+<h2><span class="header-section-number">7.1</span> 概括被试和刺激的组合<a href="交叉随机因子线性混合效应模型.html#概括被试和刺激的组合" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>心理学实验的一个常见目标是检验关于在特定类型的刺激下行为发生的主张(有时是关于该行为神经基础的结论)。这些刺激可能是单词、图像、声音、视频或故事。你可能想检验的主张的一些例子包括：</p>
+<ul>
+<li>在听第二语言的单词时，双语者是否会受到母语单词的干扰？</li>
+<li>人们在心情好的时候和心情不好的时候对面孔的吸引力评分是否不同？</li>
+<li>相对于更中性的图像，观看舒适的图像是否有助于减轻压力?</li>
+<li>在阅读模糊描述目标个体的场景时，被潜意识启动后，人们是否更有可能对目标所属的社会群体做出假设?</li>
+</ul>
+<p>关于所有这些主张需要注意的一点是，它们的形式都是：“当类型为X的个体遇到类型为Y的刺激时，我们的测量结果会发生什么变化”，其中X是从目标被试的总体中抽取的，Y是从目标刺激的总体中抽取的。换句话说，我们试图对涉及被试和刺激的采样单元<strong>相遇</strong>产生的特定类别的<strong>事件</strong>做出可推广的主张<span class="citation">(<a href="#ref-Barr_2017">Barr, 2017</a>)</span>。但就像我们不能从目标被试的总体中采样所有可能的被试一样，我们也不能从目标刺激的总体中采样所有可能的刺激。因此，在做推断时，我们需要考虑由<em>两种</em>采样过程引入的估计不确定性<span class="citation">(<a href="#ref-Clark_1973">Clark, 1973</a>; <a href="#ref-Coleman_1964">Coleman, 1964</a>; <a href="#ref-Judd_Westfall_Kenny_2012">Judd et al., 2012</a>; <a href="#ref-yarkoni_2019">Yarkoni, 2019</a>)</span>。线性混合效应模型通过允许我们的模型公式中有多个随机因子而特别容易做到这一点<span class="citation">(<a href="#ref-Baayen_Davidson_Bates_2008">Baayen et al., 2008</a>)</span>。</p>
+<p>这里有一个简单的例子，你感兴趣的是检验人们是否认为猫、狗或日落的图片看起来更舒适。你想对猫、狗和日落这类图片做出一般性陈述，而不是关于你碰巧采样的具体图片。假设你从Google图片中随机为每类选取4张图片(你绝对需要更多的图片才能做出一般性陈述，但我们选择少量图片以使示例简单)。因此，你的刺激表可能如下所示：</p>
+<table>
+<thead>
+<tr class="header">
+<th align="right">stimulus_id</th>
+<th align="left">category</th>
+<th align="left">file</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="left">cat</td>
+<td align="left">cat1.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="left">cat</td>
+<td align="left">cat2.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="left">cat</td>
+<td align="left">cat3.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="left">cat</td>
+<td align="left">cat4.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">5</td>
+<td align="left">dog</td>
+<td align="left">dog1.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">6</td>
+<td align="left">dog</td>
+<td align="left">dog2.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">7</td>
+<td align="left">dog</td>
+<td align="left">dog3.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">8</td>
+<td align="left">dog</td>
+<td align="left">dog4.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">9</td>
+<td align="left">sunset</td>
+<td align="left">sunset1.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">10</td>
+<td align="left">sunset</td>
+<td align="left">sunset2.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">11</td>
+<td align="left">sunset</td>
+<td align="left">sunset3.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">12</td>
+<td align="left">sunset</td>
+<td align="left">sunset4.jpg</td>
+</tr>
+</tbody>
+</table>
+<p>然后你抽取了4个被试来进行舒适度评分。再次强调，4个被试对于真实研究来说太少了，但为了便于解释我们保持数据量很小。</p>
+<table>
+<thead>
+<tr class="header">
+<th align="right">subject_id</th>
+<th align="right">age</th>
+<th align="left">date</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">53</td>
+<td align="left">2020-05-03</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">42</td>
+<td align="left">2020-05-25</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">62</td>
+<td align="left">2020-05-27</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">34</td>
+<td align="left">2020-05-27</td>
+</tr>
+</tbody>
+</table>
+<p>现在，因为每个受试者对每张图片都进行了“舒适度”评分，所以你会有一个完整的数据集，包含所有的<code>subject_id</code>和<code>stimulus_id</code>组合。这就是我们所说的“交叉随机因子”。你可以使用<code>tidyr</code>(加载<code>tidyverse</code>时会一起加载)中的<code>crossing()</code>函数来创建包含所有这些组合的表。</p>
+<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="交叉随机因子线性混合效应模型.html#cb200-1" tabindex="-1"></a><span class="fu">crossing</span>(subjects <span class="sc">%&gt;%</span> <span class="fu">select</span>(subject_id),</span>
+<span id="cb200-2"><a href="交叉随机因子线性混合效应模型.html#cb200-2" tabindex="-1"></a>         stimuli <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>category)) </span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="right">subject_id</th>
+<th align="right">stimulus_id</th>
+<th align="left">file</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="left">cat1.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="left">cat2.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="left">cat3.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="left">cat4.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">5</td>
+<td align="left">dog1.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">6</td>
+<td align="left">dog2.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">7</td>
+<td align="left">dog3.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">8</td>
+<td align="left">dog4.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">9</td>
+<td align="left">sunset1.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">10</td>
+<td align="left">sunset2.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">11</td>
+<td align="left">sunset3.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">12</td>
+<td align="left">sunset4.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="left">cat1.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="left">cat2.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">2</td>
+<td align="right">3</td>
+<td align="left">cat3.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">4</td>
+<td align="left">cat4.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">2</td>
+<td align="right">5</td>
+<td align="left">dog1.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">6</td>
+<td align="left">dog2.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">2</td>
+<td align="right">7</td>
+<td align="left">dog3.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">8</td>
+<td align="left">dog4.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">2</td>
+<td align="right">9</td>
+<td align="left">sunset1.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">10</td>
+<td align="left">sunset2.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">2</td>
+<td align="right">11</td>
+<td align="left">sunset3.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">12</td>
+<td align="left">sunset4.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">1</td>
+<td align="left">cat1.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">3</td>
+<td align="right">2</td>
+<td align="left">cat2.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">3</td>
+<td align="left">cat3.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">3</td>
+<td align="right">4</td>
+<td align="left">cat4.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">5</td>
+<td align="left">dog1.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">3</td>
+<td align="right">6</td>
+<td align="left">dog2.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">7</td>
+<td align="left">dog3.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">3</td>
+<td align="right">8</td>
+<td align="left">dog4.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">9</td>
+<td align="left">sunset1.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">3</td>
+<td align="right">10</td>
+<td align="left">sunset2.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">11</td>
+<td align="left">sunset3.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">3</td>
+<td align="right">12</td>
+<td align="left">sunset4.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">4</td>
+<td align="right">1</td>
+<td align="left">cat1.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">2</td>
+<td align="left">cat2.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">4</td>
+<td align="right">3</td>
+<td align="left">cat3.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">4</td>
+<td align="left">cat4.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">4</td>
+<td align="right">5</td>
+<td align="left">dog1.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">6</td>
+<td align="left">dog2.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">4</td>
+<td align="right">7</td>
+<td align="left">dog3.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">8</td>
+<td align="left">dog4.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">4</td>
+<td align="right">9</td>
+<td align="left">sunset1.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">10</td>
+<td align="left">sunset2.jpg</td>
+</tr>
+<tr class="odd">
+<td align="right">4</td>
+<td align="right">11</td>
+<td align="left">sunset3.jpg</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">12</td>
+<td align="left">sunset4.jpg</td>
+</tr>
+</tbody>
+</table>
+<p>因为4个被试对12个刺激做出反应，所以结果表将有48行。</p>
+</div>
+<div id="lme4语法用于交叉随机因子" class="section level2 hasAnchor" number="7.2">
+<h2><span class="header-section-number">7.2</span> lme4语法用于交叉随机因子<a href="交叉随机因子线性混合效应模型.html#lme4语法用于交叉随机因子" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>如何分析这样的数据呢？回忆上一个章节中提到的，在lme4中，表示被试水平上的随机截距和预测变量<code>x</code>的随机斜率的模型的公式语法为<code>y ~ x + (1 + x | subject_id)</code>，其中用包含在括号中的竖线<code>|</code>部分进行了随机效应的指定。竖线右侧的变量<code>subject_id</code>指定了随机因子的水平。括号中竖线左侧的公式<code>1 + x</code>指定了与该因子相关的随机效应，在这种情况下是随机截距和<code>x</code>的随机斜率。最好将这个括号中的部分<code>(1 + x | subject_id)</code>理解为<strong>对<code>lme4::lmer()</code>关于如何构建协方差矩阵以捕捉由随机因子被试引入的方差的指示</strong>。到目前为止，你应该意识到，这个指示将指示一个二维协方差矩阵的估计，一个维度是截距方差，一个是斜率方差。</p>
+<p>但我们并不仅局限于估计被试的随机效应；我们还可以通过简单地在公式中添加另一个项来指定刺激的随机效应。例如：</p>
+<p><code>y ~ x + (1 + x | subject_id) + (1 + x | stimulus_id)</code>。</p>
+<p>这个公式通过<code>x</code>对<code>y</code>进行了回归，包含了被试水平上的随机截距和斜率的随机效应和刺激水平上的随机截距和斜率的随机效应。这样，拟合的模型将捕捉到我们估计中的两种不确定性来源——由被试抽样引入的不确定性以及由(刺激)项目抽样引入的不确定性。我们现在估计的是<strong>两个独立的协方差矩阵</strong>，一个用于被试，一个用于(刺激)项目。在上述例子中，这两个矩阵都将具有相同的2x2结构，但情况未必总是如此。我们可以通过改变每个竖线<code>|</code>符号左侧的公式灵活地更改随机效应结构。例如，如果我们有另一个预测变量<code>w</code>，我们可以有：</p>
+<p><code>y ~ x + (x | subject_id) + (x + w | stimulus_id)</code></p>
+<p>这将为被试估计相同的2x2矩阵，但(刺激)项目的协方差矩阵现在是一个3x3矩阵(截距、<code>x</code>的斜率和 <code>w</code>的斜率)。虽然这提供了很大的灵活性，但随着随机效应结构变得更加复杂，估计过程变得更加困难，并且不太可能收敛得到结果。</p>
+</div>
+<div id="指定随机效应" class="section level2 hasAnchor" number="7.3">
+<h2><span class="header-section-number">7.3</span> 指定随机效应<a href="交叉随机因子线性混合效应模型.html#指定随机效应" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>随机效应结构的选择并不是随着线性混合效应模型而出现的新问题。在使用t检验和ANOVA的传统方法中，当你选择使用何种流程时，你隐含地选择了随机效应结构。如上一章所讨论的，如果你选择配对样本t检验而不是独立样本t检验，这相当于选择拟合<code>lme4::lmer(y ~ x + (1 | subject))</code>而不是<code>lm(y ~ x)</code>。同样地，你可以将混合模型ANOVA运行为<code>aov(y ~ x + Error(subject_id))</code>，这相当于随机截距模型，或者<code>aov(y ~ x + Error(x / subject_id))</code>，这相当于随机斜率模型。心理学中进行验证性分析(confirmatory analyses)的传统是使用<strong>研究设计所证明的最大随机效应结构</strong>。所以，如果你有一个带有假重复的单因素数据，你会使用<code>aov(y ~ x + Error(x / subject_id))</code>而不是<code>aov(y ~ x + Error(subject_id))</code>。类似地，如果你使用线性混合效应模型来分析具有假重复的数据，你应该使用<code>lme4::lmer(y ~ x + (1 + x | subject_id))</code>而不是<code>lme4::lmer(y ~ x + (1 | subject_id))</code>。换句话说，你应该考虑由重复抽样相同被试或刺激引入的所有非独立性来源。这种方法被称为<strong>最大随机效应法(maximal random effects approach)</strong>或<strong>设计驱动法(design-driven approach)</strong>来指定随机效应结构<span class="citation">(<a href="#ref-Barr_et_al_2013">Barr et al., 2013</a>)</span>。未能考虑到设计引入的依赖性可能会导致标准差过小，进而导致p值小于实际值，从而提高假阳性概率(I类错误)。在某些情况下，这可能导致效力降低，从而提高假阴性概率(II类错误)。因此，进行分析时必须密切注意随机效应结构。</p>
+<p>线性混合效应模型几乎不可避免地包含所有设计中随机因子的随机截距。因此，如果你的随机因子是由<code>subject_id</code>和<code>stimulus_id</code>标识的被试和刺激，那么至少你的模型语法将包含<code>(1 | subject_id) + (1 | stimulus_id)</code>。但你会在模型中有各种预测变量，因此关键问题是：我应该允许哪些预测变量在什么抽样单位上变化？例如，如果你的模型的固定效应部分是一个2x2因子设计，因子A和B，<code>y ~ a * b + ...</code>，你可能会有各种随机效应结构，包括(但不限于)：</p>
+<ol style="list-style-type: decimal">
+<li>仅随机截距：<code>y ~ a * b + (1 | subject_id) + (1 | stimulus_id)</code></li>
+<li>被试水平上的a随机截距和(刺激)项目水平上的随机截距：<code>y ~ a * b + (a | subject_id) + (1 | stimulus_id)</code></li>
+<li>被试水平上的a和b的随机截距和斜率及其交互效应，(刺激)项目水平上的随机截距：<code>y ~ a * b + (a * b | subject_id) + (1 | stimulus_id)</code></li>
+<li>被试水平上的a和b的随机截距和斜率及其交互效应，(刺激)项目水平上的a和b的随机截距和斜率及其交互效应：<code>y ~ a * b + (a * b | subject_id) + (a * b | stimulus_id)</code>。</li>
+</ol>
+<p>有一点需要明确：</p>
+<div class="bluebox">
+<p>“由设计证明的最大随机效应结构”与“最大可能的随机效应结构”不同；也就是说，它并不意味着自动将所有预测变量的所有随机斜率放入所有随机因子中。你必须遵循下一部分中的随机效应指南，以决定是否应包含某个随机斜率。</p>
+</div>
+<p>一些作者建议采用“数据驱动”的随机效应结构替代设计驱动的随机效应结构，建议研究者仅在数据进一步证明的情况下才包含设计所证明的随机斜率<span class="citation">(<a href="#ref-Matuschek_et_al_2017">Matuschek et al., 2017</a>)</span>。例如，你可以使用虚无假设检验来确定是否包括一个被试水平上的<code>x</code>随机斜率显著提高了模型拟合，只有在显著提高时才包含该效应。虽然当随机斜率非常小时，这可能会在理论意义上提高检验的效力，但也会增加未知的假阳性风险，因此在检验的情景中是否应该采用这种方法是值得怀疑的。所以，我们不推荐基于数据的方法。</p>
+<div id="为分类因子选择随机效应的规则" class="section level3 hasAnchor" number="7.3.1">
+<h3><span class="header-section-number">7.3.1</span> 为分类因子选择随机效应的规则<a href="交叉随机因子线性混合效应模型.html#为分类因子选择随机效应的规则" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>线性混合效应模型的随机效应结构——即关于哪些效应在什么抽样单位上变化的假设——对于确保你的参数反映抽样引入的不确定性至关重要<span class="citation">(<a href="#ref-Barr_et_al_2013">Barr et al., 2013</a>)</span>。首先，请注意我们专注于代表<strong>设计变量(design variable)</strong>的预测变量，这些变量具有理论意义，并且你将对其进行推断检验。如果你有代表<strong>控制变量(control variable)</strong>的预测变量，而你不打算对其进行统计检验，那么通常不需要随机斜率。</p>
+<p>以下规则源自<span class="citation">(<a href="#ref-Barr_et_al_2013">Barr et al., 2013</a>)</span>和<span class="citation">(<a href="#ref-Barr_2013">Barr, 2013</a>)</span>。如果你想了解这些指南的更多信息，请参考这些论文。请记住，只有当你有重复测量数据时，你才能使用混合效应模型，这可能是由于假重复和/或存在被试内(或刺激内)因子。在交叉随机因子的情况下，你不可避免地会有假重复——由于多个被试的多个刺激，每个被试的多个观测值，以及多个被试的每个刺激的多个观测值。确定随机效应结构的关键是弄清楚哪些因子是被试内或刺激内，以及设计中的假重复位于何处。你对被试使用一次规则以确定公式<code>(1 + ... | subject_id)</code>部分的形式，并对刺激使用一次规则以确定公式<code>(1 + ... | stimulus_id)</code>部分的形式。以下规则中的“单位”或“抽样单位”一词，根据需要替换为“被试”或“刺激”。</p>
+<p>以下是规则：</p>
+<ol style="list-style-type: decimal">
+<li>如果对抽样单位进行了重复测量，则需要该随机因子的随机截距：<code>(1 | unit_id)</code>；</li>
+<li>如果一个因子<code>x</code>是单位间的，则不需要该因子的随机斜率；</li>
+<li>确定所考虑的单位的被试内因子的最高阶交互效应。如果在这些组合定义的每个单元内有假重复(即每个单元的多个观测值)，那么对于该单位，你将需要该交互效应的斜率以及所有低阶效应的斜率。如果没有假重复，则不需要任何随机斜率。</li>
+</ol>
+<p>前两条规则很简单，但第三条需要一些解释。首先问自己：我们怎么知道某个因子是单位间还是单位内的？</p>
+<p>一个简单的方法是使用<code>dplyr::count()</code>函数(在加载tidyverse时加载)，它会提供频率计数。假设你对因子A是否在被试内还是被试者间感兴趣，对下面虚拟的2x2x2因子数据<code>abc_data</code>，其中 <span class="math inline">\(A\)</span>、<span class="math inline">\(B\)</span>和<span class="math inline">\(C\)</span>是你的设计因子。</p>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="交叉随机因子线性混合效应模型.html#cb201-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb201-2"><a href="交叉随机因子线性混合效应模型.html#cb201-2" tabindex="-1"></a></span>
+<span id="cb201-3"><a href="交叉随机因子线性混合效应模型.html#cb201-3" tabindex="-1"></a><span class="do">## 运行代码创建&quot;abc_data&quot;表</span></span>
+<span id="cb201-4"><a href="交叉随机因子线性混合效应模型.html#cb201-4" tabindex="-1"></a>abc_subj <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">subject_id =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,</span>
+<span id="cb201-5"><a href="交叉随机因子线性混合效应模型.html#cb201-5" tabindex="-1"></a>                   <span class="at">B =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;B1&quot;</span>, <span class="st">&quot;B2&quot;</span>), <span class="at">times =</span> <span class="dv">2</span>))</span>
+<span id="cb201-6"><a href="交叉随机因子线性混合效应模型.html#cb201-6" tabindex="-1"></a></span>
+<span id="cb201-7"><a href="交叉随机因子线性混合效应模型.html#cb201-7" tabindex="-1"></a>abc_item  <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">stimulus_id =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,</span>
+<span id="cb201-8"><a href="交叉随机因子线性混合效应模型.html#cb201-8" tabindex="-1"></a>                    <span class="at">A =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;A1&quot;</span>, <span class="st">&quot;A2&quot;</span>), <span class="at">each =</span> <span class="dv">2</span>),</span>
+<span id="cb201-9"><a href="交叉随机因子线性混合效应模型.html#cb201-9" tabindex="-1"></a>                    <span class="at">C =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;C1&quot;</span>, <span class="st">&quot;C2&quot;</span>), <span class="at">times =</span> <span class="dv">2</span>))</span>
+<span id="cb201-10"><a href="交叉随机因子线性混合效应模型.html#cb201-10" tabindex="-1"></a></span>
+<span id="cb201-11"><a href="交叉随机因子线性混合效应模型.html#cb201-11" tabindex="-1"></a>abc_data <span class="ot">&lt;-</span> <span class="fu">crossing</span>(abc_subj, abc_item) <span class="sc">%&gt;%</span></span>
+<span id="cb201-12"><a href="交叉随机因子线性混合效应模型.html#cb201-12" tabindex="-1"></a>  <span class="fu">select</span>(subject_id, stimulus_id, <span class="fu">everything</span>())</span></code></pre></div>
+<p>查看<span class="math inline">\(A\)</span>是被试内还是被试间，使用：</p>
+<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="交叉随机因子线性混合效应模型.html#cb202-1" tabindex="-1"></a>abc_data <span class="sc">%&gt;%</span></span>
+<span id="cb202-2"><a href="交叉随机因子线性混合效应模型.html#cb202-2" tabindex="-1"></a>  <span class="fu">count</span>(subject_id, A)</span></code></pre></div>
+<pre><code>## # A tibble: 8 × 3
+##   subject_id A         n
+##        &lt;int&gt; &lt;chr&gt; &lt;int&gt;
+## 1          1 A1        2
+## 2          1 A2        2
+## 3          2 A1        2
+## 4          2 A2        2
+## 5          3 A1        2
+## 6          3 A2        2
+## 7          4 A1        2
+## 8          4 A2        2</code></pre>
+<p>在结果表中，你可以看到每个没事都接受了<span class="math inline">\(A\)</span>的所有水平，说明这是个被试内因子。那么对于<span class="math inline">\(B\)</span>和<span class="math inline">\(C\)</span>呢？</p>
+<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="交叉随机因子线性混合效应模型.html#cb204-1" tabindex="-1"></a>abc_data <span class="sc">%&gt;%</span></span>
+<span id="cb204-2"><a href="交叉随机因子线性混合效应模型.html#cb204-2" tabindex="-1"></a>  <span class="fu">count</span>(subject_id, B)</span></code></pre></div>
+<pre><code>## # A tibble: 4 × 3
+##   subject_id B         n
+##        &lt;int&gt; &lt;chr&gt; &lt;int&gt;
+## 1          1 B1        4
+## 2          2 B2        4
+## 3          3 B1        4
+## 4          4 B2        4</code></pre>
+<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="交叉随机因子线性混合效应模型.html#cb206-1" tabindex="-1"></a>abc_data <span class="sc">%&gt;%</span></span>
+<span id="cb206-2"><a href="交叉随机因子线性混合效应模型.html#cb206-2" tabindex="-1"></a>  <span class="fu">count</span>(subject_id, C)</span></code></pre></div>
+<pre><code>## # A tibble: 8 × 3
+##   subject_id C         n
+##        &lt;int&gt; &lt;chr&gt; &lt;int&gt;
+## 1          1 C1        2
+## 2          1 C2        2
+## 3          2 C1        2
+## 4          2 C2        2
+## 5          3 C1        2
+## 6          3 C2        2
+## 7          4 C1        2
+## 8          4 C2        2</code></pre>
+<p><span class="math inline">\(B\)</span>是被试间(每个被试只接受1个水平)，<span class="math inline">\(C\)</span>是被试内(每个被试接受所有水平)。</p>
+<div class="purplebox">
+<p><em>练习</em></p>
+<p>回答关于<code>abc_data</code>的问题。</p>
+<ul>
+<li>因子<span class="math inline">\(A\)</span>的水平是在刺激间还是刺激内? <select class='webex-select'><option value='blank'></option><option value='answer'>between</option><option value=''>within</option></select></li>
+</ul>
+<div class="webex-solution">
+<button>
+答案
+</button>
+<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="交叉随机因子线性混合效应模型.html#cb208-1" tabindex="-1"></a>abc_data <span class="sc">%&gt;%</span></span>
+<span id="cb208-2"><a href="交叉随机因子线性混合效应模型.html#cb208-2" tabindex="-1"></a>  <span class="fu">count</span>(stimulus_id, A)</span></code></pre></div>
+<pre><code>## # A tibble: 4 × 3
+##   stimulus_id A         n
+##         &lt;int&gt; &lt;chr&gt; &lt;int&gt;
+## 1           1 A1        4
+## 2           2 A1        4
+## 3           3 A2        4
+## 4           4 A2        4</code></pre>
+<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="交叉随机因子线性混合效应模型.html#cb210-1" tabindex="-1"></a><span class="co"># between</span></span></code></pre></div>
+</div>
+<ul>
+<li>因子<span class="math inline">\(B\)</span>的水平是在刺激间还是刺激内? <select class='webex-select'><option value='blank'></option><option value=''>between</option><option value='answer'>within</option></select></li>
+</ul>
+<div class="webex-solution">
+<button>
+答案
+</button>
+<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="交叉随机因子线性混合效应模型.html#cb211-1" tabindex="-1"></a>abc_data <span class="sc">%&gt;%</span></span>
+<span id="cb211-2"><a href="交叉随机因子线性混合效应模型.html#cb211-2" tabindex="-1"></a>  <span class="fu">count</span>(stimulus_id, B)</span></code></pre></div>
+<pre><code>## # A tibble: 8 × 3
+##   stimulus_id B         n
+##         &lt;int&gt; &lt;chr&gt; &lt;int&gt;
+## 1           1 B1        2
+## 2           1 B2        2
+## 3           2 B1        2
+## 4           2 B2        2
+## 5           3 B1        2
+## 6           3 B2        2
+## 7           4 B1        2
+## 8           4 B2        2</code></pre>
+<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="交叉随机因子线性混合效应模型.html#cb213-1" tabindex="-1"></a><span class="co"># within</span></span></code></pre></div>
+</div>
+<ul>
+<li>因子<span class="math inline">\(C\)</span>的水平是在刺激间还是刺激内? <select class='webex-select'><option value='blank'></option><option value='answer'>between</option><option value=''>within</option></select></li>
+</ul>
+<div class="webex-solution">
+<button>
+答案
+</button>
+<div class="webex-solution">
+<button>
+Solution
+</button>
+<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="交叉随机因子线性混合效应模型.html#cb214-1" tabindex="-1"></a>abc_data <span class="sc">%&gt;%</span></span>
+<span id="cb214-2"><a href="交叉随机因子线性混合效应模型.html#cb214-2" tabindex="-1"></a>  <span class="fu">count</span>(stimulus_id, C)</span></code></pre></div>
+<pre><code>## # A tibble: 4 × 3
+##   stimulus_id C         n
+##         &lt;int&gt; &lt;chr&gt; &lt;int&gt;
+## 1           1 C1        4
+## 2           2 C2        4
+## 3           3 C1        4
+## 4           4 C2        4</code></pre>
+<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="交叉随机因子线性混合效应模型.html#cb216-1" tabindex="-1"></a><span class="co"># between</span></span></code></pre></div>
+</div>
+</div>
+</div>
+<p>好的，我们已经确定了哪些因子是被试内和哪些被试间，以及哪些因子是刺激内和哪些刺激间。</p>
+<p>第二条规则告诉我们，如果一个因子是单位间的，你不需要该因子的随机斜率。事实上，无法估计单位间因子的随机斜率。如果你考虑到随机斜率捕捉效应在单位之间的变化，那么只有当你在该因子的所有水平上测量了你的响应变量时，才能估计出这种变化。例如，如果你有一个名为处理组(实验组、对照组)的2水平因子，除非某个被试经历了该因子的两个水平(即它必须是被试内的)，否则无法估计“治疗”对该被试的效应。</p>
+<p>我们现在如何应用第三条规则来确定我们对单位内因子需要哪些随机斜率呢？</p>
+<p>考虑到<span class="math inline">\(A\)</span>和<span class="math inline">\(C\)</span>是被试内的，<span class="math inline">\(B\)</span>是被试间的。所以被试内因子的最高阶交互作用是<span class="math inline">\(AC\)</span>。如果我们对每个被试在每个<span class="math inline">\(AC\)</span>组合中有假重复，那么我们将需要<span class="math inline">\(AC\)</span>交互效应的随机斜率以及主效应<span class="math inline">\(A\)</span>和<span class="math inline">\(C\)</span>的随机斜率。我们如何确定这一点呢？</p>
+<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="交叉随机因子线性混合效应模型.html#cb217-1" tabindex="-1"></a>abc_data <span class="sc">%&gt;%</span></span>
+<span id="cb217-2"><a href="交叉随机因子线性混合效应模型.html#cb217-2" tabindex="-1"></a>  <span class="fu">count</span>(subject_id, A, C)</span></code></pre></div>
+<pre><code>## # A tibble: 16 × 4
+##    subject_id A     C         n
+##         &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt;
+##  1          1 A1    C1        1
+##  2          1 A1    C2        1
+##  3          1 A2    C1        1
+##  4          1 A2    C2        1
+##  5          2 A1    C1        1
+##  6          2 A1    C2        1
+##  7          2 A2    C1        1
+##  8          2 A2    C2        1
+##  9          3 A1    C1        1
+## 10          3 A1    C2        1
+## 11          3 A2    C1        1
+## 12          3 A2    C2        1
+## 13          4 A1    C1        1
+## 14          4 A1    C2        1
+## 15          4 A2    C1        1
+## 16          4 A2    C2        1</code></pre>
+<p>这向我们展示了对于每个<span class="math inline">\(AC\)</span>组合，只有<em>1</em>个观测值，因此我们不需要<span class="math inline">\(AC\)</span>的随机斜率，也不需要<span class="math inline">\(A\)</span>或<span class="math inline">\(C\)</span>的随机斜率。被试水平上的随机效应公式就是<code>(1 | subject_id)</code>。</p>
+<div class="purplebox">
+<p>刺激水平上的随机因子需要哪些随机斜率?</p>
+<div class="webex-solution">
+<button>
+答案
+</button>
+<p>你有1个刺激内因子<span class="math inline">\(B\)</span>，它进行了假重复。</p>
+<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="交叉随机因子线性混合效应模型.html#cb219-1" tabindex="-1"></a>abc_data <span class="sc">%&gt;%</span></span>
+<span id="cb219-2"><a href="交叉随机因子线性混合效应模型.html#cb219-2" tabindex="-1"></a>  <span class="fu">count</span>(stimulus_id, B)</span></code></pre></div>
+<pre><code>## # A tibble: 8 × 3
+##   stimulus_id B         n
+##         &lt;int&gt; &lt;chr&gt; &lt;int&gt;
+## 1           1 B1        2
+## 2           1 B2        2
+## 3           2 B1        2
+## 4           2 B2        2
+## 5           3 B1        2
+## 6           3 B2        2
+## 7           4 B1        2
+## 8           4 B2        2</code></pre>
+<p>因此对于刺激的公式是<code>(B | stimulus_id)</code>, 完整的<code>lme4</code>公式是:</p>
+<p><code>y ~ A * B * C + (1 | subject_id) + (B | stimulus_id)</code>.</p>
+</div>
+</div>
+</div>
+<div id="排除不收敛和畸形拟合singular-fit" class="section level3 hasAnchor" number="7.3.2">
+<h3><span class="header-section-number">7.3.2</span> 排除不收敛和“畸形拟合(singular fit)”<a href="交叉随机因子线性混合效应模型.html#排除不收敛和畸形拟合singular-fit" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>当你试图拟合具有最大随机效应的模型时，可能会遇到几个不同的问题。回想一下，线性混合效应模型的估计算法是<em>迭代(iterative)</em>——即拟合算法以逐步的方式搜索使数据最合适的参数值。有时它会一直搜索但找不到，这种情况下，你会收到“收敛警告”。当这种情况发生时，信任未收敛模型的任何估计值都不是一个好主意，你需要简化模型结构然后重试。</p>
+<p>另一种情况是你会收到关于“畸形拟合”的信息。当估计过程包含一个或多个随机因子产生的方差-协方差矩阵有(1)完全或近乎完全(1.00，-1.00)的正或负相关，(2)一个或多个方差接近于0，或(3)两者兼有时，会出现这种信息。可能可以忽略此信息，但也有理由简化模型结构直到信息消失。</p>
+<p>如何简化模型以处理收敛问题或畸形拟合信息呢？这需要小心操作。我建议以下策略：</p>
+<ol style="list-style-type: decimal">
+<li>将所有协方差参数约束为0。这可以使用双竖线<code>||</code>语法来完成，例如，将<code>(a * b | subject)</code>更改为<code>(a * b || subject)</code>。如果仍然遇到估计问题，那么：</li>
+<li>检查非收敛或畸形模型的参数估计值。是否有任何斜率变量为0或接近于0？删除这些变量并重新拟合模型，重复此步骤直到收敛警告/畸形拟合信息消失。</li>
+</ol>
+<p>有关收敛问题的更多技术细节以及如何处理，参见<code>?lme4::convergence</code>和<code>?lme4::isSingular</code>。</p>
+</div>
+</div>
+<div id="模拟交叉随机因子的数据" class="section level2 hasAnchor" number="7.4">
+<h2><span class="header-section-number">7.4</span> 模拟交叉随机因子的数据<a href="交叉随机因子线性混合效应模型.html#模拟交叉随机因子的数据" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>对于这些练习，我们将生成与实验相对应的模拟数据，该实验具有被试内和项目间的单、双水平因子(自变量)。假设实验涉及一组单词的词汇决策(例如，“PINT”是单词还是非单词？)，因变量是反应时(以毫秒为单位)，自变量是词类(名词与动词)。我们想把被试和单词都视为随机因子(以便我们能够推广到被试遇到单词这一事件的总体)。你可以使用网页app进行操作(或<a href="https://rstudio-connect.psy.gla.ac.uk/crossed" target="_blank">点击这里在新窗口中打开</a>)，这允许你操纵数据生成参数并观察其对数据的影响。</p>
+<p>到目前为止，你应该已经掌握了模拟具有交叉随机效应的研究数据所需的所有拼图。<span class="citation">DeBruine &amp; Barr (<a href="#ref-Debruine_Barr_2020">2020</a>)</span> 提供了更详细的、逐步的练习演示。</p>
+<p>这里是被试<span class="math inline">\(s\)</span>和项目<span class="math inline">\(i\)</span>的反应时<span class="math inline">\(Y_{si}\)</span>的数据生成过程(data generating process，DGP)：</p>
+<p><em>第1层:</em></p>
+<p><span class="math display">\[\begin{equation}
+Y_{si} = \beta_{0s} + \beta_{1} X_{i} + e_{si}
+\end{equation}\]</span></p>
+<p><em>第2层:</em></p>
+<p><span class="math display">\[\begin{equation}
+\beta_{0s} = \gamma_{00} + S_{0s} + I_{0i}
+\end{equation}\]</span></p>
+<p><span class="math display">\[\begin{equation}
+\beta_{1} = \gamma_{10} + S_{1s}
+\end{equation}\]</span></p>
+<p><em>方差成分:</em></p>
+<p><span class="math display">\[\begin{equation}
+\langle S_{0s}, S_{1s} \rangle \sim N\left(\langle 0, 0 \rangle, \mathbf{\Sigma}\right)
+\end{equation}\]</span></p>
+<p><span class="math display">\[\begin{equation}
+\mathbf{\Sigma} = \left(\begin{array}{cc}{\tau_{00}}^2 &amp; \rho\tau_{00}\tau_{11} \\
+         \rho\tau_{00}\tau_{11} &amp; {\tau_{11}}^2 \\
+         \end{array}\right)
+\end{equation}\]</span></p>
+<p><span class="math display">\[\begin{equation}
+I_{0s} \sim N\left(0, {\omega_{00}}^2\right)
+\end{equation}\]</span></p>
+<p><span class="math display">\[\begin{equation}
+e_{si} \sim N\left(0, \sigma^2\right)
+\end{equation}\]</span></p>
+<p>在上述等式中，<span class="math inline">\(X_i\)</span>是是一个数值型预测变量编码，它决定项目<span class="math inline">\(i\)</span>所处的条件，如-.5表示名词，.5表示动词。</p>
+<p>我们可以化简第1层和第2层为：</p>
+<p><span class="math display">\[Y_{si} = \beta_0 + S_{0s} + I_{0i} + (\beta_1 + S_{1s})X_{i} + e_{si}\]</span></p>
+<p>其中：</p>
+<table>
+<colgroup>
+<col width="20%" />
+<col width="15%" />
+<col width="64%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">参数</th>
+<th align="left">符号</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><span class="math inline">\(Y_{si}\)</span></td>
+<td align="left"><code>Y</code></td>
+<td align="left">被试<span class="math inline">\(s\)</span>对于项目<span class="math inline">\(i\)</span>的反应时;</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(\beta_0\)</span></td>
+<td align="left"><code>b0</code></td>
+<td align="left">总均值;</td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(S_{0s}\)</span></td>
+<td align="left"><code>S_0s</code></td>
+<td align="left">被试<span class="math inline">\(s\)</span>的随机截距;</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(I_{0i}\)</span></td>
+<td align="left"><code>I_0i</code></td>
+<td align="left">项目<span class="math inline">\(i\)</span>的随机截距;</td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\beta_1\)</span></td>
+<td align="left"><code>b1</code></td>
+<td align="left">单词类型的固定效应(斜率);</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(S_{1s}\)</span></td>
+<td align="left"><code>S_1s</code></td>
+<td align="left">被试水平上的随机斜率;</td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(X_{i}\)</span></td>
+<td align="left"><code>cond</code></td>
+<td align="left">字型的偏差编码预测变量;</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(\tau_{00}\)</span></td>
+<td align="left"><code>tau_00</code></td>
+<td align="left">被试水平上的随机截距标准差</td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\tau_{11}\)</span></td>
+<td align="left"><code>tau_11</code></td>
+<td align="left">被试水平上的随机斜率标准差</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(\rho\)</span></td>
+<td align="left"><code>rho</code></td>
+<td align="left">随机截距与斜率的相关性</td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\omega_{00}\)</span></td>
+<td align="left"><code>omega_00</code></td>
+<td align="left">项目水平上的随机截距标准差</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(e_{si}\)</span></td>
+<td align="left"><code>err</code></td>
+<td align="left">被试<span class="math inline">\(s\)</span>项目<span class="math inline">\(i\)</span>的误差残差</td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\sigma\)</span></td>
+<td align="left"><code>sig</code></td>
+<td align="left">误差残差标准差</td>
+</tr>
+</tbody>
+</table>
+<div id="设置环境并定义dgp的参数" class="section level3 hasAnchor" number="7.4.1">
+<h3><span class="header-section-number">7.4.1</span> 设置环境并定义DGP的参数<a href="交叉随机因子线性混合效应模型.html#设置环境并定义dgp的参数" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>如果你想在这个练习中得到和其他人一样的结果，我们都应该为随机数生成器提供相同的值。同时，让我们加载我们需要的包。</p>
+<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="交叉随机因子线性混合效应模型.html#cb221-1" tabindex="-1"></a><span class="fu">library</span>(lme4)</span>
+<span id="cb221-2"><a href="交叉随机因子线性混合效应模型.html#cb221-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb221-3"><a href="交叉随机因子线性混合效应模型.html#cb221-3" tabindex="-1"></a></span>
+<span id="cb221-4"><a href="交叉随机因子线性混合效应模型.html#cb221-4" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">11709</span>)  </span></code></pre></div>
+<p>现在让我们定义DGP参数。</p>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="交叉随机因子线性混合效应模型.html#cb222-1" tabindex="-1"></a>nsubj <span class="ot">&lt;-</span> <span class="dv">100</span> <span class="co"># 被试数</span></span>
+<span id="cb222-2"><a href="交叉随机因子线性混合效应模型.html#cb222-2" tabindex="-1"></a>nitem <span class="ot">&lt;-</span> <span class="dv">50</span>  <span class="co"># 必须是偶数</span></span>
+<span id="cb222-3"><a href="交叉随机因子线性混合效应模型.html#cb222-3" tabindex="-1"></a></span>
+<span id="cb222-4"><a href="交叉随机因子线性混合效应模型.html#cb222-4" tabindex="-1"></a>b0 <span class="ot">&lt;-</span> <span class="dv">800</span> <span class="co"># 总均值</span></span>
+<span id="cb222-5"><a href="交叉随机因子线性混合效应模型.html#cb222-5" tabindex="-1"></a>b1 <span class="ot">&lt;-</span> <span class="dv">80</span> <span class="co"># 80毫秒差异</span></span>
+<span id="cb222-6"><a href="交叉随机因子线性混合效应模型.html#cb222-6" tabindex="-1"></a>effc <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span>.<span class="dv">5</span>, .<span class="dv">5</span>) <span class="co"># 偏差编码</span></span>
+<span id="cb222-7"><a href="交叉随机因子线性混合效应模型.html#cb222-7" tabindex="-1"></a></span>
+<span id="cb222-8"><a href="交叉随机因子线性混合效应模型.html#cb222-8" tabindex="-1"></a>omega_00 <span class="ot">&lt;-</span> <span class="dv">80</span> <span class="co"># 项目水平上的随机截距标准差(omega_00)</span></span>
+<span id="cb222-9"><a href="交叉随机因子线性混合效应模型.html#cb222-9" tabindex="-1"></a></span>
+<span id="cb222-10"><a href="交叉随机因子线性混合效应模型.html#cb222-10" tabindex="-1"></a><span class="do">## 被试水平上的方差-协方差矩阵</span></span>
+<span id="cb222-11"><a href="交叉随机因子线性混合效应模型.html#cb222-11" tabindex="-1"></a>tau_00 <span class="ot">&lt;-</span> <span class="dv">100</span> <span class="co"># 被试水平上的随机截距标准差</span></span>
+<span id="cb222-12"><a href="交叉随机因子线性混合效应模型.html#cb222-12" tabindex="-1"></a>tau_11 <span class="ot">&lt;-</span> <span class="dv">40</span> <span class="co"># 被试水平上的随机斜率标准差</span></span>
+<span id="cb222-13"><a href="交叉随机因子线性混合效应模型.html#cb222-13" tabindex="-1"></a>rho <span class="ot">&lt;-</span> .<span class="dv">2</span> <span class="co"># 截距和斜率的相关性</span></span>
+<span id="cb222-14"><a href="交叉随机因子线性混合效应模型.html#cb222-14" tabindex="-1"></a></span>
+<span id="cb222-15"><a href="交叉随机因子线性混合效应模型.html#cb222-15" tabindex="-1"></a>sig <span class="ot">&lt;-</span> <span class="dv">200</span> <span class="co"># 残差(标准差)</span></span></code></pre></div>
+<p>你将创建3个表：</p>
+<table>
+<colgroup>
+<col width="16%" />
+<col width="84%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">名称</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>subjects</code></td>
+<td align="left">包含<code>subj_id</code>和被试随机效应的被试数据表</td>
+</tr>
+<tr class="even">
+<td align="left"><code>items</code></td>
+<td align="left">包含<code>item_id</code>和项目随机效应的刺激数据表</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>trials</code></td>
+<td align="left">列举被试/刺激之间组合的试验表</td>
+</tr>
+</tbody>
+</table>
+<p>然后将三个表中的信息合并在一起，根据上面的模型公式计算响应变量。</p>
+</div>
+<div id="生成一个刺激样本" class="section level3 hasAnchor" number="7.4.2">
+<h3><span class="header-section-number">7.4.2</span> 生成一个刺激样本<a href="交叉随机因子线性混合效应模型.html#生成一个刺激样本" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 
+</div>
+</div>
+</div>
+<h3>参考文献<a href="参考文献.html#参考文献" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="ref-Baayen_Davidson_Bates_2008" class="csl-entry">
+Baayen, R. H., Davidson, D. J., &amp; Bates, D. M. (2008). Mixed-effects modeling with crossed random effects for subjects and items. <em>Journal of Memory and Language</em>, <em>59</em>(4), 390–412.
+</div>
+<div id="ref-Barr_2013" class="csl-entry">
+Barr, D. J. (2013). Random effects structure for testing interactions in linear mixed-effects models. <em>Frontiers in Psychology</em>, <em>4</em>, 328.
+</div>
+<div id="ref-Barr_2017" class="csl-entry">
+Barr, D. J. (2017). <span class="nocase">Generalizing over encounters: Statistical and theoretical considerations</span>. In <em>Oxford handbook of psycholinguistics</em>. Oxford University Press. <a href="https://psyarxiv.com/mcrzu/">https://psyarxiv.com/mcrzu/</a>
+</div>
+<div id="ref-Barr_et_al_2013" class="csl-entry">
+Barr, D. J., Levy, R., Scheepers, C., &amp; Tily, H. J. (2013). Random effects structure for confirmatory hypothesis testing: Keep it maximal. <em>Journal of Memory and Language</em>, <em>68</em>(3), 255–278.
+</div>
+<div id="ref-Clark_1973" class="csl-entry">
+Clark, H. H. (1973). The language-as-fixed-effect fallacy: A critique of language statistics in psychological research. <em>Journal of Verbal Learning and Verbal Behavior</em>, <em>12</em>(4), 335–359.
+</div>
+<div id="ref-Coleman_1964" class="csl-entry">
+Coleman, E. B. (1964). Generalizing to a language population. <em>Psychological Reports</em>, <em>14</em>(1), 219–226.
+</div>
+<div id="ref-Debruine_Barr_2020" class="csl-entry">
+DeBruine, L., &amp; Barr, D. J. (2020). Understanding mixed effects models through data simulation. <em><span>Advances in Methods and Practice in Psychological Science</span></em>. <a href="https://psyarxiv.com/xp5cy/">https://psyarxiv.com/xp5cy/</a>
+</div>
+<div id="ref-Judd_Westfall_Kenny_2012" class="csl-entry">
+Judd, C. M., Westfall, J., &amp; Kenny, D. A. (2012). Treating stimuli as a random factor in social psychology: A new and comprehensive solution to a pervasive but largely ignored problem. <em>Journal of Personality and Social Psychology</em>, <em>103</em>, 54–69.
+</div>
+<div id="ref-Matuschek_et_al_2017" class="csl-entry">
+Matuschek, H., Kliegl, R., Vasishth, S., Baayen, H., &amp; Bates, D. (2017). <span class="nocase">Balancing Type I error and power in linear mixed models</span>. <em><span>Journal of Memory and Language</span></em>, <em>94</em>, 305–315.
+</div>
+<div id="ref-yarkoni_2019" class="csl-entry">
+Yarkoni, T. (2019). <em>The generalizability crisis</em>. <a href="https://doi.org/10.31234/osf.io/jqw35">https://doi.org/10.31234/osf.io/jqw35</a>
+</div>
 </div>
 <script>
 
