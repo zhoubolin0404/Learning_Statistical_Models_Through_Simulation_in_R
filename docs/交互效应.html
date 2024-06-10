@@ -23,7 +23,7 @@
 <meta name="author" content="周博霖" />
 
 
-<meta name="date" content="2024-06-09" />
+<meta name="date" content="2024-06-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -273,6 +273,7 @@ div.csl-indent {
 <li class="chapter" data-level="6.3" data-path="单随机因子线性混合效应模型.html"><a href="单随机因子线性混合效应模型.html#用回归表达研究设计和进行检验"><i class="fa fa-check"></i><b>6.3</b> 用回归表达研究设计和进行检验</a>
 <ul>
 <li class="chapter" data-level="6.3.1" data-path="单随机因子线性混合效应模型.html"><a href="单随机因子线性混合效应模型.html#水平以上的因子"><i class="fa fa-check"></i><b>6.3.1</b> 2水平以上的因子</a></li>
+<li class="chapter" data-level="6.3.2" data-path="单随机因子线性混合效应模型.html"><a href="单随机因子线性混合效应模型.html#多参数检验"><i class="fa fa-check"></i><b>6.3.2</b> 多参数检验</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="交叉随机因子线性混合效应模型.html"><a href="交叉随机因子线性混合效应模型.html"><i class="fa fa-check"></i><b>7</b> 交叉随机因子线性混合效应模型</a></li>
@@ -413,7 +414,7 @@ div.csl-indent {
 <li><span class="math inline">\(\beta_3\)</span>: 其他组的斜率偏移量。</li>
 </ul>
 <p>用R估计：</p>
-<p><code>lm(Y ~ X1 + X2 + X1:X2, data)</code>或者缩写:</p>
+<p><code>lm(Y ~ X1 + X2 + X1:X2, data)</code>或者简写:</p>
 <p><code>lm(Y ~ X1 * X2, data)</code>。这里<code>*</code>的意思是：“所有可能的主效应以及X1和X2的交互”</p>
 </div>
 <p><span class="math inline">\(\beta_3 X_{1i} X_{2i}\)</span>项是两个预测变量相乘，被称为<strong>交互项(interaction term)</strong>。现在让我们展示上述广义线性模型(GLM)是如何得出两条回归线的。</p>
@@ -436,7 +437,7 @@ div.csl-indent {
 <p>然而，交互项不显著并<em>不一定</em>意味着在总体中这些线是平行的。它们可能是平行的，但也可能不是，而你的研究只是缺乏足够的统计效力(power)来检测出差异。</p>
 <p>为了获得关于原假设的证据，最好的方法是进行所谓的等效性检验(equivalence test)。在这个检验中你试图拒绝一个原假设，该原假设是总体效应大于某个你感兴趣的最小效应值；教程详见<span class="citation">(<a href="#ref-Lakens_Scheel_Isager_2018">Lakens et al., 2018</a>)</span>。</p>
 </div>
-<p>我们已经创建了结合两组模拟数据的数据集<code>all_data</code>。我们使用R公式语法表示模型的方式是<code>Y ~ X1 + X2 + X1:X2</code>，其中<code>X1:X2</code>告诉R创建一个预测变量，该预测变量是<code>X1</code>和<code>X2</code>的乘积。还有一个缩写方式<code>Y ~ X1 * X2</code>，它告诉R计算所有可能的主效应和交互效应。首先，我们将向模型添加一个虚拟预测变量，并将结果存储在<code>all_data2</code>中。</p>
+<p>我们已经创建了结合两组模拟数据的数据集<code>all_data</code>。我们使用R公式语法表示模型的方式是<code>Y ~ X1 + X2 + X1:X2</code>，其中<code>X1:X2</code>告诉R创建一个预测变量，该预测变量是<code>X1</code>和<code>X2</code>的乘积。还有一个简写方式<code>Y ~ X1 * X2</code>，它告诉R计算所有可能的主效应和交互效应。首先，我们将向模型添加一个虚拟预测变量，并将结果存储在<code>all_data2</code>中。</p>
 <div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="交互效应.html#cb103-1" tabindex="-1"></a>all_data2 <span class="ot">&lt;-</span> all_data <span class="sc">%&gt;%</span></span>
 <span id="cb103-2"><a href="交互效应.html#cb103-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">grp =</span> <span class="fu">if_else</span>(group <span class="sc">==</span> <span class="st">&quot;rural&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span></code></pre></div>
 <div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="交互效应.html#cb104-1" tabindex="-1"></a>sonic_mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(simple_rt <span class="sc">~</span> dist_level <span class="sc">+</span> grp <span class="sc">+</span> dist_level<span class="sc">:</span>grp,</span>
