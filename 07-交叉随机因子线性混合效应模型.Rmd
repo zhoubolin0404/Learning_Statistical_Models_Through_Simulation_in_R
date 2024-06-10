@@ -177,7 +177,7 @@ abc_data %>%
 
 `r hide("答案")`
 
-```{r c-stim, webex.hide="Solution"}
+```{r c-stim}
 abc_data %>%
   count(stimulus_id, C)
 
