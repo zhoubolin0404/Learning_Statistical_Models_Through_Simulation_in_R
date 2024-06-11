@@ -23,7 +23,7 @@
 <meta name="author" content="周博霖" />
 
 
-<meta name="date" content="2024-06-10" />
+<meta name="date" content="2024-06-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -288,7 +288,12 @@ div.csl-indent {
 <li class="chapter" data-level="7.4" data-path="交叉随机因子线性混合效应模型.html"><a href="交叉随机因子线性混合效应模型.html#模拟交叉随机因子的数据"><i class="fa fa-check"></i><b>7.4</b> 模拟交叉随机因子的数据</a>
 <ul>
 <li class="chapter" data-level="7.4.1" data-path="交叉随机因子线性混合效应模型.html"><a href="交叉随机因子线性混合效应模型.html#设置环境并定义dgp的参数"><i class="fa fa-check"></i><b>7.4.1</b> 设置环境并定义DGP的参数</a></li>
-<li class="chapter" data-level="7.4.2" data-path="交叉随机因子线性混合效应模型.html"><a href="交叉随机因子线性混合效应模型.html#生成一个刺激样本"><i class="fa fa-check"></i><b>7.4.2</b> 生成一个刺激样本</a></li>
+<li class="chapter" data-level="7.4.2" data-path="交叉随机因子线性混合效应模型.html"><a href="交叉随机因子线性混合效应模型.html#生成刺激样本"><i class="fa fa-check"></i><b>7.4.2</b> 生成刺激样本</a></li>
+<li class="chapter" data-level="7.4.3" data-path="交叉随机因子线性混合效应模型.html"><a href="交叉随机因子线性混合效应模型.html#生成被试样本"><i class="fa fa-check"></i><b>7.4.3</b> 生成被试样本</a></li>
+<li class="chapter" data-level="7.4.4" data-path="交叉随机因子线性混合效应模型.html"><a href="交叉随机因子线性混合效应模型.html#生产试次样本"><i class="fa fa-check"></i><b>7.4.4</b> 生产试次样本</a></li>
+<li class="chapter" data-level="7.4.5" data-path="交叉随机因子线性混合效应模型.html"><a href="交叉随机因子线性混合效应模型.html#合并subjectsitems和trials"><i class="fa fa-check"></i><b>7.4.5</b> 合并<code>subjects</code>，<code>items</code>和<code>trials</code></a></li>
+<li class="chapter" data-level="7.4.6" data-path="交叉随机因子线性混合效应模型.html"><a href="交叉随机因子线性混合效应模型.html#创建响应变量"><i class="fa fa-check"></i><b>7.4.6</b> 创建响应变量</a></li>
+<li class="chapter" data-level="7.4.7" data-path="交叉随机因子线性混合效应模型.html"><a href="交叉随机因子线性混合效应模型.html#拟合模型"><i class="fa fa-check"></i><b>7.4.7</b> 拟合模型</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="参考文献.html"><a href="参考文献.html"><i class="fa fa-check"></i>参考文献</a></li>
@@ -405,23 +410,23 @@ div.csl-indent {
 <tbody>
 <tr class="odd">
 <td align="right">1</td>
-<td align="right">70</td>
-<td align="left">2020-05-06</td>
+<td align="right">30</td>
+<td align="left">2020-05-03</td>
 </tr>
 <tr class="even">
 <td align="right">2</td>
-<td align="right">51</td>
-<td align="left">2020-05-09</td>
+<td align="right">18</td>
+<td align="left">2020-05-06</td>
 </tr>
 <tr class="odd">
 <td align="right">3</td>
-<td align="right">64</td>
-<td align="left">2020-05-12</td>
+<td align="right">28</td>
+<td align="left">2020-05-16</td>
 </tr>
 <tr class="even">
 <td align="right">4</td>
-<td align="right">45</td>
-<td align="left">2020-05-29</td>
+<td align="right">36</td>
+<td align="left">2020-05-26</td>
 </tr>
 </tbody>
 </table>
@@ -743,7 +748,7 @@ div.csl-indent {
 ## 6          3 A2        2
 ## 7          4 A1        2
 ## 8          4 A2        2</code></pre>
-<p>在结果表中，你可以看到每个没事都接受了<span class="math inline">\(A\)</span>的所有水平，说明这是个被试内因子。那么对于<span class="math inline">\(B\)</span>和<span class="math inline">\(C\)</span>呢？</p>
+<p>在结果表中，你可以看到每个被试都接受了<span class="math inline">\(A\)</span>的所有水平，说明这是个被试内因子。那么对于<span class="math inline">\(B\)</span>和<span class="math inline">\(C\)</span>呢？</p>
 <div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="交叉随机因子线性混合效应模型.html#cb204-1" tabindex="-1"></a>abc_data <span class="sc">%&gt;%</span></span>
 <span id="cb204-2"><a href="交叉随机因子线性混合效应模型.html#cb204-2" tabindex="-1"></a>  <span class="fu">count</span>(subject_id, B)</span></code></pre></div>
 <pre><code>## # A tibble: 4 × 3
@@ -1060,8 +1065,463 @@ e_{si} \sim N\left(0, \sigma^2\right)
 </table>
 <p>然后将三个表中的信息合并在一起，根据上面的模型公式计算响应变量。</p>
 </div>
-<div id="生成一个刺激样本" class="section level3 hasAnchor" number="7.4.2">
-<h3><span class="header-section-number">7.4.2</span> 生成一个刺激样本<a href="交叉随机因子线性混合效应模型.html#生成一个刺激样本" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="生成刺激样本" class="section level3 hasAnchor" number="7.4.2">
+<h3><span class="header-section-number">7.4.2</span> 生成刺激样本<a href="交叉随机因子线性混合效应模型.html#生成刺激样本" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>让我们随机生成50项。像下面一样创建一个叫<code>item</code>的表，其中<code>iri</code>是项目水平上的随机截距(提取于方差为<span class="math inline">\(\omega_{00}^2\)</span> = 6400的正态分布)。一半的词形是名词(<code>cond = -.5</code>)，一半的词形是动词(<code>cond = .5</code>)。</p>
+<div class="webex-solution">
+<button>
+点击查看完整表格
+</button>
+<pre><code>## # A tibble: 50 × 3
+##    item_id  cond    I_0i
+##      &lt;int&gt; &lt;dbl&gt;   &lt;dbl&gt;
+##  1       1  -0.5   14.9 
+##  2       2   0.5  -86.3 
+##  3       3  -0.5  -12.8 
+##  4       4   0.5  -13.9 
+##  5       5  -0.5   55.6 
+##  6       6   0.5  -45.9 
+##  7       7  -0.5  -42.0 
+##  8       8   0.5  -87.6 
+##  9       9  -0.5  -97.4 
+## 10      10   0.5  -85.2 
+## 11      11  -0.5  135.  
+## 12      12   0.5   83.2 
+## 13      13  -0.5  -44.7 
+## 14      14   0.5    8.59
+## 15      15  -0.5 -156.  
+## 16      16   0.5  -57.6 
+## 17      17  -0.5  -38.7 
+## 18      18   0.5   39.6 
+## 19      19  -0.5  105.  
+## 20      20   0.5   30.3 
+## 21      21  -0.5 -115.  
+## 22      22   0.5   -3.40
+## 23      23  -0.5 -218.  
+## 24      24   0.5   53.0 
+## 25      25  -0.5  -86.9 
+## 26      26   0.5  -65.4 
+## 27      27  -0.5  172.  
+## 28      28   0.5 -152.  
+## 29      29  -0.5   25.1 
+## 30      30   0.5 -156.  
+## 31      31  -0.5   47.7 
+## 32      32   0.5  -46.3 
+## 33      33  -0.5   48.0 
+## 34      34   0.5   62.8 
+## 35      35  -0.5  -75.4 
+## 36      36   0.5  -35.9 
+## 37      37  -0.5  -48.5 
+## 38      38   0.5   29.3 
+## 39      39  -0.5  -55.5 
+## 40      40   0.5   69.5 
+## 41      41  -0.5  196.  
+## 42      42   0.5   77.6 
+## 43      43  -0.5  -45.0 
+## 44      44   0.5  204.  
+## 45      45  -0.5   32.1 
+## 46      46   0.5  -63.9 
+## 47      47  -0.5  145.  
+## 48      48   0.5   66.2 
+## 49      49  -0.5  -23.9 
+## 50      50   0.5   97.3</code></pre>
+</div>
+<div class="webex-solution">
+<button>
+提示：生成cond
+</button>
+<p><code>rep()</code></p>
+</div>
+<div class="webex-solution">
+<button>
+提示：生成项目的随机效应
+</button>
+<p><code>rnorm()</code></p>
+</div>
+<div class="webex-solution">
+<button>
+答案
+</button>
+<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="交叉随机因子线性混合效应模型.html#cb224-1" tabindex="-1"></a>items <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">item_id =</span> <span class="dv">1</span><span class="sc">:</span>nitem,</span>
+<span id="cb224-2"><a href="交叉随机因子线性混合效应模型.html#cb224-2" tabindex="-1"></a>                <span class="at">cond =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="sc">-</span>.<span class="dv">5</span>, .<span class="dv">5</span>), <span class="at">times =</span> nitem <span class="sc">/</span> <span class="dv">2</span>),</span>
+<span id="cb224-3"><a href="交叉随机因子线性混合效应模型.html#cb224-3" tabindex="-1"></a>                <span class="at">I_0i =</span> <span class="fu">rnorm</span>(nitem, <span class="dv">0</span>, <span class="at">sd =</span> omega_00))</span></code></pre></div>
+</div>
+</div>
+<div id="生成被试样本" class="section level3 hasAnchor" number="7.4.3">
+<h3><span class="header-section-number">7.4.3</span> 生成被试样本<a href="交叉随机因子线性混合效应模型.html#生成被试样本" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>要生成被试水平上的随机效应，你需要从<em>双变量正态分布</em>中生成数据。为此，我们将使用函数<code>MASS::mvrnorm</code>。</p>
+<div class="yellowbox">
+<p><strong>记住</strong>：不要仅仅为了获得这个函数而运行<code>library("MASS")</code>，因为<code>MASS</code>包中有一个函数<code>select()</code>会覆盖tidyverse版本的<code>select()</code>。由于我们只需要<code>MASS</code>包中的<code>mvrnorm()</code>函数，我们可以直接通过<code>pkgname::function</code>语法来访问它，即<code>MASS::mvrnorm()</code>。</p>
+</div>
+<p>你的被试表格应如下所示：</p>
+<div class="webex-solution">
+<button>
+点击查看完整表格
+</button>
+<pre><code>## # A tibble: 100 × 3
+##     subj_id      S_0s     S_1s
+##       &lt;int&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+##   1       1  -80.0      -0.763
+##   2       2   44.6      54.5  
+##   3       3    8.74    -20.4  
+##   4       4  -38.6     -23.8  
+##   5       5  -83.3      29.2  
+##   6       6  -70.9     -13.8  
+##   7       7  -21.4      46.0  
+##   8       8    2.33      8.39 
+##   9       9   62.3     -58.2  
+##  10      10  238.        7.72 
+##  11      11  -92.5       2.14 
+##  12      12   58.5     -65.8  
+##  13      13 -204.      -38.8  
+##  14      14  -91.6       5.46 
+##  15      15   51.1     -38.8  
+##  16      16  142.      -12.9  
+##  17      17   46.0       6.60 
+##  18      18  -56.7     -54.8  
+##  19      19  -10.1      62.1  
+##  20      20 -226.      -19.3  
+##  21      21 -158.      -18.5  
+##  22      22  102.        8.99 
+##  23      23  -12.7     -70.6  
+##  24      24  135.       -9.50 
+##  25      25   62.0     -52.5  
+##  26      26    0.0653   32.8  
+##  27      27 -117.       70.8  
+##  28      28 -232.        3.43 
+##  29      29   70.9      50.8  
+##  30      30 -123.       22.8  
+##  31      31  268.       30.0  
+##  32      32  -18.7     -25.0  
+##  33      33   50.8     -31.0  
+##  34      34  -43.1     -28.9  
+##  35      35  -10.1      28.3  
+##  36      36   65.6      18.2  
+##  37      37 -123.       -4.63 
+##  38      38  -94.8      10.3  
+##  39      39   77.7     -22.5  
+##  40      40  -59.1      52.4  
+##  41      41  -91.2    -103.   
+##  42      42  -66.6      -2.14 
+##  43      43   -4.40      0.305
+##  44      44   69.7      10.2  
+##  45      45  -77.5     -10.4  
+##  46      46  -17.8     -48.2  
+##  47      47 -103.       47.0  
+##  48      48   22.8     -39.3  
+##  49      49  -31.1     -34.9  
+##  50      50  -26.4      40.0  
+##  51      51   47.8      26.0  
+##  52      52  -93.2     -42.7  
+##  53      53   28.9      51.4  
+##  54      54  -19.3      11.5  
+##  55      55   53.6      21.5  
+##  56      56  -27.4     -21.4  
+##  57      57  -67.7     -32.1  
+##  58      58   59.2      13.4  
+##  59      59  -53.1       2.44 
+##  60      60  104.        7.41 
+##  61      61  -20.7     -78.7  
+##  62      62   55.9     -15.7  
+##  63      63  114.      -29.1  
+##  64      64  -57.7     -34.7  
+##  65      65  -38.7      -9.14 
+##  66      66 -106.      -58.0  
+##  67      67   99.1     -37.6  
+##  68      68  -56.9      21.0  
+##  69      69  -50.4      -0.407
+##  70      70   27.5      -2.69 
+##  71      71  139.      -32.2  
+##  72      72   44.9       8.53 
+##  73      73  -14.8      71.7  
+##  74      74   33.7     -52.6  
+##  75      75    2.03     27.8  
+##  76      76 -134.       37.0  
+##  77      77   24.4      20.7  
+##  78      78  -60.6     -36.7  
+##  79      79   31.1      16.9  
+##  80      80  -34.9       9.68 
+##  81      81  206.       17.3  
+##  82      82   -7.19    -25.4  
+##  83      83  182.       46.0  
+##  84      84   55.7      21.7  
+##  85      85 -149.      -44.0  
+##  86      86 -193.      -73.2  
+##  87      87  167.       13.9  
+##  88      88  160.        3.87 
+##  89      89   84.1      82.1  
+##  90      90   97.2      -6.55 
+##  91      91 -205.     -125.   
+##  92      92  -75.1       6.76 
+##  93      93  -95.3     -46.5  
+##  94      94  106.       38.6  
+##  95      95  -42.4      11.3  
+##  96      96   74.0     -21.1  
+##  97      97 -245.      -25.3  
+##  98      98 -113.       -1.88 
+##  99      99   68.8      30.6  
+## 100     100  136.       44.2</code></pre>
+</div>
+<div class="webex-solution">
+<button>
+提示1
+</button>
+<p>回忆一下：</p>
+<ul>
+<li><em><code>tau_00</code></em>: 被试水平上随机截距的标准差</li>
+<li><em><code>tau_11</code></em>: 被试水平上随机斜率的标准差</li>
+<li><em><code>rho</code></em> : 截距和斜率的相关系数</li>
+</ul>
+</div>
+<div class="webex-solution">
+<button>
+提示2
+</button>
+<p><code>covariance = rho * tau_00 * tau_11</code></p>
+</div>
+<div class="webex-solution">
+<button>
+提示3
+</button>
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="交叉随机因子线性混合效应模型.html#cb226-1" tabindex="-1"></a><span class="fu">matrix</span>(    tau_00<span class="sc">^</span><span class="dv">2</span>,            rho <span class="sc">*</span> tau_00 <span class="sc">*</span> tau_11,</span>
+<span id="cb226-2"><a href="交叉随机因子线性混合效应模型.html#cb226-2" tabindex="-1"></a>        rho <span class="sc">*</span> tau_00 <span class="sc">*</span> tau_11,      tau_11<span class="sc">^</span><span class="dv">2</span>, ...)</span></code></pre></div>
+</div>
+<div class="webex-solution">
+<button>
+提示4
+</button>
+<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="交叉随机因子线性混合效应模型.html#cb227-1" tabindex="-1"></a><span class="fu">as_tibble</span>(mx) <span class="sc">%&gt;%</span></span>
+<span id="cb227-2"><a href="交叉随机因子线性混合效应模型.html#cb227-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">subj_id =</span> ...)</span></code></pre></div>
+</div>
+<div class="webex-solution">
+<button>
+答案
+</button>
+<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="交叉随机因子线性混合效应模型.html#cb228-1" tabindex="-1"></a>cov <span class="ot">&lt;-</span> rho <span class="sc">*</span> tau_00 <span class="sc">*</span> tau_11</span>
+<span id="cb228-2"><a href="交叉随机因子线性混合效应模型.html#cb228-2" tabindex="-1"></a></span>
+<span id="cb228-3"><a href="交叉随机因子线性混合效应模型.html#cb228-3" tabindex="-1"></a>mx <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(tau_00<span class="sc">^</span><span class="dv">2</span>, cov,</span>
+<span id="cb228-4"><a href="交叉随机因子线性混合效应模型.html#cb228-4" tabindex="-1"></a>               cov,      tau_11<span class="sc">^</span><span class="dv">2</span>),</span>
+<span id="cb228-5"><a href="交叉随机因子线性混合效应模型.html#cb228-5" tabindex="-1"></a>             <span class="at">nrow =</span> <span class="dv">2</span>)</span>
+<span id="cb228-6"><a href="交叉随机因子线性混合效应模型.html#cb228-6" tabindex="-1"></a></span>
+<span id="cb228-7"><a href="交叉随机因子线性混合效应模型.html#cb228-7" tabindex="-1"></a>by_subj_rfx <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">mvrnorm</span>(nsubj, <span class="at">mu =</span> <span class="fu">c</span>(<span class="at">S_0s =</span> <span class="dv">0</span>, <span class="at">S_1s =</span> <span class="dv">0</span>), <span class="at">Sigma =</span> mx)</span>
+<span id="cb228-8"><a href="交叉随机因子线性混合效应模型.html#cb228-8" tabindex="-1"></a></span>
+<span id="cb228-9"><a href="交叉随机因子线性混合效应模型.html#cb228-9" tabindex="-1"></a>subjects <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(by_subj_rfx) <span class="sc">%&gt;%</span></span>
+<span id="cb228-10"><a href="交叉随机因子线性混合效应模型.html#cb228-10" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">subj_id =</span> <span class="fu">row_number</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb228-11"><a href="交叉随机因子线性混合效应模型.html#cb228-11" tabindex="-1"></a>  <span class="fu">select</span>(subj_id, <span class="fu">everything</span>())</span></code></pre></div>
+</div>
+</div>
+<div id="生产试次样本" class="section level3 hasAnchor" number="7.4.4">
+<h3><span class="header-section-number">7.4.4</span> 生产试次样本<a href="交叉随机因子线性混合效应模型.html#生产试次样本" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>每个试次都是独特被试和刺激的<em>相遇</em>，在这个实验中，每个被试都接受了每个刺激。生产一个表<code>trials</code>列出实验中所有的试次。注意：每个被试都会接受每种刺激1次。使用<code>crossing()</code>函数创建所有可能的试次。</p>
+<p>现在应用这个示例生成下面的表，其中<code>err</code>是残差项，提取于<span class="math inline">\(N \sim \left(0, \sigma^2\right)\)</span>，<span class="math inline">\(\sigma\)</span>是<code>err_sd</code>。</p>
+<pre><code>## # A tibble: 5,000 × 3
+##    subj_id item_id    err
+##      &lt;int&gt;   &lt;int&gt;  &lt;dbl&gt;
+##  1       1       1  382. 
+##  2       1       2  283. 
+##  3       1       3   30.4
+##  4       1       4 -282. 
+##  5       1       5 -239. 
+##  6       1       6   73.4
+##  7       1       7  -98.4
+##  8       1       8 -189. 
+##  9       1       9 -410. 
+## 10       1      10  102. 
+## # ℹ 4,990 more rows</code></pre>
+<div class="webex-solution">
+<button>
+答案
+</button>
+<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="交叉随机因子线性混合效应模型.html#cb230-1" tabindex="-1"></a>trials <span class="ot">&lt;-</span> <span class="fu">crossing</span>(<span class="at">subj_id =</span> subjects <span class="sc">%&gt;%</span> <span class="fu">pull</span>(subj_id),</span>
+<span id="cb230-2"><a href="交叉随机因子线性混合效应模型.html#cb230-2" tabindex="-1"></a>                   <span class="at">item_id =</span> items <span class="sc">%&gt;%</span> <span class="fu">pull</span>(item_id)) <span class="sc">%&gt;%</span></span>
+<span id="cb230-3"><a href="交叉随机因子线性混合效应模型.html#cb230-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">err =</span> <span class="fu">rnorm</span>(<span class="fu">nrow</span>(.), <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> sig))</span></code></pre></div>
+</div>
+</div>
+<div id="合并subjectsitems和trials" class="section level3 hasAnchor" number="7.4.5">
+<h3><span class="header-section-number">7.4.5</span> 合并<code>subjects</code>，<code>items</code>和<code>trials</code><a href="交叉随机因子线性混合效应模型.html#合并subjectsitems和trials" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>合并<code>subjects</code>，<code>items</code>和<code>trials</code>中的信息，创建完整的数据集<code>dat_sim</code>，看起来像这样：</p>
+<pre><code>## # A tibble: 5,000 × 7
+##    subj_id item_id  S_0s  I_0i   S_1s  cond    err
+##      &lt;int&gt;   &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+##  1       1       1 -80.0  14.9 -0.763  -0.5  382. 
+##  2       1       2 -80.0 -86.3 -0.763   0.5  283. 
+##  3       1       3 -80.0 -12.8 -0.763  -0.5   30.4
+##  4       1       4 -80.0 -13.9 -0.763   0.5 -282. 
+##  5       1       5 -80.0  55.6 -0.763  -0.5 -239. 
+##  6       1       6 -80.0 -45.9 -0.763   0.5   73.4
+##  7       1       7 -80.0 -42.0 -0.763  -0.5  -98.4
+##  8       1       8 -80.0 -87.6 -0.763   0.5 -189. 
+##  9       1       9 -80.0 -97.4 -0.763  -0.5 -410. 
+## 10       1      10 -80.0 -85.2 -0.763   0.5  102. 
+## # ℹ 4,990 more rows</code></pre>
+<div class="webex-solution">
+<button>
+提示
+</button>
+<p><code>inner_join()</code></p>
+</div>
+<div class="webex-solution">
+<button>
+答案
+</button>
+<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="交叉随机因子线性混合效应模型.html#cb232-1" tabindex="-1"></a>dat_sim <span class="ot">&lt;-</span> subjects <span class="sc">%&gt;%</span></span>
+<span id="cb232-2"><a href="交叉随机因子线性混合效应模型.html#cb232-2" tabindex="-1"></a>  <span class="fu">inner_join</span>(trials, <span class="st">&quot;subj_id&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb232-3"><a href="交叉随机因子线性混合效应模型.html#cb232-3" tabindex="-1"></a>  <span class="fu">inner_join</span>(items, <span class="st">&quot;item_id&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb232-4"><a href="交叉随机因子线性混合效应模型.html#cb232-4" tabindex="-1"></a>  <span class="fu">arrange</span>(subj_id, item_id) <span class="sc">%&gt;%</span></span>
+<span id="cb232-5"><a href="交叉随机因子线性混合效应模型.html#cb232-5" tabindex="-1"></a>  <span class="fu">select</span>(subj_id, item_id, S_0s, I_0i, S_1s, cond, err)</span></code></pre></div>
+</div>
+</div>
+<div id="创建响应变量" class="section level3 hasAnchor" number="7.4.6">
+<h3><span class="header-section-number">7.4.6</span> 创建响应变量<a href="交叉随机因子线性混合效应模型.html#创建响应变量" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>根据下面的公式模型将响应变量<code>Y</code>添加到数据中：</p>
+<p><span class="math display">\[Y_{si} = \beta_0 + S_{0s} + I_{0i} + (\beta_1 + S_{1s})X_{i} + e_{si}\]</span></p>
+<p>那么，最终的表(<code>dat_sim2</code>)看起来是这样的：</p>
+<pre><code>## # A tibble: 5,000 × 8
+##    subj_id item_id     Y  S_0s  I_0i   S_1s  cond    err
+##      &lt;int&gt;   &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+##  1       1       1 1078. -80.0  14.9 -0.763  -0.5  382. 
+##  2       1       2  957. -80.0 -86.3 -0.763   0.5  283. 
+##  3       1       3  698. -80.0 -12.8 -0.763  -0.5   30.4
+##  4       1       4  464. -80.0 -13.9 -0.763   0.5 -282. 
+##  5       1       5  497. -80.0  55.6 -0.763  -0.5 -239. 
+##  6       1       6  787. -80.0 -45.9 -0.763   0.5   73.4
+##  7       1       7  540. -80.0 -42.0 -0.763  -0.5  -98.4
+##  8       1       8  483. -80.0 -87.6 -0.763   0.5 -189. 
+##  9       1       9  173. -80.0 -97.4 -0.763  -0.5 -410. 
+## 10       1      10  776. -80.0 -85.2 -0.763   0.5  102. 
+## # ℹ 4,990 more rows</code></pre>
+<p>注意：这是该模型完整的<strong>分解表</strong></p>
+<div class="webex-solution">
+<button>
+提示
+</button>
+<pre><code>... %&gt;% 
+  mutate(Y = ...) %&gt;%
+  select(...)</code></pre>
+</div>
+<div class="webex-solution">
+<button>
+答案
+</button>
+<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="交叉随机因子线性混合效应模型.html#cb235-1" tabindex="-1"></a>dat_sim2 <span class="ot">&lt;-</span> dat_sim <span class="sc">%&gt;%</span></span>
+<span id="cb235-2"><a href="交叉随机因子线性混合效应模型.html#cb235-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Y =</span> b0 <span class="sc">+</span> S_0s <span class="sc">+</span> I_0i <span class="sc">+</span> (S_1s <span class="sc">+</span> b1) <span class="sc">*</span> cond <span class="sc">+</span> err) <span class="sc">%&gt;%</span></span>
+<span id="cb235-3"><a href="交叉随机因子线性混合效应模型.html#cb235-3" tabindex="-1"></a>  <span class="fu">select</span>(subj_id, item_id, Y, <span class="fu">everything</span>())</span></code></pre></div>
+</div>
+</div>
+<div id="拟合模型" class="section level3 hasAnchor" number="7.4.7">
+<h3><span class="header-section-number">7.4.7</span> 拟合模型<a href="交叉随机因子线性混合效应模型.html#拟合模型" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>现在你创建完了模拟数据，使用<code>lme4::lmer()</code>拟合模型，并运行<code>summary()</code>吧。</p>
+<div class="webex-solution">
+<button>
+答案
+</button>
+<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="交叉随机因子线性混合效应模型.html#cb236-1" tabindex="-1"></a>mod_sim <span class="ot">&lt;-</span> <span class="fu">lmer</span>(Y <span class="sc">~</span> cond <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> cond <span class="sc">|</span> subj_id) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> item_id),</span>
+<span id="cb236-2"><a href="交叉随机因子线性混合效应模型.html#cb236-2" tabindex="-1"></a>                dat_sim2, <span class="at">REML =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb236-3"><a href="交叉随机因子线性混合效应模型.html#cb236-3" tabindex="-1"></a></span>
+<span id="cb236-4"><a href="交叉随机因子线性混合效应模型.html#cb236-4" tabindex="-1"></a><span class="fu">summary</span>(mod_sim, <span class="at">corr =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## Linear mixed model fit by maximum likelihood  [&#39;lmerMod&#39;]
+## Formula: Y ~ cond + (1 + cond | subj_id) + (1 | item_id)
+##    Data: dat_sim2
+## 
+##      AIC      BIC   logLik deviance df.resid 
+##  67639.4  67685.0 -33812.7  67625.4     4993 
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -3.6357 -0.6599 -0.0251  0.6767  3.7685 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev. Corr
+##  subj_id  (Intercept)  9464.8   97.29       
+##           cond          597.7   24.45   0.68
+##  item_id  (Intercept)  8087.0   89.93       
+##  Residual             40305.0  200.76       
+## Number of obs: 5000, groups:  subj_id, 100; item_id, 50
+## 
+## Fixed effects:
+##             Estimate Std. Error t value
+## (Intercept)   793.29      16.26  48.782
+## cond           77.65      26.18   2.967</code></pre>
+</div>
+<p>现在看看你能否在<code>summary()</code>的输出结果中识别出数据生成参数。</p>
+<p>首先，尝试找到<span class="math inline">\(\beta_0\)</span>和<span class="math inline">\(\beta_1\)</span>。</p>
+<div class="webex-solution">
+<button>
+答案：固定效应
+</button>
+<table>
+<thead>
+<tr class="header">
+<th align="left">parameter</th>
+<th align="left">variable</th>
+<th align="right">input</th>
+<th align="right">estimate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\hat{\beta}_0\)</span></td>
+<td align="left"><code>b0</code></td>
+<td align="right">800</td>
+<td align="right">793.293</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(\hat{\beta}_1\)</span></td>
+<td align="left"><code>b1</code></td>
+<td align="right">80</td>
+<td align="right">77.652</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>尝试找到随机效应的估计参数<span class="math inline">\(\tau_{00}\)</span>，<span class="math inline">\(\tau_{11}\)</span>，<span class="math inline">\(\rho\)</span>，<span class="math inline">\(\omega_{00}\)</span>和<span class="math inline">\(\sigma\)</span>。</p>
+<div class="webex-solution">
+<button>
+答案：随机效应参数
+</button>
+<table>
+<thead>
+<tr class="header">
+<th align="left">parameter</th>
+<th align="left">variable</th>
+<th align="right">input</th>
+<th align="right">estimate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\hat{\tau}_{00}\)</span></td>
+<td align="left"><code>tau_00</code></td>
+<td align="right">100.0</td>
+<td align="right">97.287</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(\hat{\tau}_{11}\)</span></td>
+<td align="left"><code>tau_11</code></td>
+<td align="right">40.0</td>
+<td align="right">24.448</td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\hat{\rho}\)</span></td>
+<td align="left"><code>rho</code></td>
+<td align="right">0.2</td>
+<td align="right">0.675</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(\hat{\omega}_{00}\)</span></td>
+<td align="left"><code>omega_00</code></td>
+<td align="right">80.0</td>
+<td align="right">89.928</td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\hat{\sigma}\)</span></td>
+<td align="left"><code>sig</code></td>
+<td align="right">200.0</td>
+<td align="right">200.761</td>
+</tr>
+</tbody>
+</table>
+</div>
 
 </div>
 </div>

@@ -128,7 +128,7 @@ abc_data %>%
   count(subject_id, A)
 ```
 
-在结果表中，你可以看到每个没事都接受了$A$的所有水平，说明这是个被试内因子。那么对于$B$和$C$呢？
+在结果表中，你可以看到每个被试都接受了$A$的所有水平，说明这是个被试内因子。那么对于$B$和$C$呢？
 
 ```{r b-count}
 abc_data %>%
@@ -343,15 +343,262 @@ sig <- 200 # 残差(标准差)
 
 然后将三个表中的信息合并在一起，根据上面的模型公式计算响应变量。
 
-### 生成一个刺激样本
+### 生成刺激样本
 
+让我们随机生成`r nitem`项。像下面一样创建一个叫`item`的表，其中`iri`是项目水平上的随机截距(提取于方差为\(\omega_{00}^2\) = `r omega_00^2`的正态分布)。一半的词形是名词(`cond = -.5`)，一半的词形是动词(`cond = .5`)。
 
+```{r mk-items, echo=FALSE}
+items <- tibble(item_id = 1:nitem,
+                cond = rep(c(-.5, .5), times = nitem / 2),
+                I_0i = rnorm(nitem, 0, sd = omega_00))
+```
 
+`r hide("点击查看完整表格")`
 
+```{r mk-items2, echo=FALSE}
+items %>% print(n = +Inf)
+```
 
+`r unhide()`
 
+`r hide("提示：生成cond")`
 
+`rep()`
 
+`r unhide()`
 
+`r hide("提示：生成项目的随机效应")`
 
+`rnorm()`
 
+`r unhide()`
+
+`r hide("答案")`
+
+```{r item-tib-sol, ref.label="mk-items", eval=FALSE}
+```
+
+`r unhide()`
+
+### 生成被试样本
+
+要生成被试水平上的随机效应，你需要从*双变量正态分布*中生成数据。为此，我们将使用函数`MASS::mvrnorm`。
+
+:::yellowbox
+**记住**：不要仅仅为了获得这个函数而运行`library("MASS")`，因为`MASS`包中有一个函数`select()`会覆盖tidyverse版本的`select()`。由于我们只需要`MASS`包中的`mvrnorm()`函数，我们可以直接通过`pkgname::function`语法来访问它，即`MASS::mvrnorm()`。
+:::
+
+你的被试表格应如下所示：
+
+`r hide("点击查看完整表格")`
+
+```{r subj-tbl1, echo = FALSE}
+cov <- rho * tau_00 * tau_11
+
+mx <- matrix(c(tau_00^2, cov,
+               cov,      tau_11^2),
+             nrow = 2)
+
+by_subj_rfx <- MASS::mvrnorm(nsubj, mu = c(S_0s = 0, S_1s = 0), Sigma = mx)
+
+subjects <- as_tibble(by_subj_rfx) %>%
+  mutate(subj_id = row_number()) %>%
+  select(subj_id, everything())
+```
+
+```{r subj-print, echo=FALSE}
+subjects %>% print(n = +Inf)
+```
+
+`r unhide()`
+
+`r hide("提示1")`
+
+回忆一下：
+
+* *`tau_00`*: 被试水平上随机截距的标准差
+* *`tau_11`*: 被试水平上随机斜率的标准差
+* *`rho`* : 截距和斜率的相关系数
+
+`r unhide()`
+
+`r hide("提示2")`
+
+`covariance = rho * tau_00 * tau_11`
+
+`r unhide()`
+
+`r hide("提示3")`
+
+```{r hint3, eval=FALSE}
+matrix(    tau_00^2,            rho * tau_00 * tau_11,
+        rho * tau_00 * tau_11,      tau_11^2, ...)
+
+```
+
+`r unhide()`
+
+`r hide("提示4")`
+
+```{r hint4, eval=FALSE}
+as_tibble(mx) %>%
+  mutate(subj_id = ...)
+```
+
+`r unhide()`
+
+`r hide("答案")`
+
+```{r code-subj-sol, ref.label="subj-tbl1", eval=FALSE}
+```
+
+`r unhide()`
+
+### 生产试次样本
+
+每个试次都是独特被试和刺激的*相遇*，在这个实验中，每个被试都接受了每个刺激。生产一个表`trials`列出实验中所有的试次。注意：每个被试都会接受每种刺激1次。使用`crossing()`函数创建所有可能的试次。
+
+现在应用这个示例生成下面的表，其中`err`是残差项，提取于\(N \sim \left(0, \sigma^2\right)\)，\(\sigma\)是`err_sd`。
+
+```{r gen-encounters, echo=FALSE}
+trials <- crossing(subj_id = subjects %>% pull(subj_id),
+                   item_id = items %>% pull(item_id)) %>%
+  mutate(err = rnorm(nrow(.), mean = 0, sd = sig))
+```
+
+```{r gen-print, echo=FALSE}
+trials
+```
+
+`r hide("答案")`
+
+```{r trials2, eval=FALSE, ref.label="gen-encounters"}
+```
+
+`r unhide()`
+
+### 合并`subjects`，`items`和`trials`
+
+合并`subjects`，`items`和`trials`中的信息，创建完整的数据集`dat_sim`，看起来像这样：
+
+```{r make-dat, echo=FALSE}
+dat_sim <- subjects %>%
+  inner_join(trials, "subj_id") %>%
+  inner_join(items, "item_id") %>%
+  arrange(subj_id, item_id) %>%
+  select(subj_id, item_id, S_0s, I_0i, S_1s, cond, err)
+```
+
+```{r make-dat-print, echo=FALSE}
+dat_sim
+```
+
+`r hide("提示")`
+
+`inner_join()`
+
+`r unhide()`
+
+`r hide("答案")`
+
+```{r dat-sim-sol, ref.label="make-dat", eval=FALSE}
+```
+
+`r unhide()`
+
+### 创建响应变量
+
+根据下面的公式模型将响应变量`Y`添加到数据中：
+
+$$Y_{si} = \beta_0 + S_{0s} + I_{0i} + (\beta_1 + S_{1s})X_{i} + e_{si}$$
+
+那么，最终的表(`dat_sim2`)看起来是这样的：
+
+```{r dat-sim2, echo=FALSE}
+dat_sim2 <- dat_sim %>%
+  mutate(Y = b0 + S_0s + I_0i + (S_1s + b1) * cond + err) %>%
+  select(subj_id, item_id, Y, everything())
+```
+
+```{r dat-sim3, echo=FALSE}
+dat_sim2
+```
+
+注意：这是该模型完整的**分解表**
+
+`r hide("提示")`
+
+```
+... %>% 
+  mutate(Y = ...) %>%
+  select(...)
+```
+
+`r unhide()`
+
+`r hide("答案")`
+
+```{r dat-sim2-sol, ref.label="dat-sim2", eval=FALSE}
+```
+
+`r unhide()`
+
+### 拟合模型
+
+现在你创建完了模拟数据，使用`lme4::lmer()`拟合模型，并运行`summary()`吧。
+
+`r hide("答案")`
+
+```{r fit-model}
+mod_sim <- lmer(Y ~ cond + (1 + cond | subj_id) + (1 | item_id),
+                dat_sim2, REML = FALSE)
+
+summary(mod_sim, corr = FALSE)
+```
+
+`r unhide()`
+
+现在看看你能否在`summary()`的输出结果中识别出数据生成参数。
+
+```{r dgp1, include=FALSE}
+srfx <- attr(VarCorr(mod_sim)$subj_id, "stddev")
+irfx <- attr(VarCorr(mod_sim)$item_id, "stddev")
+rc <- attr(VarCorr(mod_sim)$subj_id, "correlation")[1, 2]
+
+res <- attr(VarCorr(mod_sim), "sc")
+
+ffx <- fixef(mod_sim)
+```
+
+首先，尝试找到\(\beta_0\)和\(\beta_1\)。
+
+`r hide("答案：固定效应")`
+
+```{r fef-sol, echo = FALSE}
+tribble(~parameter, ~variable, ~input, ~estimate,
+        "\\(\\hat{\\beta}_0\\)", "`b0`", b0, as.numeric(round(ffx[1], 3)),
+        "\\(\\hat{\\beta}_1\\)", "`b1`", b1, as.numeric(round(ffx[2], 3))) %>%
+  knitr::kable()
+```
+
+`r unhide()`
+
+尝试找到随机效应的估计参数\(\tau_{00}\)，\(\tau_{11}\)，\(\rho\)，\(\omega_{00}\)和\(\sigma\)。
+
+`r hide("答案：随机效应参数")`
+
+```{r rfx-sol, echo = FALSE}
+tribble(~parameter, ~variable, ~input, ~estimate,
+        "\\(\\hat{\\tau}_{00}\\)", "`tau_00`", tau_00,
+        as.numeric(round(srfx[1], 3)),
+        "\\(\\hat{\\tau}_{11}\\)", "`tau_11`", tau_11,
+        as.numeric(round(srfx[2], 3)),
+        "\\(\\hat{\\rho}\\)", "`rho`", rho, as.numeric(round(rc, 3)),
+        "\\(\\hat{\\omega}_{00}\\)", "`omega_00`", omega_00,
+        as.numeric(round(irfx[1], 3)),
+        "\\(\\hat{\\sigma}\\)", "`sig`", sig,
+        as.numeric(round(res, 3))) %>%
+  knitr::kable()
+```
+
+`r unhide()`
