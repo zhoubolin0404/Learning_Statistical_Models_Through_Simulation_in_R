@@ -604,3 +604,5 @@ tribble(~parameter, ~variable, ~input, ~estimate,
 ```
 
 `r unhide()`
+
+注：推荐阅读 @Brown_2021
