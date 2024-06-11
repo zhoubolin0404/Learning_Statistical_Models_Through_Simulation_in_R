@@ -234,6 +234,8 @@ abc_data %>%
 
 有关收敛问题的更多技术细节以及如何处理，参见`?lme4::convergence`和`?lme4::isSingular`。
 
+注：推荐阅读[混合线性模型的实现](https://github.com/usplos/Eye-movement-related/blob/master/Linear%20mixed%20model%20(Hierarchical%20linear%20model)%20using%20R%20and%20JAMOVI.md)加深理解。
+
 ## 模拟交叉随机因子的数据
 
 对于这些练习，我们将生成与实验相对应的模拟数据，该实验具有被试内和项目间的单、双水平因子(自变量)。假设实验涉及一组单词的词汇决策(例如，“PINT”是单词还是非单词？)，因变量是反应时(以毫秒为单位)，自变量是词类(名词与动词)。我们想把被试和单词都视为随机因子(以便我们能够推广到被试遇到单词这一事件的总体)。你可以使用[网页app](https://rstudio-connect.psy.gla.ac.uk/crossed){target="_blank"}进行操作，这允许你操纵数据生成参数并观察其对数据的影响。
