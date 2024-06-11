@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>学习统计模型——通过R模拟(施工中)</title>
-  <meta name="description" content="学习统计模型——通过R模拟(施工中)" />
+  <title>8 广义线性混合效应模型 | 学习统计模型——通过R模拟(施工中)</title>
+  <meta name="description" content="8 广义线性混合效应模型 | 学习统计模型——通过R模拟(施工中)" />
   <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="学习统计模型——通过R模拟(施工中)" />
+  <meta property="og:title" content="8 广义线性混合效应模型 | 学习统计模型——通过R模拟(施工中)" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="学习统计模型——通过R模拟(施工中)" />
+  <meta name="twitter:title" content="8 广义线性混合效应模型 | 学习统计模型——通过R模拟(施工中)" />
   
   
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-<link rel="next" href="前言.html"/>
+<link rel="prev" href="交叉随机因子线性混合效应模型.html"/>
+<link rel="next" href="参考文献.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -329,55 +329,137 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">学习统计模型——通过R模拟(施工中)</h1>
-<p class="author"><em>周博霖</em></p>
-<p class="date"><em>2024-06-11</em></p>
-</div>
-<div id="概述" class="section level1 unnumbered hasAnchor">
-<h1>概述<a href="index.html#概述" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>本教材采用在R语言环境下模拟广义线性模型(General Linear Model, GLM)的方法来介绍统计分析。总体目标是教会学生如何将研究设计的描述转化为线性模型，来分析该研究的数据。重点是分析心理学实验数据所需的技能。</p>
-<div class="small_right">
-<img src="images/logos/logo.png" 
-     alt="Stat Models Hex Logo" />
-</div>
-<p>本教材包括以下内容：</p>
+<div id="广义线性混合效应模型" class="section level1 hasAnchor" number="8">
+<h1><span class="header-section-number">8</span> 广义线性混合效应模型<a href="广义线性混合效应模型.html#广义线性混合效应模型" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="离散discrete数据-vs.-连续continuous数据" class="section level2 hasAnchor" number="8.1">
+<h2><span class="header-section-number">8.1</span> 离散(discrete)数据 vs. 连续(continuous)数据<a href="广义线性混合效应模型.html#离散discrete数据-vs.-连续continuous数据" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>到目前为止，我们考虑的所有模型都假设测量的响应变量(即因变量)是<strong>连续的</strong>且是数值型的。然而，在心理学中，很多情况下我们的测量结果是<strong>离散的</strong>。离散数据的一种类型是可能值的有限值集合，且可能值之间有间隔，例如使用李克特量表获得的数据。另一种类型的离散数据是响应变量反映没有内在顺序的类别(通常称为“名义(nominal)”数据)，例如餐馆顾客点的是鸡肉、牛肉还是豆腐。</p>
+<p>离散数据在心理学中很常见。以下是一些离散数据的例子：</p>
 <ul>
-<li>线性模型工作流程;</li>
-<li>方差-协方差矩阵;</li>
-<li>多元回归;</li>
-<li>交互效应(连续与分类; 分类与分类);</li>
-<li>线性混合效应模型;</li>
-<li>广义线性混合效应模型。</li>
+<li>说话者产生的语言结构类型(双宾语结构或介词短语结构)；</li>
+<li>被试在给定时间内观看的是哪一组图像；</li>
+<li>被试是否做出了准确或不准确的选择；</li>
+<li>求职者是否被录用；</li>
+<li>李克特量表上的同意度。</li>
 </ul>
-<p>本课程的内容构成了<a href="https://www.gla.ac.uk/schools/psychologyneuroscience/">格拉斯哥大学心理学院</a>(University of Glasgow School of Psychology)由<a href="https://www.gla.ac.uk/schools/psychologyneuroscience/staff/dalebarr/">Dale Barr</a>讲授的大学三年级一学期课程的基础。这也是由格拉斯哥大学心理学院工作人员开发的<a href="https://psyteachr.github.io/">PsyTeachR</a>系列课程材料的一部分。</p>
-<p>与你可能遇到的其他教材不同，这是一本<strong>互动教材</strong>。每一章都包含嵌入式练习和网页应用来帮助学生更好地理解内容。你只有通过浏览器访问这些材料，这些互动内容才能正常工作。因此，不建议打印这些材料。如果你希望在没网的情况下访问教材或保存本地版本以防止网站变化或迁移，可以<a href="https://psyteachr.github.io/stat-models-v1/offline-textbook.zip">下载离线使用版本</a>。只需要从ZIP压缩包中提取文件，在<code>docs</code>目录中找到<code>index.html</code>文件，然后使用浏览器打开这个文件即可。</p>
-<div id="译者按" class="section level2 unnumbered hasAnchor">
-<h2>译者按<a href="index.html#译者按" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>对于线性混合效应模型的关注起源于本科毕业论文最初的研究设计，但因为各种原因，最终未采用混合线性模型进行研究。但在查阅资料的过程中对线性混合效应模型产生了一定兴趣，可之后没有进行深入探索。直到2024年初，阅读 <span class="citation">Fraley et al. (<a href="#ref-Fraley_et_al_2021">2021</a>)</span> 的研究时又遇到了线性混合效应模型，而且还必须理清研究方法(如果你的研究领域是依恋关系，可以考虑阅读该论文，挺漂亮一论文)。幸运的是论文给出了相关R代码，不幸的是代码“充满”错误(也许是我理解不够深入，少量错误在我眼里被放大了)。这使得我下定决心跟线性混合效应模型死磕到底。</p>
-<p>对于线性混合效应模型，网上并没有找到系统、免费、不太老旧的中文资料(反正我没找到，如知道欢迎推荐)。查阅R的<code>lme4</code>包(这应该是用R做GLMM最常用的包)相关资料时，发现了R包作者提供的<a href="https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html">GLMM FAQ</a>中推荐了这篇教材，我就想着反正自己要看，干脆翻译一遍也当是为枯燥的生活添加一些小乐趣吧。</p>
-<p>该教材相关信息在概述里面已经讲解，不再赘述。翻译的版本是公开的最新版本，应该是2023年进行微调后的版本(也可能就是2021版)，符合系统、免费、不太老旧三个要求，中文这个要求我尽量解决。本人非统计、英语相关专业，翻译习惯为：尽可能直译，实在无法翻译清楚的会根据自己的理解意译，对于自己想补充说明的地方会用“注”标识。这是本人第一次使用R书写材料，对<code>bookdown</code>十分不熟，只能尽可能还原原教材里的内容，如有条件建议阅读原教材。</p>
-<p>希望这份译文对大家有所帮助，如发现错误或有修改建议，欢迎提交到<a href="https://github.com/zhoubolin0404/Learning_Statistical_Models_Through_Simulation_in_R/issues">github</a>，或联系邮箱 <a href="mailto:zhoubolin0404@126.com" class="email">zhoubolin0404@126.com</a>。</p>
+<p>另一种常见的数据类型是<strong>计数</strong>数据，其中数值也是离散的。通常在计数数据中，某件事发生的机会数量没有明确定义。一些例子：</p>
+<ul>
+<li>自然语言语料库中的语误次数；</li>
+<li>每年在某个路口发生的交通事故次数；</li>
+<li>在给定月份中看医生的次数。</li>
+</ul>
+<div id="为什么不将离散数据建模为连续数据" class="section level3 hasAnchor" number="8.1.1">
+<h3><span class="header-section-number">8.1.1</span> 为什么不将离散数据建模为连续数据？<a href="广义线性混合效应模型.html#为什么不将离散数据建模为连续数据" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>离散数据具有一些特性，这些特性通常使得尝试使用连续数据模型来分析它们变得不合适。例如，如果你对某些二元事件(被试在强制选择任务中的准确性)的概率感兴趣，每次测量将表示为0或1，分别表示不准确或准确的响应。你可以计算每个被试的准确响应比例并分析它(确实很多人这么做)，但这是一个糟糕的想法，原因有很多。</p>
+<div id="有界尺度dounded-scale" class="section level4 hasAnchor" number="8.1.1.1">
+<h4><span class="header-section-number">8.1.1.1</span> 有界尺度(dounded scale)<a href="广义线性混合效应模型.html#有界尺度dounded-scale" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>离散数据通常具有有界尺度。它可能是有下界的(如计数数据下界为0)，也可能同时有上界和下界(如李克特量表数据或二元数据)。如果你尝试使用为连续数据设计的方法来建模有界数据，那么模型可能最终将非零概率分配给尺度之外的不可能值。</p>
+<p>使用连续数据模型分析有界数据可能会导致虚假的交互效应。例如，考虑某种实验干预对准确性的影响。如果被试在条件A中已经非常准确(如超过90%)，而在条件B中较低(如50%)，那么(干预)在A中的可能效果很可能小于在B中的可能效果，因为准确性不能超过100%。因此，很难确定交互效应是反映了理论上有意义的东西，还是单纯是尺度有界的产物。</p>
 </div>
-<div id="如何引用本书" class="section level2 unnumbered hasAnchor">
-<h2>如何引用本书<a href="index.html#如何引用本书" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Barr, Dale J. (2021). <em>Learning statistical models through simulation in R: An interactive textbook</em>. Version 1.0.0. Retrieved from <a href="https://psyteachr.github.io/stat-models-v1" class="uri">https://psyteachr.github.io/stat-models-v1</a>.</p>
+<div id="方差依赖于均值" class="section level4 hasAnchor" number="8.1.1.2">
+<h4><span class="header-section-number">8.1.1.2</span> 方差依赖于均值<a href="广义线性混合效应模型.html#方差依赖于均值" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>在大多数连续数据设置中，通常假设方差与均值无关；这本质上是对含有连续预测变量的模型的方差齐性(homogeneity of variance)假设。对于离散数据，这种方差独立于均值的假设通常不成立。</p>
+<p>我们可以通过数据模拟看到这一点。<code>rbinom()</code>函数可以模拟<strong>二项分布</strong>的数据，该分布描述了一组行为的离散观测值。让我们考虑一下巴塞罗那(Barcelona, Spain)和格拉斯哥(Glasgow, U.K)在某一天的降雨概率。根据<a href="https://www.currentresults.com/Weather/Europe/Cities/precipitation-annual-average.php">这个网站</a>，巴塞罗那每年平均有55天下雨，而格拉斯哥有170天。因此，格拉斯哥某一天的降雨概率可以估计为170/365，大约是0.47，而巴塞罗那的概率是55/365，大约是0.15。让我们模拟500年的降雨数据(假设气候恒定)。</p>
+<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="广义线性混合效应模型.html#cb238-1" tabindex="-1"></a>rainy_days <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">city =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Barcelona&quot;</span>, <span class="st">&quot;Glasgow&quot;</span>), <span class="at">each =</span> <span class="dv">500</span>),</span>
+<span id="cb238-2"><a href="广义线性混合效应模型.html#cb238-2" tabindex="-1"></a>       <span class="at">days_of_rain =</span> <span class="fu">c</span>(<span class="fu">rbinom</span>(<span class="dv">500</span>, <span class="dv">365</span>, <span class="dv">55</span><span class="sc">/</span><span class="dv">365</span>),</span>
+<span id="cb238-3"><a href="广义线性混合效应模型.html#cb238-3" tabindex="-1"></a>                        <span class="fu">rbinom</span>(<span class="dv">500</span>, <span class="dv">365</span>, <span class="dv">170</span><span class="sc">/</span><span class="dv">365</span>))) </span></code></pre></div>
+<p>如果我们看一下每个城市模拟数据的标准差，我们可以看到格拉斯哥的变异性更大。</p>
+<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="广义线性混合效应模型.html#cb239-1" tabindex="-1"></a>rainy_days <span class="sc">%&gt;%</span></span>
+<span id="cb239-2"><a href="广义线性混合效应模型.html#cb239-2" tabindex="-1"></a>  <span class="fu">group_by</span>(city) <span class="sc">%&gt;%</span></span>
+<span id="cb239-3"><a href="广义线性混合效应模型.html#cb239-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">variance =</span> <span class="fu">var</span>(days_of_rain))</span></code></pre></div>
+<pre><code>## # A tibble: 2 × 2
+##   city      variance
+##   &lt;chr&gt;        &lt;dbl&gt;
+## 1 Barcelona     50.2
+## 2 Glasgow       92.1</code></pre>
+<p>对于二项分布的数据，方差由<span class="math inline">\(np(1-p)\)</span>给出，其中<span class="math inline">\(n\)</span>是观测次数，<span class="math inline">\(p\)</span>是“成功”的概率(上述例子中某一天降雨的概率)。下图显示了<span class="math inline">\(n=1000\)</span>的情况；注意，当概率接近0和1时，方差变得很小，而在0.5处达到峰值。</p>
+<div class="figure"><span style="display:block;" id="fig:binomial-var-plot"></span>
+<img src="08-%E5%B9%BF%E4%B9%89%E7%BA%BF%E6%80%A7%E6%B7%B7%E5%90%88%E6%95%88%E5%BA%94%E6%A8%A1%E5%9E%8B_files/figure-html/binomial-var-plot-1.png" alt="方差与概率的关系图($n=1000$)" width="672" />
+<p class="caption">
+图8.1: 方差与概率的关系图(<span class="math inline">\(n=1000\)</span>)
+</p>
 </div>
-<div id="发现问题" class="section level2 unnumbered hasAnchor">
-<h2>发现问题？<a href="index.html#发现问题" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>如果你发现错误或书写错误，有问题或建议，请在<a href="https://github.com/psyteachr/stat-models-v1/issues" class="uri">https://github.com/psyteachr/stat-models-v1/issues</a>提交问题。谢谢！</p>
 </div>
-<div id="教育者需知" class="section level2 unnumbered hasAnchor">
-<h2>教育者需知<a href="index.html#教育者需知" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>您可以根据自己的需求免费重复使用和修改本教材中的材料，但需要注明原作出处。请注意关于重复使用本材料的 <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons CC-BY-SA 4.0</a> 许可证的其他条款。</p>
-<p>本书是使用R <a href="https://bookdown.org"><strong><code>bookdown</code></strong></a>包构建的。源文件可在<a href="https://github.com/psyteachr/stat-models-v1">github</a>上获得。</p>
+</div>
+</div>
+<div id="广义线性模型" class="section level2 hasAnchor" number="8.2">
+<h2><span class="header-section-number">8.2</span> 广义线性模型<a href="广义线性混合效应模型.html#广义线性模型" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>广义线性模型[不要与一般线性模型(General Linear Models)混淆]的基本思想是指定一个<strong>链接函数(link function)</strong>，将响应空间(response space)转换为建模空间(modeling space)，这样我们可以执行常规线性回归，并通过<strong>方差函数(variance function)</strong>捕捉方差对均值的依赖性。模型的参数将在建模空间的尺度上表示，但我们总是可以使用<strong>逆链接函数(inverse link function)</strong>将其转换回原始的响应空间。</p>
+<p>有很多不同类型的广义线性模型可以拟合不同类型的数据。在心理学中最常用的是<strong>逻辑回归(logistic regression)</strong>和<strong>泊松回归(Poisson regression)</strong>，前者用于二分类数据(伯努利试验，Bernoulli trials)，后者用于试验次数未明确规定计数数据。我们将重点关注逻辑回归。</p>
+</div>
+<div id="逻辑回归" class="section level2 hasAnchor" number="8.3">
+<h2><span class="header-section-number">8.3</span> 逻辑回归<a href="广义线性混合效应模型.html#逻辑回归" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="术语" class="section level3 hasAnchor" number="8.3.1">
+<h3><span class="header-section-number">8.3.1</span> 术语<a href="广义线性混合效应模型.html#术语" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<table>
+<colgroup>
+<col width="34%" />
+<col width="65%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Term</th>
+<th align="left">Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>伯努利试验</strong></td>
+<td align="left">具有二元结果的事件，其中一个结果被认为是“成功”</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>概率(proportion)</strong></td>
+<td align="left">伯努利试验的成功次数与总次数之比</td>
+</tr>
+<tr class="odd">
+<td align="left"><strong>发生比(odds)</strong></td>
+<td align="left">成功对失败的比率</td>
+</tr>
+<tr class="even">
+<td align="left"><strong>对数发生比(log odds)</strong></td>
+<td align="left">发生比的(自然)对数</td>
+</tr>
+</tbody>
+</table>
+<p>注：odds也有人翻译为几率，考虑到几率表意并不直观，且易与概率(proportion)混淆，发生比又有些拗口，很多材料也不去翻译，所以本文之后直接使用odds和log odds。</p>
+<p>在逻辑回归中，我们在log odds空间中建模响应变量与一组预测变量之间的关系。</p>
+<p>逻辑回归用于个体结果是伯努利试验(具有二分类结果的事件)的情况。通常两种结果之一被称为“成功”，编码为1；另一种结果称为“失败”，编码为0。需要注意的是，“成功”和“失败”这两个术语是完全随意的，不应该认为更可取的类别总是编码为1。例如，当抛硬币时，我们可以同样选择“正面”为成功，“反面”为失败，反之亦然。</p>
+<p>通常，伯努利试验序列的结果通过<strong>概率</strong>(成功次数与试验总次数的比率)来传达。例如，如果我们抛硬币100次，得到47次正面，那么我们的概率就是47/100或0.47，这也将是我们对事件可能性的估计。对于编码为1和0的事件，计算概率的便捷方法是使用<code>mean()</code>函数。</p>
+<p>我们也可以谈论成功的odds，例如，正面与反面的odds是一比一，即1:1。格拉斯哥某天降雨的odds是170:195；分母是没有下雨的天数(365 - 170 = 195)。用小数表示，170/195约等于0.87，这被称为<strong>natural odds</strong>。natural odds的范围是0到<span class="math inline">\(+\infty\)</span>。给定<span class="math inline">\(N\)</span>次试验中成功<span class="math inline">\(Y\)</span>次，我们可以将natural odds表示为<span class="math inline">\(\frac{Y}{N - Y}\)</span>。或者，给定一个概率<span class="math inline">\(p\)</span>，我们可以将odds表示为<span class="math inline">\(\frac{p}{1-p}\)</span>。</p>
+<p>odds的自然对数，或<strong>logit</strong>，是进行逻辑回归的尺度。回想一下，对某个值<span class="math inline">\(Y\)</span>的对数给出在给定底数下使<span class="math inline">\(Y\)</span>成立的指数。例如，16的<span class="math inline">\(log_2\)</span>(以2为底的对数)是4，因为<span class="math inline">\(2^4 = 16\)</span>。在逻辑回归中，通常使用的底数是<span class="math inline">\(e\)</span>(也称为欧拉数，Euler’s number)。例如，要从格拉斯哥降雨的odds中得到log odds，我们会使用<code>log(170/195)</code>，其结果为-0.1372011；要从log odds中恢复natural odds，我们会使用逆运算<code>exp(-.137)</code>，其结果约为0.872。</p>
+</div>
+<div id="log-odds的性质" class="section level3 hasAnchor" number="8.3.2">
+<h3><span class="header-section-number">8.3.2</span> log odds的性质<a href="广义线性混合效应模型.html#log-odds的性质" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>log odds = <span class="math inline">\(\log \left(\frac{p}{1-p}\right)\)</span></p>
+<p>log odds具有一些适用于线性建模的优秀性质。</p>
+<p>首先，它是围绕0对称，且log odds等于0对应最大的不确定性，即概率为0.5。正的log odds意味着成功比失败更可能(成功的概率 &gt; 0.5)，负的log odds意味着失败比成功更可能(成功的概率 &lt; 0.5)。log odds为2表示成功比失败可能性大的程度与-2表示失败比成功可能性大的程度相同。其尺度是无界的，范围从<span class="math inline">\(-\infty\)</span>到<span class="math inline">\(+\infty\)</span>。</p>
+</div>
+<div id="链接函数和方差函数" class="section level3 hasAnchor" number="8.3.3">
+<h3><span class="header-section-number">8.3.3</span> 链接函数和方差函数<a href="广义线性混合效应模型.html#链接函数和方差函数" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>逻辑回归的链接函数是：</p>
+<p><span class="math display">\[\eta = \log \left(\frac{p}{1-p}\right)\]</span></p>
+<p>而逆链接函数为:</p>
+<p><span class="math display">\[p = \frac{1}{1 + e^{-\eta}}\]</span></p>
+<p>其中<span class="math inline">\(e\)</span>是欧拉数。在R中，In R, 你可以将逆链接函数写成：<code>1/(1 + exp(-eta))</code>。</p>
+<p>方差函数为二项分布的方差，即：</p>
+<p><span class="math display">\[np(1 - p)\]</span></p>
+<p>下面的app允许你在log odds空间中操控一条线的截距和斜率，并查看该线在响应空间中的投影。请注意该函数在响应空间中是S形(“sigmoidal”)。</p>
+<div class="figure"><span style="display:block;" id="fig:logit-app"></span>
+<iframe src="https://rstudio-connect.psy.gla.ac.uk/logit?showcase=0" width="672" height="800px" data-external="1">
+</iframe>
+<p class="caption">
+图8.2: <strong>逻辑回归网页app</strong> <a href="https://rstudio-connect.psy.gla.ac.uk/logit" class="uri">https://rstudio-connect.psy.gla.ac.uk/logit</a>
+</p>
+</div>
+</div>
+<div id="在r中估计逻辑回归模型" class="section level3 hasAnchor" number="8.3.4">
+<h3><span class="header-section-number">8.3.4</span> 在R中估计逻辑回归模型<a href="广义线性混合效应模型.html#在r中估计逻辑回归模型" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>对于单层数据，可以使用<code>glm()</code>函数。请注意，这个函数与你已经熟悉的<code>lm()</code>函数非常相似。主要区别在于你需要为链接/方差函数指定一个<code>family</code>参数。对于逻辑回归，可以使用<code>family = binomial(link = "logit")</code>。二项分布的链接默认值是logit链接，因此只需输入<code>family = binomial</code>即可。</p>
+<p><code>glm(DV ~ IV1 + IV2 + ..., data, family = binomial)</code></p>
+<p>对于有随机效应的多层数据，可以使用<code>lme4</code>包中的<code>glmer</code>函数：</p>
+<p><code>glmer(DV ~ IV1 + IV2 + ... (1 | subject), data, family = binomial)</code></p>
 
 </div>
-</div>
-<h3>参考文献<a href="参考文献.html#参考文献" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
-<div id="ref-Fraley_et_al_2021" class="csl-entry">
-Fraley, R. C., Gillath, O., &amp; Deboeck, P. R. (2021). Do life events lead to enduring changes in adult attachment styles? A naturalistic longitudinal investigation. <em>Journal of Personality and Social Psychology</em>, <em>120</em>(6), 1567–1606.
 </div>
 </div>
 <script>
@@ -504,8 +586,8 @@ $( document ).ready(function() {
           </div>
         </div>
       </div>
-
-<a href="前言.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="交叉随机因子线性混合效应模型.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="参考文献.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

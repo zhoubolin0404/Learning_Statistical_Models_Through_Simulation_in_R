@@ -22,6 +22,8 @@ fig:cp-model-plot
 fig:np-model-fits
 fig:pp-plot
 fig:extrap-plot
+fig:binomial-var-plot
+fig:logit-app
 前言
 课程目的
 广义线性混合效应模型generalized-linear-mixed-effects-models-glmms
@@ -111,3 +113,14 @@ lme4语法用于交叉随机因子
 合并subjectsitems和trials
 创建响应变量
 拟合模型
+广义线性混合效应模型
+离散discrete数据-vs.-连续continuous数据
+为什么不将离散数据建模为连续数据
+有界尺度dounded-scale
+方差依赖于均值
+广义线性模型
+逻辑回归
+术语
+log-odds的性质
+链接函数和方差函数
+在r中估计逻辑回归模型
