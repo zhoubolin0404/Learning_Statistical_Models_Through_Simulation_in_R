@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="交叉随机因子线性混合效应模型.html"/>
-<link rel="next" href="参考文献.html"/>
+<link rel="next" href="符号定义.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -311,6 +311,12 @@ div.csl-indent {
 <li class="chapter" data-level="8.3.4" data-path="广义线性混合效应模型.html"><a href="广义线性混合效应模型.html#在r中估计逻辑回归模型"><i class="fa fa-check"></i><b>8.3.4</b> 在R中估计逻辑回归模型</a></li>
 </ul></li>
 </ul></li>
+<li class="appendix"><span><b>附录</b></span></li>
+<li class="chapter" data-level="A" data-path="符号定义.html"><a href="符号定义.html"><i class="fa fa-check"></i><b>A</b> 符号定义</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="符号定义.html"><a href="符号定义.html#总说明"><i class="fa fa-check"></i><b>A.1</b> 总说明</a></li>
+<li class="chapter" data-level="A.2" data-path="符号定义.html"><a href="符号定义.html#符号定义表"><i class="fa fa-check"></i><b>A.2</b> 符号定义表</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="参考文献.html"><a href="参考文献.html"><i class="fa fa-check"></i>参考文献</a></li>
 </ul>
 
@@ -370,8 +376,8 @@ div.csl-indent {
 <pre><code>## # A tibble: 2 × 2
 ##   city      variance
 ##   &lt;chr&gt;        &lt;dbl&gt;
-## 1 Barcelona     50.1
-## 2 Glasgow       83.5</code></pre>
+## 1 Barcelona     43.4
+## 2 Glasgow       86.3</code></pre>
 <p>对于二项分布的数据，方差由<span class="math inline">\(np(1-p)\)</span>给出，其中<span class="math inline">\(n\)</span>是观测次数，<span class="math inline">\(p\)</span>是“成功”的概率(上述例子中某一天降雨的概率)。下图显示了<span class="math inline">\(n=1000\)</span>的情况；注意，当概率接近0和1时，方差变得很小，而在0.5处达到峰值。</p>
 <div class="figure"><span style="display:block;" id="fig:binomial-var-plot"></span>
 <img src="08-%E5%B9%BF%E4%B9%89%E7%BA%BF%E6%80%A7%E6%B7%B7%E5%90%88%E6%95%88%E5%BA%94%E6%A8%A1%E5%9E%8B_files/figure-html/binomial-var-plot-1.png" alt="方差与概率的关系图($n=1000$)" width="672" />
@@ -459,9 +465,22 @@ div.csl-indent {
 <p>对于有随机效应的多层数据，可以使用<code>lme4</code>包中的<code>glmer</code>函数：</p>
 <p><code>glmer(DV ~ IV1 + IV2 + ... (1 | subject), data, family = binomial)</code></p>
 
+<pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+## ✔ dplyr     1.1.4     ✔ readr     2.1.5
+## ✔ forcats   1.0.0     ✔ stringr   1.5.1
+## ✔ ggplot2   3.5.0     ✔ tibble    3.2.1
+## ✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+## ✔ purrr     1.0.2     
+## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()
+## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
 </div>
 </div>
 </div>
+
+
+
 <script>
 
 /* update total correct if #webex-total_correct exists */
@@ -587,7 +606,7 @@ $( document ).ready(function() {
         </div>
       </div>
 <a href="交叉随机因子线性混合效应模型.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="参考文献.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="符号定义.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
