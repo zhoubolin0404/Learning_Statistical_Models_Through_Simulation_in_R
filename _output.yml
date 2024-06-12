@@ -5,3 +5,9 @@ bookdown::gitbook:
   config:
     download: ["pdf"]
   css: [styles.css, include/webex.css]
+bookdown::pdf_book:
+  includes:
+    in_header: include/preamble.tex
+  latex_engine: xelatex
+  citation_package: natbib
+  keep_tex: yes
