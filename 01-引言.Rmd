@@ -6,7 +6,6 @@ output:
 # 前言
 
 ```{r chapter-status, echo=FALSE, warning=FALSE, results='asis'}
-# chapter_status("incomplete")
 library(knitr)
 library(patchwork)
 ```
