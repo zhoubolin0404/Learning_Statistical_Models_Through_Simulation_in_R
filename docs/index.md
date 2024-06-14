@@ -2,7 +2,7 @@
 title: "学习统计模型——通过R模拟"
 subtitle: "线性混合效应模型入门"
 author: "周博霖"
-date: "2024-06-12"
+date: "2024-06-14"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]

@@ -23,7 +23,7 @@
 <meta name="author" content="周博霖" />
 
 
-<meta name="date" content="2024-06-12" />
+<meta name="date" content="2024-06-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -251,7 +251,7 @@ div.csl-indent {
 <li class="chapter" data-level="5.2.1" data-path="介绍线性混合效应模型.html"><a href="介绍线性混合效应模型.html#完全混合一刀切"><i class="fa fa-check"></i><b>5.2.1</b> 完全混合：一刀切</a></li>
 <li class="chapter" data-level="5.2.2" data-path="介绍线性混合效应模型.html"><a href="介绍线性混合效应模型.html#不混合"><i class="fa fa-check"></i><b>5.2.2</b> 不混合</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="介绍线性混合效应模型.html"><a href="介绍线性混合效应模型.html#使用混合效果模型的部分混合"><i class="fa fa-check"></i><b>5.3</b> 使用混合效果模型的部分混合</a>
+<li class="chapter" data-level="5.3" data-path="介绍线性混合效应模型.html"><a href="介绍线性混合效应模型.html#使用混合效应模型的部分混合"><i class="fa fa-check"></i><b>5.3</b> 使用混合效应模型的部分混合</a>
 <ul>
 <li class="chapter" data-level="5.3.1" data-path="介绍线性混合效应模型.html"><a href="介绍线性混合效应模型.html#方差-协方差矩阵"><i class="fa fa-check"></i><b>5.3.1</b> 方差-协方差矩阵</a></li>
 </ul></li>
@@ -707,8 +707,8 @@ sleepstudy                package:lme4                 R Documentation
 t(17) = 6.197, <span class="math inline">\(p &lt; .001\)</span>.</p>
 </div>
 </div>
-<div id="使用混合效果模型的部分混合" class="section level2 hasAnchor" number="5.3">
-<h2><span class="header-section-number">5.3</span> 使用混合效果模型的部分混合<a href="介绍线性混合效应模型.html#使用混合效果模型的部分混合" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="使用混合效应模型的部分混合" class="section level2 hasAnchor" number="5.3">
+<h2><span class="header-section-number">5.3</span> 使用混合效应模型的部分混合<a href="介绍线性混合效应模型.html#使用混合效应模型的部分混合" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>完全混合或不混合方法都不是令人满意的。如果我们能够利用对其他被试的了解来改进对单个被试的估计，那将是可取的。这将有助于更好地区分每个被试的信号(signal)和误差(error)，并提高对总体的可推广性。正如最下面的网页APP所示，当我们有不平衡或缺失的数据时，这变得尤为重要。</p>
 <p>在不混合模型中，我们将<code>Subject</code>视为一个<strong>固定因子(fixed factor)</strong>。每对截距和斜率的估计仅由该被试的数据决定。然而，我们对这18个被试本身并不感兴趣；我们更感兴趣的是他们作为具有潜在被试的更大群体的代表。如果你的目标是推广到你感兴趣的群体中的新被试，那么这种被试作为固定效应因子的方法是不够优化的。</p>
 <p>部分混合发生在你将一个因子视为随机因子而不是固定因子进行分析时。<strong>随机因子(random factor)</strong>是指其水平被认为代表所有潜在水平的一个真子集(proper subset)。通常情况下，当你数据中的水平是抽样结果，并且你希望推广到超出这些水平的范围时，你会将一个因子视为随机。在这种情况下，我们有18个独特被试(因此有18个<code>Subject</code>因子的水平)，希望能够对潜在被试群体的睡眠剥夺效应做出一些一般性的陈述。</p>
