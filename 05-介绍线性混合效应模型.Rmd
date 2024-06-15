@@ -728,6 +728,6 @@ ggplot(sleep2, aes(x = days_deprived, y = Reaction)) +
   labs(y = "反应时", x = "睡眠剥夺的天数(0 = 基线)")
 ```
 
-## 多层app
+## 多层数据建模app
 
-试试这个[多层网页app](https://rstudio-connect.psy.gla.ac.uk/multilevel){target="_blank"}以加深你对三种不同的多层建模方法的理解。
+试试这个[多层数据建模app](https://rstudio-connect.psy.gla.ac.uk/multilevel){target="_blank"}以加深你对三种不同的多层建模方法的理解。

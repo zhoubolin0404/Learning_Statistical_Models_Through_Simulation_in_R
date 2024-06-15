@@ -261,7 +261,7 @@ div.csl-indent {
 <li class="chapter" data-level="5.5.1" data-path="介绍线性混合效应模型.html"><a href="介绍线性混合效应模型.html#固定效应"><i class="fa fa-check"></i><b>5.5.1</b> 固定效应</a></li>
 <li class="chapter" data-level="5.5.2" data-path="介绍线性混合效应模型.html"><a href="介绍线性混合效应模型.html#随机效应"><i class="fa fa-check"></i><b>5.5.2</b> 随机效应</a></li>
 </ul></li>
-<li class="chapter" data-level="5.6" data-path="介绍线性混合效应模型.html"><a href="介绍线性混合效应模型.html#多层app"><i class="fa fa-check"></i><b>5.6</b> 多层app</a></li>
+<li class="chapter" data-level="5.6" data-path="介绍线性混合效应模型.html"><a href="介绍线性混合效应模型.html#多层数据建模app"><i class="fa fa-check"></i><b>5.6</b> 多层数据建模app</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="单随机因子线性混合效应模型.html"><a href="单随机因子线性混合效应模型.html"><i class="fa fa-check"></i><b>6</b> 单随机因子线性混合效应模型</a>
 <ul>
@@ -376,8 +376,8 @@ div.csl-indent {
 <pre><code>## # A tibble: 2 × 2
 ##   city      variance
 ##   &lt;chr&gt;        &lt;dbl&gt;
-## 1 Barcelona     46.2
-## 2 Glasgow       83.7</code></pre>
+## 1 Barcelona     48.0
+## 2 Glasgow       98.6</code></pre>
 <p>对于二项分布的数据，方差由<span class="math inline">\(np(1-p)\)</span>给出，其中<span class="math inline">\(n\)</span>是观测次数，<span class="math inline">\(p\)</span>是“成功”的概率(上述例子中某一天降雨的概率)。下图显示了<span class="math inline">\(n=1000\)</span>的情况；注意，当概率接近0和1时，方差变得很小，而在0.5处达到峰值。</p>
 <div class="figure"><span style="display:block;" id="fig:binomial-var-plot"></span>
 <img src="08-%E5%B9%BF%E4%B9%89%E7%BA%BF%E6%80%A7%E6%B7%B7%E5%90%88%E6%95%88%E5%BA%94%E6%A8%A1%E5%9E%8B_files/figure-html/binomial-var-plot-1.png" alt="方差与概率的关系图($n=1000$)" width="672" />
