@@ -234,7 +234,7 @@ abc_data %>%
 
 有关收敛问题的更多技术细节以及如何处理，参见`?lme4::convergence`和`?lme4::isSingular`。
 
-注：推荐阅读[混合线性模型的实现](https://github.com/usplos/Eye-movement-related/blob/master/Linear%20mixed%20model%20(Hierarchical%20linear%20model)%20using%20R%20and%20JAMOVI.md)加深理解。
+注：推荐阅读[混合线性模型的实现](https://github.com/usplos/Eye-movement-related/blob/master/Linear%20mixed%20model%20(Hierarchical%20linear%20model)%20using%20R%20and%20JAMOVI.md)加深理解。同时可以考虑使用贝叶斯方法，参见 @Fiechter_2024 。
 
 ## 模拟交叉随机因子的数据
 
